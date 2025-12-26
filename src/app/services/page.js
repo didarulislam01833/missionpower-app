@@ -102,7 +102,7 @@ export default function ServicesPage() {
 
             {/* 3. CLASSY CALL TO ACTION */}
             <section className="py-32 bg-slate-950 relative overflow-hidden">
-                <div className="container mx-auto px-6 text-center relative z-10">
+                <div className="">
                     <h2 className="text-white text-4xl md:text-6xl font-black uppercase italic tracking-tighter mb-10">
                         Discuss your next <br /> <span className="text-blue-600">Major Project.</span>
                     </h2>
@@ -120,3 +120,6 @@ export default function ServicesPage() {
         </main>
     );
 }
+
+
+

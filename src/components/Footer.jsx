@@ -77,7 +77,7 @@ export default function Footer() {
                         <div className="space-y-4 text-sm text-slate-400">
                             <div className="flex gap-3">
                                 <span className="text-blue-500">📍</span>
-                                <p>House: 00, Road: 00, Sector: 00, <br /> Uttara, Dhaka-1230, BD.</p>
+                                <p>House: 01, Road: 16, Sector: 07, <br /> Uttara, Dhaka-1230, Bangladesh</p>
                             </div>
                             <div className="flex gap-3">
                                 <span className="text-blue-600">✉️</span>

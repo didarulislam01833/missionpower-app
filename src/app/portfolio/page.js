@@ -116,8 +116,8 @@ export default function PortfolioPage() {
                                     key={cat}
                                     onClick={() => setFilter(cat)}
                                     className={`px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${filter === cat
-                                            ? 'bg-slate-900 text-white shadow-xl'
-                                            : 'bg-slate-50 text-slate-400 hover:bg-slate-100'
+                                        ? 'bg-slate-900 text-white shadow-xl'
+                                        : 'bg-slate-50 text-slate-400 hover:bg-slate-100'
                                         }`}
                                 >
                                     {cat}
@@ -202,3 +202,5 @@ export default function PortfolioPage() {
         </main>
     );
 }
+
+

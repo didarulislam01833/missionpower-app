@@ -1,42 +1,48 @@
+"use client";
+
 import React from 'react';
 import Image from 'next/image';
+// 1. Correct Link import for navigation
+import Link from 'next/link';
+// 2. Import the icon separately to avoid name conflict
+import { ExternalLink } from 'lucide-react';
 
 export default function FeaturedProjects() {
     const projects = [
         {
             id: 1,
             title: "Urban Residential Planning",
-            image: "/assets/All/01-04.jpg", // Architecture/Housing
+            image: "/assets/All/01-04.jpg",
             category: "Real Estate"
         },
         {
             id: 2,
             title: "Commercial Safety Systems",
-            image: "/assets/All/01-03.jpg", // Fire Safety
+            image: "/assets/All/01-03.jpg",
             category: "Fire & Safety"
         },
         {
             id: 3,
             title: "National Grid Infrastructure",
-            image: "/assets/All/01-11.jpg", // Power Lines
+            image: "/assets/All/01-11.jpg",
             category: "Electrical"
         },
         {
             id: 4,
             title: "Highway & Road Networks",
-            image: "/assets/All/01-06.jpg", // Road infrastructure
+            image: "/assets/All/01-06.jpg",
             category: "Civil Engineering"
         },
         {
             id: 5,
             title: "Petroleum Distribution Hub",
-            image: "/assets/All/01-09.jpg", // Gas Station
+            image: "/assets/All/01-09.jpg",
             category: "Energy Supply"
         },
         {
             id: 6,
             title: "Logistics & Supply Chain",
-            image: "/assets/All/01-08.jpg", // Port/Trucks
+            image: "/assets/All/01-08.jpg",
             category: "Logistics"
         }
     ];
@@ -53,9 +59,14 @@ export default function FeaturedProjects() {
                             Delivering Excellence Across <br /> Multiple Sectors
                         </h3>
                     </div>
-                    <button className="bg-slate-900 text-white px-8 py-3 rounded-lg font-bold text-sm hover:bg-blue-700 transition-all">
+
+                    {/* 3. This Link now works properly */}
+                    <Link
+                        href="/portfolio"
+                        className="bg-slate-900 text-white px-8 py-3 rounded-lg font-bold text-sm hover:bg-blue-700 transition-all inline-block"
+                    >
                         View All Projects
-                    </button>
+                    </Link>
                 </div>
 
                 {/* Project Grid */}
@@ -69,7 +80,9 @@ export default function FeaturedProjects() {
                                     fill
                                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <ExternalLink className="text-white w-10 h-10 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0" />
+                                </div>
                             </div>
 
                             <div className="mt-5">
