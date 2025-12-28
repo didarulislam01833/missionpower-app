@@ -81,7 +81,7 @@ export default function Footer() {
                             </div>
                             <div className="flex gap-3">
                                 <span className="text-blue-600">✉️</span>
-                                <p className="font-bold text-slate-300">info@missionpowerland.com</p>
+                                <p className="font-bold text-slate-300">mission</p>
                             </div>
                             <button className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-black uppercase tracking-[0.2em] rounded-lg transition-all mt-4">
                                 Get a Quote
