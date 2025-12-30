@@ -9,8 +9,8 @@ export default function ContactPage() {
     const [showToast, setShowToast] = useState(false);
 
     // Google Maps Links
-    const googleMapsEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.3340578854044!2d90.39578647588383!3d23.877797778982366!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c41259c6b90f%3A0xc074719d363573c9!2sUttara%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd";
-    const googleMapsShareUrl = "https://maps.app.goo.gl/YourActualLinkHere";
+    const googleMapsEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.43825814546!2d90.3976352!3d23.8732128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c43d34608c99%3A0xc3f6068f18708c9d!2sUttara%20Sector%203%2C%20Uttara%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd";
+    const googleMapsShareUrl = "https://maps.app.goo.gl/YourMapLink";
 
     const validateForm = (data) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,27 +46,37 @@ export default function ContactPage() {
         setErrorMessage("");
 
         try {
-            const res = await fetch("/api/send", {
+            // আপনার আলাদা ব্যাকএন্ড সার্ভারের URL (লোকাল টেস্টের জন্য localhost:5000)
+            const BACKEND_API = "http://localhost:5000/api/send";
+
+            const res = await fetch(BACKEND_API, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 body: JSON.stringify(formData),
             });
-            if (res.ok) {
+
+            const result = await res.json();
+
+            if (res.ok && result.success) {
                 setStatus("success");
                 e.target.reset();
+                // ৫ সেকেন্ড পর সাকসেস মেসেজ সরিয়ে দেয়া
+                setTimeout(() => setStatus("idle"), 5000);
             } else {
                 setStatus("error");
-                setErrorMessage("Failed to send message.");
+                setErrorMessage(result.message || "Failed to send message.");
             }
         } catch (err) {
+            console.error("Frontend Fetch Error:", err);
             setStatus("error");
-            setErrorMessage("Connection error.");
+            setErrorMessage("Server is offline. Please try again later.");
         }
     }
 
     return (
         <main className="relative min-h-screen bg-white">
-
             {/* 1. PROFESSIONAL TOAST */}
             <AnimatePresence>
                 {showToast && status === "idle" && (
@@ -81,13 +91,13 @@ export default function ContactPage() {
                 )}
             </AnimatePresence>
 
-            {/* SECTION 1: HERO & MAP */}
+            {/* SECTION: HERO & MAP */}
             <section
                 onMouseEnter={() => setShowToast(true)}
                 onMouseLeave={() => setShowToast(false)}
                 className="relative h-screen w-full overflow-hidden"
             >
-                {/* 2. MAP BACKGROUND */}
+                {/* MAP BACKGROUND */}
                 <div className="absolute inset-0 z-0 grayscale contrast-125 opacity-40">
                     <iframe
                         src={googleMapsEmbedUrl}
@@ -95,7 +105,7 @@ export default function ContactPage() {
                     ></iframe>
                 </div>
 
-                {/* 3. GLASS CARD CONTENT */}
+                {/* GLASS CARD CONTENT */}
                 <div className="relative z-10 container mx-auto px-6 lg:px-16 h-full flex items-center justify-end">
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
@@ -106,7 +116,6 @@ export default function ContactPage() {
                             Contact <span className="text-blue-600">Hub</span>
                         </h1>
 
-                        {/* 4. ADDRESS & MAP LINKS */}
                         <div className="space-y-4 mb-6">
                             <div>
                                 <h4 className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">HQ Address</h4>
@@ -122,17 +131,16 @@ export default function ContactPage() {
                             </a>
                         </div>
 
-                        {/* 5. FORM WITH VALIDATION */}
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-2 gap-3">
-                                <input name="name" type="text" placeholder="Full Name" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600" />
-                                <input name="email" type="email" placeholder="Email" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600" />
+                                <input required name="name" type="text" placeholder="Full Name" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600" />
+                                <input required name="email" type="email" placeholder="Email" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600" />
                             </div>
                             <div className="grid grid-cols-2 gap-3">
-                                <input name="phone" type="tel" placeholder="Phone (017...)" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600" />
-                                <input name="subject" type="text" placeholder="Subject" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600" />
+                                <input required name="phone" type="tel" placeholder="Phone (017...)" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600" />
+                                <input required name="subject" type="text" placeholder="Subject" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600" />
                             </div>
-                            <textarea name="message" placeholder="Project Details" className="w-full bg-slate-100 rounded-xl p-4 text-xs font-bold h-24 outline-none focus:ring-2 focus:ring-blue-600 resize-none"></textarea>
+                            <textarea required name="message" placeholder="Project Details" className="w-full bg-slate-100 rounded-xl p-4 text-xs font-bold h-24 outline-none focus:ring-2 focus:ring-blue-600 resize-none"></textarea>
 
                             <button
                                 type="submit"
@@ -142,15 +150,14 @@ export default function ContactPage() {
                                 {status === "sending" ? "Processing..." : "Submit Inquiry"}
                             </button>
 
-                            {/* Status Notifications */}
                             <AnimatePresence>
                                 {status === "success" && (
-                                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-green-600 text-[10px] font-black text-center mt-2">
+                                    <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-green-600 text-[10px] font-black text-center mt-2">
                                         ✓ INQUIRY SENT SUCCESSFULLY!
                                     </motion.p>
                                 )}
                                 {status === "error" && (
-                                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-600 text-[10px] font-black text-center mt-2">
+                                    <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-red-600 text-[10px] font-black text-center mt-2">
                                         ✕ {errorMessage.toUpperCase()}
                                     </motion.p>
                                 )}
@@ -162,6 +169,3 @@ export default function ContactPage() {
         </main>
     );
 }
-
-
-
