@@ -8,9 +8,8 @@ export default function ContactPage() {
     const [errorMessage, setErrorMessage] = useState("");
     const [showToast, setShowToast] = useState(false);
 
-    // Google Maps Links
-    const googleMapsEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.428574345266!2d90.3957813153634!3d23.87442198452778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c421736657c7%3A0x7d63604f3780f2b3!2sSector%203%2C%20Uttara%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1625123456789!5m2!1sen!2sbd";
-    const googleMapsShareUrl = "https://goo.gl/maps/XYZ123"; // আপনার সঠিক লোকেশন লিঙ্ক এখানে দিন
+    const googleMapsEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.4235889215!2d90.3980!3d23.8640!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDUxJzUwLjQiTiA5MMKwMjMnNTIuOCJF!5e0!3m2!1sen!2sbd!4v1625555555555";
+    const googleMapsShareUrl = "https://goo.gl/maps/example";
 
     const validateForm = (data) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,14 +45,12 @@ export default function ContactPage() {
         setErrorMessage("");
 
         try {
-            // ✅ আপনার Render লাইভ ব্যাকএন্ড URL আপডেট করা হয়েছে
-            const BACKEND_API = "https://missionpower-backend.onrender.com/send-email";
+            // ✅ LIVE BACKEND URL (Corrected endpoint to match server.js)
+            const BACKEND_API = "https://missionpower-backend.onrender.com/api/send";
 
             const res = await fetch(BACKEND_API, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
 
@@ -70,7 +67,7 @@ export default function ContactPage() {
         } catch (err) {
             console.error("Frontend Fetch Error:", err);
             setStatus("error");
-            setErrorMessage("Server is waking up or offline. Please try again in a minute.");
+            setErrorMessage("Server is waking up. Please try again in 30 seconds.");
         }
     }
 
@@ -89,24 +86,13 @@ export default function ContactPage() {
                 )}
             </AnimatePresence>
 
-            <section
-                onMouseEnter={() => setShowToast(true)}
-                onMouseLeave={() => setShowToast(false)}
-                className="relative h-screen w-full overflow-hidden"
-            >
+            <section onMouseEnter={() => setShowToast(true)} onMouseLeave={() => setShowToast(false)} className="relative h-screen w-full overflow-hidden">
                 <div className="absolute inset-0 z-0 grayscale contrast-125 opacity-40">
-                    <iframe
-                        src={googleMapsEmbedUrl}
-                        width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy"
-                    ></iframe>
+                    <iframe src={googleMapsEmbedUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy"></iframe>
                 </div>
 
                 <div className="relative z-10 container mx-auto px-6 lg:px-16 h-full flex items-center justify-end">
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="w-full lg:w-[480px] bg-white/90 backdrop-blur-xl p-8 lg:p-10 rounded-[3rem] shadow-2xl border border-white"
-                    >
+                    <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} className="w-full lg:w-[480px] bg-white/90 backdrop-blur-xl p-8 lg:p-10 rounded-[3rem] shadow-2xl border border-white">
                         <h1 className="text-4xl font-black text-slate-900 uppercase italic tracking-tighter mb-6">
                             Contact <span className="text-blue-600">Hub</span>
                         </h1>
@@ -116,14 +102,6 @@ export default function ContactPage() {
                                 <h4 className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">HQ Address</h4>
                                 <p className="text-sm font-bold text-slate-700 leading-tight">Sector 03, Road 12, House 05, <br /> Uttara, Dhaka-1230</p>
                             </div>
-                            <a
-                                href={googleMapsShareUrl}
-                                target="_blank" rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 text-blue-600 font-black text-[10px] uppercase tracking-widest hover:underline"
-                            >
-                                <span>📍 Get Directions on GPS</span>
-                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                            </a>
                         </div>
 
                         <form onSubmit={handleSubmit} className="space-y-4">
@@ -137,25 +115,13 @@ export default function ContactPage() {
                             </div>
                             <textarea required name="message" placeholder="Project Details" className="w-full bg-slate-100 rounded-xl p-4 text-xs font-bold h-24 outline-none focus:ring-2 focus:ring-blue-600 resize-none text-black"></textarea>
 
-                            <button
-                                type="submit"
-                                disabled={status === "sending"}
-                                className="w-full py-4 bg-slate-950 text-white font-black uppercase text-[10px] tracking-[0.3em] rounded-xl hover:bg-blue-600 transition-all shadow-xl disabled:bg-slate-400 active:scale-95"
-                            >
+                            <button type="submit" disabled={status === "sending"} className="w-full py-4 bg-slate-950 text-white font-black uppercase text-[10px] tracking-[0.3em] rounded-xl hover:bg-blue-600 transition-all shadow-xl disabled:bg-slate-400">
                                 {status === "sending" ? "Processing..." : "Submit Inquiry"}
                             </button>
 
                             <AnimatePresence>
-                                {status === "success" && (
-                                    <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-green-600 text-[10px] font-black text-center mt-2">
-                                        ✓ INQUIRY SENT SUCCESSFULLY!
-                                    </motion.p>
-                                )}
-                                {status === "error" && (
-                                    <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-red-600 text-[10px] font-black text-center mt-2">
-                                        ✕ {errorMessage.toUpperCase()}
-                                    </motion.p>
-                                )}
+                                {status === "success" && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-green-600 text-[10px] font-black text-center mt-2">✓ INQUIRY SENT SUCCESSFULLY!</motion.p>}
+                                {status === "error" && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-600 text-[10px] font-black text-center mt-2">✕ {errorMessage.toUpperCase()}</motion.p>}
                             </AnimatePresence>
                         </form>
                     </motion.div>
