@@ -9,8 +9,8 @@ export default function ContactPage() {
     const [showToast, setShowToast] = useState(false);
 
     // Google Maps Links
-    const googleMapsEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.43825814546!2d90.3976352!3d23.8732128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c43d34608c99%3A0xc3f6068f18708c9d!2sUttara%20Sector%203%2C%20Uttara%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd";
-    const googleMapsShareUrl = "https://maps.app.goo.gl/YourMapLink";
+    const googleMapsEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.428574345266!2d90.3957813153634!3d23.87442198452778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c421736657c7%3A0x7d63604f3780f2b3!2sSector%203%2C%20Uttara%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1625123456789!5m2!1sen!2sbd";
+    const googleMapsShareUrl = "https://goo.gl/maps/XYZ123"; // আপনার সঠিক লোকেশন লিঙ্ক এখানে দিন
 
     const validateForm = (data) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,8 +46,8 @@ export default function ContactPage() {
         setErrorMessage("");
 
         try {
-            // আপনার আলাদা ব্যাকএন্ড সার্ভারের URL (লোকাল টেস্টের জন্য localhost:5000)
-            const BACKEND_API = "http://localhost:5000/api/send";
+            // ✅ আপনার Render লাইভ ব্যাকএন্ড URL আপডেট করা হয়েছে
+            const BACKEND_API = "https://missionpower-backend.onrender.com/send-email";
 
             const res = await fetch(BACKEND_API, {
                 method: "POST",
@@ -62,7 +62,6 @@ export default function ContactPage() {
             if (res.ok && result.success) {
                 setStatus("success");
                 e.target.reset();
-                // ৫ সেকেন্ড পর সাকসেস মেসেজ সরিয়ে দেয়া
                 setTimeout(() => setStatus("idle"), 5000);
             } else {
                 setStatus("error");
@@ -71,13 +70,12 @@ export default function ContactPage() {
         } catch (err) {
             console.error("Frontend Fetch Error:", err);
             setStatus("error");
-            setErrorMessage("Server is offline. Please try again later.");
+            setErrorMessage("Server is waking up or offline. Please try again in a minute.");
         }
     }
 
     return (
         <main className="relative min-h-screen bg-white">
-            {/* 1. PROFESSIONAL TOAST */}
             <AnimatePresence>
                 {showToast && status === "idle" && (
                     <motion.div
@@ -91,13 +89,11 @@ export default function ContactPage() {
                 )}
             </AnimatePresence>
 
-            {/* SECTION: HERO & MAP */}
             <section
                 onMouseEnter={() => setShowToast(true)}
                 onMouseLeave={() => setShowToast(false)}
                 className="relative h-screen w-full overflow-hidden"
             >
-                {/* MAP BACKGROUND */}
                 <div className="absolute inset-0 z-0 grayscale contrast-125 opacity-40">
                     <iframe
                         src={googleMapsEmbedUrl}
@@ -105,7 +101,6 @@ export default function ContactPage() {
                     ></iframe>
                 </div>
 
-                {/* GLASS CARD CONTENT */}
                 <div className="relative z-10 container mx-auto px-6 lg:px-16 h-full flex items-center justify-end">
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
@@ -133,14 +128,14 @@ export default function ContactPage() {
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-2 gap-3">
-                                <input required name="name" type="text" placeholder="Full Name" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600" />
-                                <input required name="email" type="email" placeholder="Email" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600" />
+                                <input required name="name" type="text" placeholder="Full Name" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black" />
+                                <input required name="email" type="email" placeholder="Email" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black" />
                             </div>
                             <div className="grid grid-cols-2 gap-3">
-                                <input required name="phone" type="tel" placeholder="Phone (017...)" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600" />
-                                <input required name="subject" type="text" placeholder="Subject" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600" />
+                                <input required name="phone" type="tel" placeholder="Phone (017...)" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black" />
+                                <input required name="subject" type="text" placeholder="Subject" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black" />
                             </div>
-                            <textarea required name="message" placeholder="Project Details" className="w-full bg-slate-100 rounded-xl p-4 text-xs font-bold h-24 outline-none focus:ring-2 focus:ring-blue-600 resize-none"></textarea>
+                            <textarea required name="message" placeholder="Project Details" className="w-full bg-slate-100 rounded-xl p-4 text-xs font-bold h-24 outline-none focus:ring-2 focus:ring-blue-600 resize-none text-black"></textarea>
 
                             <button
                                 type="submit"
