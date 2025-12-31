@@ -4,13 +4,14 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ContactPage() {
-    const [status, setStatus] = useState("idle");
+    const [status, setStatus] = useState("idle"); // idle, sending, success, error
     const [errorMessage, setErrorMessage] = useState("");
     const [showToast, setShowToast] = useState(false);
 
-    const googleMapsEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.4235889215!2d90.3980!3d23.8640!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDUxJzUwLjQiTiA5MMKwMjMnNTIuOCJF!5e0!3m2!1sen!2sbd!4v1625555555555";
-    const googleMapsShareUrl = "https://goo.gl/maps/example";
+    // আপনার অফিসের লোকেশন ম্যাপ (আপনার ম্যাপ লিঙ্কটি এখানে দিন)
+    const googleMapsEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.423719001353!2d90.3976523!3d23.874586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDUyJzI4LjUiTiA5MMKwMjMnNTEuNiJF!5e0!3m2!1sen!2sbd!4v1620000000000!5m2!1sen!2sbd";
 
+    // ফর্ম ভ্যালিডেশন লজিক
     const validateForm = (data) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const phoneRegex = /^(?:\+88|88)?(01[3-9]\d{8})$/;
@@ -45,10 +46,8 @@ export default function ContactPage() {
         setErrorMessage("");
 
         try {
-            // ✅ LIVE BACKEND URL (Corrected endpoint to match server.js)
-            // লাইভ লিঙ্কটি কমেন্ট করে লোকাল লিঙ্ক দিন
+            // ✅ LIVE BACKEND URL (আপনার রেন্ডার সার্ভার লিঙ্ক)
             const BACKEND_API = "https://missionpower-backend.onrender.com/api/send";
-            // const BACKEND_API = "http://localhost:5000/api/send";
 
             const res = await fetch(BACKEND_API, {
                 method: "POST",
@@ -61,6 +60,7 @@ export default function ContactPage() {
             if (res.ok && result.success) {
                 setStatus("success");
                 e.target.reset();
+                // ৫ সেকেন্ড পর সাকসেস মেসেজ সরিয়ে দেয়া
                 setTimeout(() => setStatus("idle"), 5000);
             } else {
                 setStatus("error");
@@ -75,6 +75,7 @@ export default function ContactPage() {
 
     return (
         <main className="relative min-h-screen bg-white">
+            {/* ফ্লোটিং টোস্ট মেসেজ */}
             <AnimatePresence>
                 {showToast && status === "idle" && (
                     <motion.div
@@ -88,13 +89,30 @@ export default function ContactPage() {
                 )}
             </AnimatePresence>
 
-            <section onMouseEnter={() => setShowToast(true)} onMouseLeave={() => setShowToast(false)} className="relative h-screen w-full overflow-hidden">
+            <section
+                onMouseEnter={() => setShowToast(true)}
+                onMouseLeave={() => setShowToast(false)}
+                className="relative h-screen w-full overflow-hidden"
+            >
+                {/* ব্যাকগ্রাউন্ড ম্যাপ */}
                 <div className="absolute inset-0 z-0 grayscale contrast-125 opacity-40">
-                    <iframe src={googleMapsEmbedUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy"></iframe>
+                    <iframe
+                        src={googleMapsEmbedUrl}
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen=""
+                        loading="lazy"
+                    ></iframe>
                 </div>
 
+                {/* কন্টাক্ট ফরম কার্ড */}
                 <div className="relative z-10 container mx-auto px-6 lg:px-16 h-full flex items-center justify-end">
-                    <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} className="w-full lg:w-[480px] bg-white/90 backdrop-blur-xl p-8 lg:p-10 rounded-[3rem] shadow-2xl border border-white">
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="w-full lg:w-[480px] bg-white/90 backdrop-blur-xl p-8 lg:p-10 rounded-[3rem] shadow-2xl border border-white"
+                    >
                         <h1 className="text-4xl font-black text-slate-900 uppercase italic tracking-tighter mb-6">
                             Contact <span className="text-blue-600">Hub</span>
                         </h1>
@@ -108,22 +126,34 @@ export default function ContactPage() {
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-2 gap-3">
-                                <input required name="name" type="text" placeholder="Full Name" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black" />
-                                <input required name="email" type="email" placeholder="Email" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black" />
+                                <input required name="name" type="text" placeholder="Full Name" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder-slate-500" />
+                                <input required name="email" type="email" placeholder="Email" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder-slate-500" />
                             </div>
                             <div className="grid grid-cols-2 gap-3">
-                                <input required name="phone" type="tel" placeholder="Phone (017...)" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black" />
-                                <input required name="subject" type="text" placeholder="Subject" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black" />
+                                <input required name="phone" type="tel" placeholder="Phone (017...)" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder-slate-500" />
+                                <input required name="subject" type="text" placeholder="Subject" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder-slate-500" />
                             </div>
-                            <textarea required name="message" placeholder="Project Details" className="w-full bg-slate-100 rounded-xl p-4 text-xs font-bold h-24 outline-none focus:ring-2 focus:ring-blue-600 resize-none text-black"></textarea>
+                            <textarea required name="message" placeholder="Project Details" className="w-full bg-slate-100 rounded-xl p-4 text-xs font-bold h-24 outline-none focus:ring-2 focus:ring-blue-600 resize-none text-black placeholder-slate-500"></textarea>
 
-                            <button type="submit" disabled={status === "sending"} className="w-full py-4 bg-slate-950 text-white font-black uppercase text-[10px] tracking-[0.3em] rounded-xl hover:bg-blue-600 transition-all shadow-xl disabled:bg-slate-400">
+                            <button
+                                type="submit"
+                                disabled={status === "sending"}
+                                className="w-full py-4 bg-slate-950 text-white font-black uppercase text-[10px] tracking-[0.3em] rounded-xl hover:bg-blue-600 transition-all shadow-xl disabled:bg-slate-400"
+                            >
                                 {status === "sending" ? "Processing..." : "Submit Inquiry"}
                             </button>
 
                             <AnimatePresence>
-                                {status === "success" && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-green-600 text-[10px] font-black text-center mt-2">✓ INQUIRY SENT SUCCESSFULLY!</motion.p>}
-                                {status === "error" && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-600 text-[10px] font-black text-center mt-2">✕ {errorMessage.toUpperCase()}</motion.p>}
+                                {status === "success" && (
+                                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-green-600 text-[10px] font-black text-center mt-2">
+                                        ✓ INQUIRY SENT SUCCESSFULLY!
+                                    </motion.p>
+                                )}
+                                {status === "error" && (
+                                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-600 text-[10px] font-black text-center mt-2 uppercase">
+                                        ✕ {errorMessage}
+                                    </motion.p>
+                                )}
                             </AnimatePresence>
                         </form>
                     </motion.div>
