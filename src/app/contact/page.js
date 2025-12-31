@@ -46,7 +46,9 @@ export default function ContactPage() {
 
         try {
             // ✅ LIVE BACKEND URL (Corrected endpoint to match server.js)
+            // লাইভ লিঙ্কটি কমেন্ট করে লোকাল লিঙ্ক দিন
             const BACKEND_API = "https://missionpower-backend.onrender.com/api/send";
+            // const BACKEND_API = "http://localhost:5000/api/send";
 
             const res = await fetch(BACKEND_API, {
                 method: "POST",
