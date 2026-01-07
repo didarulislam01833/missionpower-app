@@ -8,10 +8,7 @@ export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
-        const handleScroll = () => {
-            // Change state after 50px of scrolling
-            setScrolled(window.scrollY > 50);
-        };
+        const handleScroll = () => setScrolled(window.scrollY > 50);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -27,100 +24,92 @@ export default function Navbar() {
     return (
         <>
             <style jsx global>{`
-                @keyframes subtleFloat {
-                    0%, 100% { transform: translateY(0) scale(1); }
-                    50% { transform: translateY(-5px) scale(1.02); }
+                @keyframes softFloat {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-8px); }
                 }
-                .animate-premium-logo {
-                    animation: subtleFloat 4s ease-in-out infinite;
-                }
-                .text-shadow-premium {
-                    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+                .logo-animate {
+                    animation: softFloat 4s ease-in-out infinite;
+                    filter: drop-shadow(0 0 15px rgba(37, 99, 235, 0.4));
                 }
             `}</style>
 
             <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ease-in-out ${scrolled
-                    ? "bg-white/85 backdrop-blur-lg shadow-xl h-20"
+                    ? "bg-white/80 backdrop-blur-xl shadow-2xl h-20"
                     : "bg-transparent h-28"
                 }`}>
                 <div className="max-w-7xl mx-auto px-6 md:px-12 h-full flex items-center justify-between">
 
-                    {/* BRAND AREA - Clicking the logo or text takes you home */}
+                    {/* BRANDING AREA - Wraps everything in a link home */}
                     <Link href="/" className="flex items-center gap-4 group cursor-pointer shrink-0">
-                        {/* High-Definition Logo with Animation */}
-                        <div className="relative w-14 h-14 md:w-16 md:h-16 flex items-center justify-center transition-transform duration-500 group-hover:rotate-3">
+                        {/* High-Impact Animated Logo */}
+                        <div className="relative w-14 h-14 md:w-20 md:h-20 flex items-center justify-center transition-all duration-500 group-hover:scale-110">
                             <img
                                 src="/assets/logo/logo.png"
                                 alt="Mission Power Land Limited"
-                                className={`w-full h-full object-contain animate-premium-logo ${!scrolled && "brightness-0 invert"}`}
+                                className={`w-full h-full object-contain logo-animate ${!scrolled && "brightness-0 invert"}`}
                             />
-                            {/* Invert makes a dark logo white on transparent BG automatically */}
                         </div>
 
-                        {/* Company Name with Clear Hierarchy */}
-                        <div className="flex flex-col border-l border-white/20 pl-4 py-1 group-hover:border-blue-500 transition-colors">
-                            <h1 className={`text-xl md:text-2xl font-[1000] leading-none tracking-tighter uppercase transition-all duration-500 ${scrolled ? "text-slate-900" : "text-white text-shadow-premium"
+                        {/* Company Text Typography */}
+                        <div className="flex flex-col border-l border-white/20 pl-5 py-1 transition-all group-hover:border-blue-500">
+                            <h1 className={`text-xl md:text-3xl font-[1000] leading-none tracking-tighter uppercase transition-all duration-500 ${scrolled ? "text-slate-900" : "text-white"
                                 }`}>
                                 MISSION POWER <span className={scrolled ? "text-blue-600" : "text-blue-400"}>LAND</span>
                             </h1>
-                            <p className={`text-[10px] md:text-[11px] font-bold tracking-[0.5em] uppercase mt-1.5 transition-colors duration-500 ${scrolled ? "text-slate-400" : "text-white/70"
-                                }`}>
-                                Limited
-                            </p>
+                            <div className="flex items-center gap-2 mt-1.5">
+                                <span className="h-[2px] w-0 bg-blue-600 transition-all duration-700 group-hover:w-8"></span>
+                                <p className={`text-[10px] md:text-[12px] font-black tracking-[0.5em] uppercase transition-colors duration-500 ${scrolled ? "text-slate-400" : "text-white/80"
+                                    }`}>
+                                    Limited
+                                </p>
+                            </div>
                         </div>
                     </Link>
 
-                    {/* Desktop Menu - Premium Spacing */}
-                    <div className="hidden lg:flex items-center gap-2">
+                    {/* Navigation - High-end Letter Spacing */}
+                    <div className="hidden lg:flex items-center gap-4">
                         {navLinks.map((item) => (
                             <Link
                                 key={item.name}
                                 href={item.link}
-                                className={`relative px-5 py-2 text-[13px] font-black uppercase tracking-[0.15em] transition-all duration-500 group ${scrolled ? "text-slate-600 hover:text-blue-600" : "text-white hover:text-white"
+                                className={`relative px-5 py-2 text-[13px] font-black uppercase tracking-[0.2em] transition-all duration-500 group ${scrolled ? "text-slate-600 hover:text-blue-600" : "text-white hover:text-white"
                                     }`}
                             >
-                                <span className="relative z-10">{item.name}</span>
-                                <span className={`absolute bottom-0 left-5 right-5 h-[3px] transition-all duration-300 scale-x-0 group-hover:scale-x-100 ${scrolled ? "bg-blue-600" : "bg-white"
+                                {item.name}
+                                <span className={`absolute bottom-0 left-5 right-5 h-[3px] transition-all duration-500 scale-x-0 group-hover:scale-x-100 ${scrolled ? "bg-blue-600" : "bg-white"
                                     }`}></span>
                             </Link>
                         ))}
                     </div>
 
-                    {/* Premium CTA Button */}
+                    {/* Action Button */}
                     <div className="flex items-center gap-4">
                         <Link
                             href="/contact"
-                            className={`hidden sm:inline-block px-8 py-3.5 text-[11px] font-black uppercase tracking-[0.25em] transition-all duration-500 shadow-2xl ${scrolled
+                            className={`hidden sm:inline-block px-10 py-4 text-[11px] font-[1000] uppercase tracking-[0.3em] transition-all duration-500 shadow-2xl rounded-none ${scrolled
                                     ? "bg-blue-600 text-white hover:bg-slate-900"
                                     : "bg-white text-slate-900 hover:bg-blue-600 hover:text-white"
                                 }`}
                         >
-                            Connect Now
+                            CONNECT
                         </Link>
 
-                        {/* Minimalist Mobile Burger */}
-                        <button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className={`lg:hidden flex flex-col gap-1.5 p-2 transition-all ${scrolled ? "text-slate-900" : "text-white"}`}
-                        >
-                            <span className={`h-1 bg-current transition-all duration-300 ${isOpen ? "w-7 rotate-45 translate-y-2.5" : "w-7"}`}></span>
-                            <span className={`h-1 bg-current transition-all duration-300 ${isOpen ? "opacity-0" : "w-5"}`}></span>
-                            <span className={`h-1 bg-current transition-all duration-300 ${isOpen ? "w-7 -rotate-45 -translate-y-2.5" : "w-7"}`}></span>
+                        {/* Mobile Menu Icon */}
+                        <button onClick={() => setIsOpen(!isOpen)} className={`lg:hidden p-2 ${scrolled ? "text-slate-900" : "text-white"}`}>
+                            <svg className="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+                            </svg>
                         </button>
                     </div>
                 </div>
 
-                {/* Mobile Fullscreen Menu */}
-                <div className={`lg:hidden fixed inset-0 bg-slate-950/95 backdrop-blur-2xl transition-all duration-700 ease-in-out ${isOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+                {/* Mobile Fullscreen Overlay */}
+                <div className={`lg:hidden fixed inset-0 bg-slate-950 transition-all duration-700 ease-in-out ${isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
                     }`}>
-                    <div className="flex flex-col items-center justify-center h-full gap-10">
+                    <div className="flex flex-col items-center justify-center h-full gap-12">
                         {navLinks.map((item) => (
-                            <Link
-                                key={item.name}
-                                href={item.link}
-                                onClick={() => setIsOpen(false)}
-                                className="text-4xl font-black text-white uppercase tracking-tighter hover:text-blue-500 transition-colors"
-                            >
+                            <Link key={item.name} href={item.link} onClick={() => setIsOpen(false)} className="text-4xl font-black text-white uppercase tracking-tighter hover:text-blue-500 transition-colors">
                                 {item.name}
                             </Link>
                         ))}
