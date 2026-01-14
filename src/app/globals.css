@@ -77,3 +77,18 @@ body {
 .__next {
     position: relative;
 }
+
+/* --- 6. Hide HubSpot Default Chat Button (Using AI Chatbot Instead) --- */
+/* HubSpot chat widget button hide করা হয়েছে কারণ আমরা custom AI chatbot ব্যবহার করছি */
+#hubspot-messages-iframe-container,
+iframe[title="Messages"],
+.hs-messages-widget-open,
+#hs-messages-mount-point {
+    display: none !important;
+}
+
+/* HubSpot widget button hide */
+.hs-messages-widget-container,
+.hs-messages-widget {
+    display: none !important;
+}

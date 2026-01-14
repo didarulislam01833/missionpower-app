@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const [mounted, setMounted] = useState(false); // To prevent hydration flicker
+    const [mounted, setMounted] = useState(false);
     const pathname = usePathname();
 
     const isInternalPage = pathname !== "/";
@@ -19,8 +19,6 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // If not mounted, return a consistent placeholder or the base state 
-    // to ensure Server and Client match exactly on first paint.
     if (!mounted) return null;
 
     const navLinks = [
@@ -45,7 +43,7 @@ export default function Navbar() {
             }`}>
             <div className="max-w-7xl mx-auto px-6 md:px-10 h-full flex items-center justify-between">
 
-                {/* BRAND AREA */}
+                {/* --- BRAND AREA --- */}
                 <Link href="/" className="flex items-center gap-4 group cursor-pointer shrink-0">
                     <div className="relative w-14 h-14 md:w-16 md:h-16 flex items-center justify-center transition-all duration-500 group-hover:scale-105">
                         <div className={`absolute inset-0 rounded-full transition-all duration-500 ${scrolled || isInternalPage ? "bg-blue-50/50 scale-90" : "bg-white/5 scale-110"
@@ -53,15 +51,14 @@ export default function Navbar() {
                         <img
                             src="/assets/logo/logo.png"
                             alt="Mission Power Land Limited"
-                            // Added "animate-in fade-in zoom-in" instead of custom JSX styles
                             className="relative z-10 w-full h-full object-contain duration-1000 animate-in fade-in zoom-in"
                         />
                     </div>
 
-                    <div className="flex flex-col justify-center">
-                        <h1 className={`text-base md:text-lg font-[900] leading-[0.9] tracking-tighter uppercase transition-all duration-500 ${getThemeColor()}`}>
-                            MISSION POWER <br />
-                            <span className={scrolled || isInternalPage ? "text-blue-600" : "text-blue-400"}>LAND</span>
+                    <div className="flex flex-col justify-center min-w-max">
+                        {/* whitespace-nowrap ব্যবহার করা হয়েছে যাতে নাম এক লাইনে থাকে এবং ভেঙে না যায় */}
+                        <h1 className={`text-base md:text-lg font-[900] leading-none tracking-tighter uppercase transition-all duration-500 whitespace-nowrap ${getThemeColor()}`}>
+                            MISSION POWER <span className={scrolled || isInternalPage ? "text-blue-600" : "text-blue-400"}>LAND</span>
                         </h1>
                         <p className={`text-[8px] md:text-[9px] font-bold tracking-[0.4em] uppercase mt-1 transition-colors duration-500 ${scrolled || isInternalPage ? "text-slate-400" : "text-white/80"
                             }`}>
@@ -70,7 +67,7 @@ export default function Navbar() {
                     </div>
                 </Link>
 
-                {/* DESKTOP MENU */}
+                {/* --- DESKTOP MENU --- */}
                 <div className="hidden lg:flex items-center gap-1">
                     {navLinks.map((item) => (
                         <Link
@@ -85,7 +82,7 @@ export default function Navbar() {
                     ))}
                 </div>
 
-                {/* ACTION BUTTON */}
+                {/* --- ACTION BUTTON --- */}
                 <div className="flex items-center gap-6">
                     <Link
                         href="/contact"
@@ -97,7 +94,7 @@ export default function Navbar() {
                         GET IN TOUCH
                     </Link>
 
-                    {/* MOBILE TOGGLE */}
+                    {/* --- MOBILE TOGGLE --- */}
                     <button
                         onClick={() => setIsOpen(!isOpen)}
                         className={`lg:hidden p-2 transition-all ${getThemeColor()}`}
@@ -110,7 +107,7 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {/* MOBILE MENU OVERLAY */}
+            {/* --- MOBILE MENU OVERLAY --- */}
             <div className={`lg:hidden fixed inset-0 bg-slate-950/98 backdrop-blur-xl z-[1000] transition-all duration-500 ${isOpen ? "translate-x-0" : "translate-x-full"
                 }`}>
                 <div className="flex flex-col items-center justify-center h-full gap-8">

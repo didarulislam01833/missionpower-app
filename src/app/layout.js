@@ -4,6 +4,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import Script from "next/script";
+import ChatWrapper from "./components/ChatWrapper";
+// ১. নতুন তৈরি করা ChatWrapper ইম্পোর্ট করুন
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,25 +25,27 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    // suppressHydrationWarning ব্রাউজার এক্সটেনশন জনিত এরর বন্ধ করবে
-    // data-scroll-behavior="smooth" নেক্সট জেএস এর স্ক্রল ওয়ার্নিং দূর করবে
     <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
-      {/* 'relative' ক্লাসটি স্ক্রল অফসেট ক্যালকুলেশন ঠিক করবে */}
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}>
         <Navbar />
         {children}
         <WhatsAppButton />
+
+        {/* ২. চ্যাটবট এখন নিরাপদে লোড হবে */}
+        <ChatWrapper />
+
         <Footer />
 
-        {/* HubSpot স্ক্রিপ্ট strategy="lazyOnload" দিলে পেজ লোড হওয়ার পর শান্তভাবে রান করবে */}
-        <Script
-          type="text/javascript"
-          id="hs-script-loader"
-          async
-          defer
-          strategy="lazyOnload"
-          src="//js-na2.hs-scripts.com/244746262.js"
-        />
+        {process.env.NEXT_PUBLIC_ENABLE_HUBSPOT === 'true' && (
+          <Script
+            type="text/javascript"
+            id="hs-script-loader"
+            async
+            defer
+            strategy="lazyOnload"
+            src="//js-na2.hs-scripts.com/244746262.js"
+          />
+        )}
       </body>
     </html>
   );
