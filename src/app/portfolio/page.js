@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, MapPin } from 'lucide-react';
 
@@ -9,7 +10,10 @@ export default function PortfolioPage() {
     const [filter, setFilter] = useState('All');
     const [isMounted, setIsMounted] = useState(false);
 
-    useEffect(() => { setIsMounted(true); }, []);
+    // Set mounted state to handle client-side specific logic
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     const projects = [
         { id: 1, category: 'Power', title: '132/33KV Substation Grid', location: 'Dhaka', img: '/assets/All/01-01.jpg' },
@@ -23,11 +27,13 @@ export default function PortfolioPage() {
     const categories = ['All', 'Power', 'Civil', 'Land'];
     const filteredProjects = filter === 'All' ? projects : projects.filter(p => p.category === filter);
 
-    if (!isMounted) return null;
+    // Return a skeleton or consistent wrapper if not mounted to avoid hydration flash
+    if (!isMounted) {
+        return <div className="bg-white min-h-screen" />;
+    }
 
     return (
         <main className="bg-white min-h-screen text-[#1e293b]">
-
             {/* --- HEADER --- */}
             <section className="pt-32 pb-12">
                 <div className="container mx-auto px-6 lg:px-20">
@@ -39,7 +45,7 @@ export default function PortfolioPage() {
                             <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 mt-2">Engineering Excellence Since 2014</p>
                         </div>
 
-                        {/* Minimal Filters */}
+                        {/* Filter Buttons */}
                         <div className="flex gap-6 overflow-x-auto no-scrollbar">
                             {categories.map((cat) => (
                                 <button
@@ -50,7 +56,10 @@ export default function PortfolioPage() {
                                 >
                                     {cat}
                                     {filter === cat && (
-                                        <motion.div layoutId="underline" className="absolute bottom-0 left-0 w-full h-[2px] bg-blue-600" />
+                                        <motion.div
+                                            layoutId="underline"
+                                            className="absolute bottom-0 left-0 w-full h-[2px] bg-blue-600"
+                                        />
                                     )}
                                 </button>
                             ))}
@@ -59,7 +68,7 @@ export default function PortfolioPage() {
                 </div>
             </section>
 
-            {/* --- COMPACT GRID --- */}
+            {/* --- GRID --- */}
             <section className="pb-20">
                 <div className="container mx-auto px-6 lg:px-20">
                     <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -68,17 +77,18 @@ export default function PortfolioPage() {
                                 <motion.div
                                     key={project.id}
                                     layout
-                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    initial={{ opacity: 0, scale: 0.9 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                    transition={{ duration: 0.2 }}
                                     className="group cursor-pointer"
                                 >
-                                    {/* Image Container: ১৬:৯ রেশিও যা উচ্চতা অনেক কমিয়ে দেয় */}
                                     <div className="relative aspect-video overflow-hidden bg-slate-100 rounded-lg shadow-sm">
                                         <Image
                                             src={project.img}
                                             alt={project.title}
                                             fill
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             className="object-cover transition-transform duration-500 group-hover:scale-105"
                                         />
                                         <div className="absolute inset-0 bg-[#0f172a]/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -88,7 +98,6 @@ export default function PortfolioPage() {
                                         </div>
                                     </div>
 
-                                    {/* Text Info */}
                                     <div className="mt-4 px-1">
                                         <h3 className="text-base font-bold text-[#0f172a] leading-tight group-hover:text-blue-600 transition-colors uppercase italic tracking-tight">
                                             {project.title}
@@ -107,7 +116,7 @@ export default function PortfolioPage() {
                 </div>
             </section>
 
-            {/* --- MINI STATS --- */}
+            {/* --- STATS --- */}
             <section className="py-16 bg-[#f8fafc] border-y border-slate-100">
                 <div className="container mx-auto px-6 lg:px-20">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -126,19 +135,22 @@ export default function PortfolioPage() {
                 </div>
             </section>
 
-            {/* --- FINAL CALL --- */}
+            {/* --- CTA --- */}
             <section className="py-24 text-center">
                 <div className="max-w-xl mx-auto px-6">
                     <p className="text-[10px] font-bold text-blue-600 uppercase tracking-[0.4em] mb-4">Get in Touch</p>
                     <h2 className="text-3xl font-black text-[#0f172a] uppercase italic tracking-tighter mb-8 leading-tight">
                         Building the foundations <br /> of Tomorrow.
                     </h2>
-                    <button className="px-10 py-4 bg-[#0f172a] text-white text-[10px] font-black uppercase tracking-widest rounded-full hover:bg-blue-600 transition-all shadow-lg shadow-slate-200">
+
+                    <Link
+                        href="/contact"
+                        className="inline-block px-10 py-4 bg-[#0f172a] text-white text-[10px] font-black uppercase tracking-widest rounded-full hover:bg-blue-600 transition-all shadow-lg shadow-slate-200"
+                    >
                         Work With Us
-                    </button>
+                    </Link>
                 </div>
             </section>
-
         </main>
     );
 }
