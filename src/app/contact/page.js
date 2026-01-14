@@ -120,7 +120,7 @@ export default function ContactPage() {
                         <div className="space-y-4 mb-6">
                             <div>
                                 <h4 className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">HQ Address</h4>
-                                <p className="text-sm font-bold text-slate-700 leading-tight">Sector 03, Road 12, House 05, <br /> Uttara, Dhaka-1230</p>
+                                <p className="text-sm font-bold text-slate-700 leading-tight">Sector 07, Road 16, House 01, <br /> Uttara, Dhaka-1230</p>
                             </div>
                         </div>
 
