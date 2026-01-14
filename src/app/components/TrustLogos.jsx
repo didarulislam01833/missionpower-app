@@ -9,87 +9,96 @@ export default function TrustLogos() {
         { name: "PGCB", full: "Power Grid Company of Bangladesh" },
         { name: "BREB", full: "Rural Electrification Board" },
         { name: "LGED", full: "Local Govt. Engineering Dept" },
-        { name: "RHD", ext: "Roads & Highways" },
+        { name: "RHD", full: "Roads and Highways Department" },
         { name: "BPC", full: "Bangladesh Petroleum Corp" },
-        { name: "DESCO", ext: "Electric Supply" },
-        { name: "DPDC", ext: "Power Dist." },
+        { name: "DESCO", full: "Dhaka Electric Supply Co." },
+        { name: "DPDC", full: "Power Distribution Co." },
     ];
 
-    const infiniteLogos = [...logos, ...logos, ...logos];
+    const duplicatedLogos = [...logos, ...logos, ...logos];
 
     return (
-        // ১. সেকশন ব্যাকগ্রাউন্ড: হালকা গ্রেডিয়েন্ট এবং সফ্ট শ্যাডো
-        <section className="py-24 bg-[#fbfcfd] overflow-hidden relative border-y border-slate-100">
+        <section className="py-24 bg-[#f8fafc] relative overflow-hidden">
+            {/* Background Gradient Accents - এই হালকা কালারগুলো সাইটকে দামী লুক দেয় */}
+            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
+            <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-50/50 blur-[100px] rounded-full" />
 
-            <div className="container mx-auto px-6 mb-20">
-                <div className="flex flex-col items-center text-center space-y-4">
+            <div className="container mx-auto px-6 relative z-10">
+                {/* Header Section */}
+                <div className="flex flex-col items-center mb-16 text-center">
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        className="bg-slate-900 text-white px-4 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.3em]"
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        className="px-4 py-1.5 rounded-full bg-slate-900 text-white text-[10px] font-bold uppercase tracking-[0.3em] mb-6 shadow-xl shadow-blue-900/10"
                     >
-                        Official Partners
+                        Official Enlistments
                     </motion.div>
+
                     <h3 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
-                        The Power Behind Our <span className="text-blue-600 underline decoration-blue-200 underline-offset-8">Progress.</span>
+                        Powering <span className="text-blue-600">National</span> Infrastructure
                     </h3>
+                    <p className="mt-4 text-slate-500 font-medium max-w-xl text-lg">
+                        Working alongside Bangladesh's most vital government organizations.
+                    </p>
                 </div>
-            </div>
 
-            {/* ২. Infinite "Go and Go" Carousel */}
-            <div className="relative">
-                {/* সাইড মাস্ক: প্রিমিয়াম ফেডিং ইফেক্ট */}
-                <div className="absolute inset-y-0 left-0 w-40 md:w-80 bg-gradient-to-r from-[#fbfcfd] via-[#fbfcfd]/90 to-transparent z-20 pointer-events-none" />
-                <div className="absolute inset-y-0 right-0 w-40 md:w-80 bg-gradient-to-l from-[#fbfcfd] via-[#fbfcfd]/90 to-transparent z-20 pointer-events-none" />
+                {/* Infinite Cinematic Slider (Go and Go) */}
+                <div className="relative mt-10">
+                    {/* Cinematic Side Blurs - দামী ফিনিশিং */}
+                    <div className="absolute inset-y-0 left-0 w-40 md:w-72 bg-gradient-to-r from-[#f8fafc] via-[#f8fafc]/90 to-transparent z-20 pointer-events-none" />
+                    <div className="absolute inset-y-0 right-0 w-40 md:w-72 bg-gradient-to-l from-[#f8fafc] via-[#f8fafc]/90 to-transparent z-20 pointer-events-none" />
 
-                <motion.div
-                    className="flex gap-8 whitespace-nowrap"
-                    animate={{ x: ["0%", "-33.33%"] }}
-                    transition={{
-                        duration: 40,
-                        ease: "linear",
-                        repeat: Infinity
-                    }}
-                >
-                    {infiniteLogos.map((logo, index) => (
-                        <div key={index} className="flex-shrink-0 group">
-                            {/* লোগো কার্ড: গ্লাস ইফেক্ট ও ডার্ক বর্ডার */}
-                            <div className="w-56 h-32 flex flex-col items-center justify-center bg-white border-2 border-slate-50 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.02)] group-hover:shadow-[0_20px_50px_rgba(37,99,235,0.1)] group-hover:border-blue-100 transition-all duration-700 relative overflow-hidden">
+                    <motion.div
+                        className="flex gap-8 py-10"
+                        animate={{ x: ["0%", "-33.33%"] }}
+                        transition={{
+                            duration: 35,
+                            ease: "linear",
+                            repeat: Infinity
+                        }}
+                    >
+                        {duplicatedLogos.map((logo, index) => (
+                            <motion.div
+                                key={index}
+                                whileHover={{ scale: 1.05, y: -5 }}
+                                className="flex-shrink-0"
+                            >
+                                {/* Logo Card - Glass Design */}
+                                <div className="w-56 h-32 flex flex-col items-center justify-center bg-white border border-slate-200 rounded-[2.5rem] shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_25px_50px_-12px_rgba(37,99,235,0.15)] hover:border-blue-400 transition-all duration-500 relative group overflow-hidden">
 
-                                {/* Background Glow on Hover */}
-                                <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-blue-50 blur-2xl group-hover:bg-blue-100 transition-all rounded-full" />
+                                    {/* Hover Glow */}
+                                    <div className="absolute top-0 left-0 w-full h-1 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
-                                {/* Logo Typography */}
-                                <span className="text-3xl font-black text-slate-200 group-hover:text-slate-900 transition-all duration-500 tracking-[ -0.05em]">
-                                    {logo.name}
-                                </span>
+                                    {/* Main Logo Text - স্পষ্ট এবং প্রিমিয়াম স্লেট কালার */}
+                                    <span className="text-3xl font-black text-slate-800 tracking-tighter group-hover:text-blue-600 transition-colors">
+                                        {logo.name}
+                                    </span>
 
-                                <span className="mt-2 text-[9px] font-bold text-slate-400 group-hover:text-blue-600 uppercase tracking-widest transition-colors">
-                                    {logo.full || logo.ext}
-                                </span>
+                                    <span className="mt-2 text-[8px] font-bold text-slate-400 uppercase tracking-widest text-center px-4 leading-tight opacity-100 group-hover:text-slate-600 transition-colors">
+                                        {logo.full || "Authorized Entity"}
+                                    </span>
 
-                                {/* ছোট আইকনিক এলিমেন্ট */}
-                                <div className="absolute top-4 left-4 w-1 h-4 bg-slate-100 group-hover:bg-blue-600 transition-all rounded-full" />
-                            </div>
-                        </div>
-                    ))}
-                </motion.div>
-            </div>
+                                    {/* Small Decoration dot */}
+                                    <div className="absolute bottom-4 w-1.5 h-1.5 rounded-full bg-slate-100 group-hover:bg-blue-600 transition-colors" />
+                                </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </div>
 
-            {/* ৩. Bottom Trust Bar */}
-            <div className="mt-24 container mx-auto px-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-slate-100 pt-16">
-                    <div className="flex flex-col items-center md:items-start space-y-2">
-                        <span className="text-3xl font-black text-slate-900">200+</span>
-                        <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Successful Missions</span>
+                {/* Bottom Trust Indicators */}
+                <div className="mt-16 pt-16 border-t border-slate-200 flex flex-wrap justify-center gap-12 md:gap-24 opacity-80">
+                    <div className="text-center group cursor-default">
+                        <p className="text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">150+</p>
+                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Projects Completed</p>
                     </div>
-                    <div className="flex flex-col items-center md:items-start space-y-2">
-                        <span className="text-3xl font-black text-slate-900">15+</span>
-                        <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Years of Dominance</span>
+                    <div className="text-center group cursor-default">
+                        <p className="text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">Class-A</p>
+                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Govt. Contractor</p>
                     </div>
-                    <div className="flex flex-col items-center md:items-start space-y-2">
-                        <span className="text-3xl font-black text-slate-900">ISO</span>
-                        <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Certified Standards</span>
+                    <div className="text-center group cursor-default">
+                        <p className="text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">ISO 9001</p>
+                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Quality Standards</p>
                     </div>
                 </div>
             </div>
