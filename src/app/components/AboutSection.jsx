@@ -5,52 +5,90 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 export default function AboutSection() {
+    // এনিমেশন ভেরিয়েন্টস
+    const fadeInSide = (direction = "up", delay = 0) => ({
+        hidden: {
+            opacity: 0,
+            x: direction === "left" ? -50 : direction === "right" ? 50 : 0,
+            y: direction === "up" ? 50 : direction === "down" ? -50 : 0
+        },
+        visible: {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            transition: { duration: 0.8, delay, ease: "easeOut" }
+        }
+    });
+
     return (
-        <section className="relative py-20 bg-white overflow-hidden">
-            {/* Background Decorative Element */}
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-slate-50/50 -skew-x-12 translate-x-20 z-0" />
+        <section className="relative py-24 bg-white overflow-hidden">
+            {/* Background Decorative Element - Animated */}
+            <motion.div
+                initial={{ opacity: 0, x: 100 }}
+                whileInView={{ opacity: 1, x: 20 }}
+                transition={{ duration: 1.5 }}
+                className="absolute top-0 right-0 w-1/3 h-full bg-slate-50/80 -skew-x-12 translate-x-20 z-0"
+            />
 
             <div className="container mx-auto px-6 lg:px-16 relative z-10">
                 <div className="flex flex-col lg:flex-row items-center gap-20">
 
                     {/* Left Side: Creative Image Composition */}
                     <div className="w-full lg:w-1/2 relative">
-                        {/* Floating Experience Badge */}
+
+                        {/* Floating Experience Badge - Unique Pop Animation */}
                         <motion.div
-                            initial={{ scale: 0, rotate: -20 }}
+                            initial={{ scale: 0, rotate: -45 }}
                             whileInView={{ scale: 1, rotate: 0 }}
-                            transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.5 }}
-                            className="absolute -top-10 -right-10 w-32 h-32 bg-blue-600 rounded-full flex flex-col items-center justify-center text-white z-30 shadow-2xl border-4 border-white"
+                            viewport={{ once: true }}
+                            transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.8 }}
+                            className="absolute -top-10 -right-5 md:-right-10 w-32 h-32 bg-blue-600 rounded-full flex flex-col items-center justify-center text-white z-30 shadow-2xl border-4 border-white"
                         >
                             <span className="text-3xl font-black">15+</span>
                             <span className="text-[10px] font-bold uppercase tracking-tighter">Years Exp.</span>
                         </motion.div>
 
-                        {/* Main Image Frame */}
+                        {/* Main Image Frame - Morphing Animation */}
                         <motion.div
-                            initial={{ opacity: 0, rounded: "100px" }}
-                            whileInView={{ opacity: 1, rounded: "30px" }}
-                            transition={{ duration: 1 }}
-                            className="relative h-[600px] w-full overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.25)] border-[12px] border-white z-10"
+                            variants={fadeInSide("left", 0.2)}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true }}
+                            className="relative h-[550px] w-full overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border-[12px] border-white z-10 rounded-3xl"
                         >
-                            <Image
-                                src="/assets/All/01-01.jpg"
-                                alt="Mission Power Land Leadership"
-                                fill
-                                className="object-cover"
-                            />
-                            {/* Subtle Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/20 to-transparent" />
+                            <motion.div
+                                whileHover={{ scale: 1.05 }}
+                                transition={{ duration: 0.6 }}
+                                className="h-full w-full relative"
+                            >
+                                <Image
+                                    src="/assets/All/01-01.jpg"
+                                    alt="Mission Power Land Leadership"
+                                    fill
+                                    className="object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/30 to-transparent" />
+                            </motion.div>
                         </motion.div>
 
-                        {/* Behind Decor: Dots Pattern */}
-                        <div className="absolute -bottom-10 -left-10 w-40 h-40 opacity-20 z-0">
+                        {/* Behind Decor: Animated Dots */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 0.4 }}
+                            transition={{ delay: 1 }}
+                            className="absolute -bottom-10 -left-10 w-40 h-40 z-0"
+                        >
                             <div className="grid grid-cols-4 gap-4">
                                 {[...Array(16)].map((_, i) => (
-                                    <div key={i} className="w-2 h-2 bg-blue-600 rounded-full" />
+                                    <motion.div
+                                        key={i}
+                                        animate={{ scale: [1, 1.2, 1] }}
+                                        transition={{ repeat: Infinity, duration: 3, delay: i * 0.1 }}
+                                        className="w-2 h-2 bg-blue-600 rounded-full"
+                                    />
                                 ))}
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
 
                     {/* Right Side: Elite Content */}
@@ -59,18 +97,26 @@ export default function AboutSection() {
                             <motion.div
                                 initial={{ width: 0 }}
                                 whileInView={{ width: "80px" }}
-                                transition={{ duration: 0.8 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1 }}
                                 className="h-1.5 bg-blue-600 rounded-full"
                             />
-                            <h2 className="text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.1]">
+                            <motion.h2
+                                variants={fadeInSide("up", 0.3)}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true }}
+                                className="text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.1]"
+                            >
                                 Defining <span className="text-blue-600 italic">Integrity</span> in Engineering.
-                            </h2>
+                            </motion.h2>
                         </div>
 
                         <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3 }}
+                            variants={fadeInSide("up", 0.5)}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true }}
                             className="text-slate-600 text-xl leading-relaxed font-medium"
                         >
                             Mission Power Land is more than a Class-A contractor. We are the architects of
@@ -78,7 +124,7 @@ export default function AboutSection() {
                             sustainable land development solutions.
                         </motion.p>
 
-                        {/* Glassmorphism Feature Cards */}
+                        {/* Staggered Feature Cards */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {[
                                 { title: "Technical Mastery", label: "Govt. Grade", icon: "💎" },
@@ -86,8 +132,12 @@ export default function AboutSection() {
                             ].map((item, i) => (
                                 <motion.div
                                     key={i}
-                                    whileHover={{ y: -5 }}
-                                    className="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-4 transition-all"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: 0.6 + (i * 0.2) }}
+                                    whileHover={{ y: -8, backgroundColor: "#eff6ff" }}
+                                    className="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-4 transition-colors"
                                 >
                                     <span className="text-3xl">{item.icon}</span>
                                     <div>
@@ -99,26 +149,41 @@ export default function AboutSection() {
                         </div>
 
                         {/* Final CTA Action */}
-                        <div className="flex flex-wrap gap-6 items-center pt-4">
+                        <motion.div
+                            variants={fadeInSide("up", 0.9)}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true }}
+                            className="flex flex-wrap gap-8 items-center pt-4"
+                        >
                             <motion.button
-                                whileHover={{ scale: 1.05 }}
+                                whileHover={{ scale: 1.05, boxShadow: "0 20px 25px -5px rgb(59 130 246 / 0.5)" }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-10 py-5 bg-slate-900 text-white rounded-full font-black text-sm uppercase tracking-widest hover:bg-blue-700 transition-all shadow-2xl shadow-blue-200"
+                                className="px-10 py-5 bg-slate-900 text-white rounded-full font-black text-sm uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-100"
                             >
                                 View Company Profile
                             </motion.button>
 
-                            <div className="flex -space-x-3">
-                                {[1, 2, 3].map((i) => (
-                                    <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-200 overflow-hidden relative">
-                                        <Image src={`/assets/All/01-0${i}.jpg`} alt="worker" fill className="object-cover" />
-                                    </div>
-                                ))}
-                                <div className="pl-6 flex items-center">
-                                    <span className="text-xs font-bold text-slate-500 underline uppercase tracking-tighter cursor-pointer">Meet Our Engineers</span>
+                            <div className="flex items-center gap-4">
+                                <div className="flex -space-x-3">
+                                    {[1, 2, 3].map((i) => (
+                                        <motion.div
+                                            key={i}
+                                            initial={{ opacity: 0, x: -10 }}
+                                            whileInView={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 1.2 + (i * 0.1) }}
+                                            className="w-12 h-12 rounded-full border-4 border-white bg-slate-200 overflow-hidden relative shadow-sm"
+                                        >
+                                            <Image src={`/assets/All/01-0${i}.jpg`} alt="worker" fill className="object-cover" />
+                                        </motion.div>
+                                    ))}
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-xs font-black text-slate-900 uppercase tracking-tighter">Expert Team</span>
+                                    <span className="text-[10px] font-bold text-blue-600 underline cursor-pointer hover:text-slate-900 transition-colors">Meet Our Engineers</span>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
 
                 </div>

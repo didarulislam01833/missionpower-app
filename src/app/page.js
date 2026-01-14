@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import Banner from "./components/Banner";
 import StatsSection from "./components/StatsSection";
 import ServicesGrid from "./components/ServicesGrid";

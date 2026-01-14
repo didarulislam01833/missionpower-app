@@ -38,10 +38,10 @@ export default function Navbar() {
 
     return (
         <nav className={`fixed top-0 left-0 right-0 z-[999] transition-all duration-500 ease-in-out ${scrolled
-                ? "bg-white/95 backdrop-blur-md shadow-lg h-20"
-                : isInternalPage
-                    ? "bg-white shadow-sm h-24"
-                    : "bg-transparent h-28"
+            ? "bg-white/95 backdrop-blur-md shadow-lg h-20"
+            : isInternalPage
+                ? "bg-white shadow-sm h-24"
+                : "bg-transparent h-28"
             }`}>
             <div className="max-w-7xl mx-auto px-6 md:px-10 h-full flex items-center justify-between">
 
@@ -90,8 +90,8 @@ export default function Navbar() {
                     <Link
                         href="/contact"
                         className={`hidden sm:flex items-center justify-center px-6 py-2.5 text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-300 rounded-sm border ${scrolled || isInternalPage
-                                ? "bg-blue-600 border-blue-600 text-white hover:bg-slate-900 hover:border-slate-900"
-                                : "bg-white border-white text-slate-900 hover:bg-transparent hover:text-white"
+                            ? "bg-blue-600 border-blue-600 text-white hover:bg-slate-900 hover:border-slate-900"
+                            : "bg-white border-white text-slate-900 hover:bg-transparent hover:text-white"
                             }`}
                     >
                         GET IN TOUCH
