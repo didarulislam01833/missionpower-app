@@ -3,11 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { ChevronDown, Zap, Sun, Building2, Landmark } from 'lucide-react';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
     const pathname = usePathname();
 
     const isInternalPage = pathname !== "/";
@@ -21,10 +23,18 @@ export default function Navbar() {
 
     if (!mounted) return null;
 
+    // --- ফাইল স্ট্রাকচার অনুযায়ী সঠিক লিংক এখানে দেওয়া হলো ---
+    const serviceItems = [
+        { name: "Power Grid", link: "/services/powerGrid", icon: <Zap size={14} /> },
+        { name: "Solar Energy", link: "/services/solar", icon: <Sun size={14} /> },
+        { name: "Civil Works", link: "/services/civil", icon: <Building2 size={14} /> },
+        { name: "Public Infrastructure", link: "/services/public", icon: <Landmark size={14} /> },
+    ];
+
     const navLinks = [
         { name: "Home", link: "/" },
         { name: "About", link: "/about" },
-        { name: "Services", link: "/services" },
+        { name: "Services", link: "/services", hasDropdown: true },
         { name: "Portfolio", link: "/portfolio" },
         { name: "Contact", link: "/contact" },
     ];
@@ -56,7 +66,6 @@ export default function Navbar() {
                     </div>
 
                     <div className="flex flex-col justify-center min-w-max">
-                        {/* whitespace-nowrap ব্যবহার করা হয়েছে যাতে নাম এক লাইনে থাকে এবং ভেঙে না যায় */}
                         <h1 className={`text-base md:text-lg font-[900] leading-none tracking-tighter uppercase transition-all duration-500 whitespace-nowrap ${getThemeColor()}`}>
                             MISSION POWER <span className={scrolled || isInternalPage ? "text-blue-600" : "text-blue-400"}>LAND</span>
                         </h1>
@@ -70,15 +79,39 @@ export default function Navbar() {
                 {/* --- DESKTOP MENU --- */}
                 <div className="hidden lg:flex items-center gap-1">
                     {navLinks.map((item) => (
-                        <Link
+                        <div
                             key={item.name}
-                            href={item.link}
-                            className={`px-4 py-2 text-[12px] font-bold uppercase tracking-[0.2em] transition-all duration-500 relative group ${getThemeColor()}`}
+                            className="relative group/nav"
+                            onMouseEnter={() => item.hasDropdown && setDropdownOpen(true)}
+                            onMouseLeave={() => item.hasDropdown && setDropdownOpen(false)}
                         >
-                            <span className="relative z-10">{item.name}</span>
-                            <span className={`absolute bottom-0 left-4 right-4 h-[1.5px] transition-all duration-300 scale-x-0 group-hover:scale-x-100 ${scrolled || isInternalPage ? "bg-blue-600" : "bg-white"
-                                }`}></span>
-                        </Link>
+                            <Link
+                                href={item.link}
+                                className={`px-4 py-2 text-[12px] font-bold uppercase tracking-[0.2em] transition-all duration-500 flex items-center gap-1 relative group ${getThemeColor()}`}
+                            >
+                                <span className="relative z-10">{item.name}</span>
+                                {item.hasDropdown && <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${dropdownOpen ? 'rotate-180' : ''}`} />}
+                                <span className={`absolute bottom-0 left-4 right-4 h-[1.5px] transition-all duration-300 scale-x-0 group-hover:scale-x-100 ${scrolled || isInternalPage ? "bg-blue-600" : "bg-white"}`}></span>
+                            </Link>
+
+                            {/* --- DROPDOWN MENU --- */}
+                            {item.hasDropdown && (
+                                <div className={`absolute top-full left-0 w-64 pt-4 transition-all duration-300 ${dropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
+                                    <div className="bg-white rounded-lg shadow-xl border border-slate-100 overflow-hidden py-2">
+                                        {serviceItems.map((subItem) => (
+                                            <Link
+                                                key={subItem.name}
+                                                href={subItem.link}
+                                                className="flex items-center gap-3 px-6 py-3 text-[11px] font-bold text-slate-600 uppercase tracking-widest hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                                            >
+                                                <span className="text-blue-500">{subItem.icon}</span>
+                                                {subItem.name}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     ))}
                 </div>
 
@@ -108,19 +141,33 @@ export default function Navbar() {
             </div>
 
             {/* --- MOBILE MENU OVERLAY --- */}
-            <div className={`lg:hidden fixed inset-0 bg-slate-950/98 backdrop-blur-xl z-[1000] transition-all duration-500 ${isOpen ? "translate-x-0" : "translate-x-full"
-                }`}>
-                <div className="flex flex-col items-center justify-center h-full gap-8">
+            <div className={`lg:hidden fixed inset-0 bg-slate-950/98 backdrop-blur-xl z-[1000] transition-all duration-500 ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
+                <div className="flex flex-col items-center justify-center h-full gap-6">
                     <button onClick={() => setIsOpen(false)} className="absolute top-8 right-8 text-white text-4xl">&times;</button>
                     {navLinks.map((item) => (
-                        <Link
-                            key={item.name}
-                            href={item.link}
-                            onClick={() => setIsOpen(false)}
-                            className="text-2xl font-bold text-white uppercase tracking-widest"
-                        >
-                            {item.name}
-                        </Link>
+                        <div key={item.name} className="flex flex-col items-center">
+                            <Link
+                                href={item.link}
+                                onClick={() => !item.hasDropdown && setIsOpen(false)}
+                                className="text-2xl font-bold text-white uppercase tracking-widest"
+                            >
+                                {item.name}
+                            </Link>
+                            {item.hasDropdown && (
+                                <div className="flex flex-col items-center gap-4 mt-4 bg-white/5 p-4 rounded-xl">
+                                    {serviceItems.map(sub => (
+                                        <Link
+                                            key={sub.name}
+                                            href={sub.link}
+                                            onClick={() => setIsOpen(false)}
+                                            className="text-sm text-blue-400 font-bold uppercase tracking-widest"
+                                        >
+                                            {sub.name}
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     ))}
                 </div>
             </div>

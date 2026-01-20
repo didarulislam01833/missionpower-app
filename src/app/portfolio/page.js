@@ -135,7 +135,7 @@ export default function PortfolioPage() {
                 </div>
             </section>
 
-            {/* --- CTA --- */}
+            {/* --- CTA Sections --- */}
             <section className="py-24 text-center">
                 <div className="max-w-xl mx-auto px-6">
                     <p className="text-[10px] font-bold text-blue-600 uppercase tracking-[0.4em] mb-4">Get in Touch</p>
