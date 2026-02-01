@@ -4,21 +4,22 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ContactPage() {
-    const [status, setStatus] = useState("idle"); // idle, sending, success, error
+    const [status, setStatus] = useState("idle");
     const [errorMessage, setErrorMessage] = useState("");
     const [showToast, setShowToast] = useState(false);
 
-    // আপনার অফিসের লোকেশন ম্যাপ (আপনার ম্যাপ লিঙ্কটি এখানে দিন)
-    const googleMapsEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.423719001353!2d90.3976523!3d23.874586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDUyJzI4LjUiTiA5MMKwMjMnNTEuNiJF!5e0!3m2!1sen!2sbd!4v1620000000000!5m2!1sen!2sbd";
+    //  Background Map: Search-based URL to ensure it never says "Link Not Found"
+    const bgMapEmbed = "https://maps.google.com/maps?q=Mission%20Power%20Land%20Limited%20Uttara%20Sector%207&t=&z=15&ie=UTF8&iwloc=&output=embed";
 
-    // ফর্ম ভ্যালিডেশন লজিক
+    //  The specific link you requested for the button
+    const userPreferredLink = "https://www.google.com/maps/@23.8690351,90.3952735,3a,89.9y,280.18h,76.66t/data=!3m7!1e1!3m5!1s2864TbyepjmFZ7I30PYJ4w!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D13.340000000000003%26panoid%3D2864TbyepjmFZ7I30PYJ4w%26yaw%3D280.18!7i16384!8i8192?entry=ttu&g_ep=EgoyMDI2MDEyOC4wIKXMDSoKLDEwMDc5MjA3MUgBUAM%3D";
+
     const validateForm = (data) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const phoneRegex = /^(?:\+88|88)?(01[3-9]\d{8})$/;
-
         if (data.name.length < 3) return "Full Name is too short.";
-        if (!emailRegex.test(data.email)) return "Enter a valid email address.";
-        if (!phoneRegex.test(data.phone)) return "Enter a valid BD phone number.";
+        if (!emailRegex.test(data.email)) return "Enter a valid email.";
+        if (!phoneRegex.test(data.phone)) return "Enter a valid phone number.";
         if (!data.subject) return "Subject is required.";
         if (data.message.length < 10) return "Message must be at least 10 characters.";
         return null;
@@ -26,7 +27,6 @@ export default function ContactPage() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-
         const formData = {
             name: e.target.name.value.trim(),
             email: e.target.email.value.trim(),
@@ -43,39 +43,30 @@ export default function ContactPage() {
         }
 
         setStatus("sending");
-        setErrorMessage("");
-
         try {
-            // ✅ LIVE BACKEND URL (আপনার রেন্ডার সার্ভার লিঙ্ক)
             const BACKEND_API = "https://missionpower-backend.onrender.com/api/send";
-
             const res = await fetch(BACKEND_API, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
-
             const result = await res.json();
-
             if (res.ok && result.success) {
                 setStatus("success");
                 e.target.reset();
-                // ৫ সেকেন্ড পর সাকসেস মেসেজ সরিয়ে দেয়া
                 setTimeout(() => setStatus("idle"), 5000);
             } else {
                 setStatus("error");
                 setErrorMessage(result.message || "Failed to send message.");
             }
         } catch (err) {
-            console.error("Frontend Fetch Error:", err);
             setStatus("error");
-            setErrorMessage("Server is waking up. Please try again in 30 seconds.");
+            setErrorMessage("Server is waking up. Please try again.");
         }
     }
 
     return (
         <main className="relative min-h-screen bg-white">
-            {/* ফ্লোটিং টোস্ট মেসেজ */}
             <AnimatePresence>
                 {showToast && status === "idle" && (
                     <motion.div
@@ -94,10 +85,10 @@ export default function ContactPage() {
                 onMouseLeave={() => setShowToast(false)}
                 className="relative h-screen w-full overflow-hidden"
             >
-                {/* ব্যাকগ্রাউন্ড ম্যাপ */}
-                <div className="absolute inset-0 z-0 grayscale contrast-125 opacity-40">
+                {/* Background Map - Using the Embed search string */}
+                <div className="absolute inset-0 z-0 grayscale contrast-125 opacity-30">
                     <iframe
-                        src={googleMapsEmbedUrl}
+                        src={bgMapEmbed}
                         width="100%"
                         height="100%"
                         style={{ border: 0 }}
@@ -106,7 +97,6 @@ export default function ContactPage() {
                     ></iframe>
                 </div>
 
-                {/* কন্টাক্ট ফরম কার্ড */}
                 <div className="relative z-10 container mx-auto px-6 lg:px-16 h-full flex items-center justify-end">
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
@@ -114,26 +104,41 @@ export default function ContactPage() {
                         className="w-full lg:w-[480px] bg-white/90 backdrop-blur-xl p-8 lg:p-10 rounded-[3rem] shadow-2xl border border-white"
                     >
                         <h1 className="text-4xl font-black text-slate-900 uppercase italic tracking-tighter mb-6">
-                            Contact <span className="text-blue-600">Hub</span>
+                            Contact <span className="text-blue-600">With Us</span>
                         </h1>
 
-                        <div className="space-y-4 mb-6">
+                        <div className="flex justify-between items-start mb-6">
                             <div>
-                                <h4 className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">HQ Address</h4>
+                                <h4 className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">Address</h4>
                                 <p className="text-sm font-bold text-slate-700 leading-tight">Sector 07, Road 16, House 01, <br /> Uttara, Dhaka-1230</p>
                             </div>
+
+                            {/* DIRECTIONS BUTTON - Opens your preferred Link */}
+                            <a
+                                href={userPreferredLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex flex-col items-center group"
+                            >
+                                <div className="bg-blue-600 p-3 rounded-full text-white group-hover:bg-slate-950 transition-colors shadow-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                                    </svg>
+                                </div>
+                                <span className="text-[9px] font-black mt-2 text-blue-600 tracking-tighter uppercase">View Location</span>
+                            </a>
                         </div>
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-2 gap-3">
-                                <input required name="name" type="text" placeholder="Full Name" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder-slate-500" />
-                                <input required name="email" type="email" placeholder="Email" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder-slate-500" />
+                                <input required name="name" type="text" placeholder="Full Name" className="bg-slate-100 rounded-xl p-3 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder:text-slate-400" />
+                                <input required name="email" type="email" placeholder="Email" className="bg-slate-100 rounded-xl p-3 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder:text-slate-400" />
                             </div>
                             <div className="grid grid-cols-2 gap-3">
-                                <input required name="phone" type="tel" placeholder="Phone (017...)" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder-slate-500" />
-                                <input required name="subject" type="text" placeholder="Subject" className="bg-slate-100 rounded-xl p-4 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder-slate-500" />
+                                <input required name="phone" type="tel" placeholder="Phone" className="bg-slate-100 rounded-xl p-3 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder:text-slate-400" />
+                                <input required name="subject" type="text" placeholder="Subject" className="bg-slate-100 rounded-xl p-3 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder:text-slate-400" />
                             </div>
-                            <textarea required name="message" placeholder="Project Details" className="w-full bg-slate-100 rounded-xl p-4 text-xs font-bold h-24 outline-none focus:ring-2 focus:ring-blue-600 resize-none text-black placeholder-slate-500"></textarea>
+                            <textarea required name="message" placeholder="Project Details" className="w-full bg-slate-100 rounded-xl p-3 text-xs font-bold h-24 outline-none focus:ring-2 focus:ring-blue-600 resize-none text-black placeholder:text-slate-400"></textarea>
 
                             <button
                                 type="submit"
@@ -145,14 +150,10 @@ export default function ContactPage() {
 
                             <AnimatePresence>
                                 {status === "success" && (
-                                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-green-600 text-[10px] font-black text-center mt-2">
-                                        ✓ INQUIRY SENT SUCCESSFULLY!
-                                    </motion.p>
+                                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-green-600 text-[10px] font-black text-center mt-2 uppercase tracking-widest">✓ Sent successfully!</motion.p>
                                 )}
                                 {status === "error" && (
-                                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-600 text-[10px] font-black text-center mt-2 uppercase">
-                                        ✕ {errorMessage}
-                                    </motion.p>
+                                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-600 text-[10px] font-black text-center mt-2 uppercase tracking-widest">✕ {errorMessage}</motion.p>
                                 )}
                             </AnimatePresence>
                         </form>
