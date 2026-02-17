@@ -11,10 +11,16 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+// --- UPDATED BANNER DATA: Transformers prioritized ---
 const bannerData = [
-    { id: 1, image: "/assets/banner/banner-img-1.jpg", title: "Engineering the", highlight: "National Grid", description: "Specialized Class-A contracting for 33/11KV substations and transmission networks." },
-    { id: 2, image: "/assets/banner/banner-img-2.jpg", title: "Pioneering", highlight: "Land Development", description: "Industrial-grade land development and filling services for national infrastructure." },
-    { id: 3, image: "/assets/banner/banner-img-4.jpg", title: "Built for", highlight: "Future Growth", description: "Turnkey electrical engineering projects delivered with international standards." }
+    // Transformer focus (imgs 5-7)
+    { id: 1, image: "/assets/banner/banner-img-5.jpg", title: "High-Voltage", highlight: "Transformer Solutions", description: "Expert installation and maintenance of industrial transformers for uninterrupted power." },
+    { id: 2, image: "/assets/banner/banner-img-6.jpg", title: "Substation", highlight: "Transformer Engineering", description: "Precision engineering for 33/11KV substations and grid integration." },
+    { id: 3, image: "/assets/banner/banner-img-7.jpg", title: "Reliable", highlight: "Power Distribution", description: "Advanced transformer technology ensuring safe and efficient energy delivery." },
+    // Other images
+    { id: 4, image: "/assets/banner/banner-img-1.jpg", title: "Engineering the", highlight: "National Grid", description: "Specialized Class-A contracting for transmission networks." },
+    { id: 5, image: "/assets/banner/banner-img-2.jpg", title: "Pioneering", highlight: "Land Development", description: "Industrial-grade land development and filling services." },
+    { id: 6, image: "/assets/banner/banner-img-4.jpg", title: "Built for", highlight: "Future Growth", description: "Turnkey electrical engineering projects delivered with international standards." }
 ];
 
 const Banner = () => {
@@ -79,7 +85,7 @@ const Banner = () => {
                                 <p className="text-sm md:text-xl text-slate-200 max-w-lg md:max-w-2xl mb-8 md:mb-12 font-medium">
                                     {item.description}
                                 </p>
-                                <Link href="/services" className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 md:px-10 md:py-5 text-sm md:text-base font-bold transition-all">
+                                <Link href="/services/powerGrid" className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 md:px-10 md:py-5 text-sm md:text-base font-bold transition-all">
                                     EXPLORE SERVICES →
                                 </Link>
                             </div>

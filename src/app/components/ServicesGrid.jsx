@@ -1,4 +1,4 @@
-"use client"; // Framer Motion এর জন্য অবশ্যই use client ব্যবহার করতে হবে
+"use client"; // Required for Framer Motion
 
 import React from 'react';
 import Image from 'next/image';
@@ -8,23 +8,25 @@ export default function ServicesGrid() {
     const services = [
         {
             id: "01",
-            title: "Civil & Land Development",
-            category: "Infrastructure Division",
-            image: "/assets/Stats/service-1.jpg",
-            desc: "Specialized in large-scale earth filling, structural piling, and site preparation for industrial zones.",
-            link: "/services/land"
+            title: "Transformer Installation & Testing",
+            category: "Electrical Engineering",
+            // Image mapping: service-2.jpg (provided)
+            image: "/assets/Stats/service-2.jpg",
+            desc: "Expert installation of high-capacity power transformers, including rigorous pre-commissioning testing, oil filtration, and specialized testing to ensure grid reliability.",
+            link: "/services/powerGrid"
         },
         {
             id: "02",
-            title: "Power & Grid Solutions",
-            category: "Electrical Division",
-            image: "/assets/Stats/service-2.jpg",
-            desc: "Comprehensive engineering for high-voltage substations and national grid transmission lines.",
-            link: "/services/power"
+            title: "Infrastructure Site Preparation",
+            category: "Civil Engineering",
+            // Image mapping: service-1.jpg (provided)
+            image: "/assets/Stats/service-1.jpg",
+            desc: "Specialized in large-scale earth filling, structural piling, and site preparation for industrial zones to support heavy infrastructure.",
+            link: "/services/land"
         }
     ];
 
-    // Animation Variants (সেকশনটি কিভাবে আসবে তার সেটিংস)
+    // Animation Variants
     const fadeInVariant = {
         hidden: { opacity: 0, y: 50 },
         visible: {
@@ -35,7 +37,7 @@ export default function ServicesGrid() {
     };
 
     return (
-        <section className="py-24 bg-slate-50 overflow-hidden">
+        <section className="py-24 bg-white overflow-hidden">
             <div className="container mx-auto px-6 lg:px-16">
 
                 {/* Header Animation */}
@@ -47,13 +49,13 @@ export default function ServicesGrid() {
                     className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8"
                 >
                     <div className="max-w-2xl">
-                        <span className="text-blue-600 font-black uppercase tracking-[0.4em] text-xs">Expertise</span>
+                        <span className="text-blue-600 font-black uppercase tracking-[0.4em] text-xs">Transformer Expertise</span>
                         <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mt-4 leading-tight">
-                            Engineering the <br /> National Infrastructure
+                            Powering the Grid <br /> With Precision
                         </h2>
                     </div>
                     <p className="text-slate-500 font-medium max-w-xs border-l-2 border-blue-600 pl-6">
-                        Registered Class-A Contractor specializing in high-impact government projects.
+                        Class-A Contractor specializing in high-voltage transformer solutions for national infrastructure.
                     </p>
                 </motion.div>
 
@@ -64,15 +66,15 @@ export default function ServicesGrid() {
                             key={service.id}
                             initial="hidden"
                             whileInView="visible"
-                            viewport={{ once: true, amount: 0.3 }} // যখন কার্ডটি ৩০% দেখা যাবে তখন শুরু হবে
+                            viewport={{ once: true, amount: 0.3 }}
                             variants={fadeInVariant}
                             className={`flex flex-col lg:flex-row items-stretch bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 hover:shadow-2xl transition-all duration-500 ${index % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}
                         >
-                            {/* Image Container */}
+                            {/* Image Container with Hover Scale */}
                             <div className="relative w-full lg:w-1/2 h-[350px] lg:h-auto overflow-hidden">
                                 <motion.div
-                                    whileHover={{ scale: 1.1 }}
-                                    transition={{ duration: 1.5 }}
+                                    whileHover={{ scale: 1.05 }}
+                                    transition={{ duration: 0.5 }}
                                     className="w-full h-full relative"
                                 >
                                     <Image
@@ -88,7 +90,7 @@ export default function ServicesGrid() {
                             <div className="w-full lg:w-1/2 p-10 md:p-16 flex flex-col justify-center">
                                 <span className="text-blue-600 font-bold text-6xl opacity-10 mb-2">{service.id}</span>
                                 <span className="text-xs font-bold text-blue-500 uppercase tracking-widest mb-2">{service.category}</span>
-                                <h3 className="text-3xl font-extrabold text-slate-900 mb-6">{service.title}</h3>
+                                <h3 className="text-3xl font-extrabold text-slate-900 mb-6 leading-tight">{service.title}</h3>
                                 <p className="text-slate-600 leading-relaxed text-lg mb-8">
                                     {service.desc}
                                 </p>

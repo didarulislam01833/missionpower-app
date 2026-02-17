@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 export default function AboutSection() {
-    // এনিমেশন ভেরিয়েন্টস
+
     const fadeInSide = (direction = "up", delay = 0) => ({
         hidden: {
             opacity: 0,

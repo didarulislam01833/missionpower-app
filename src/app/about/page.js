@@ -101,6 +101,15 @@ export default function AboutPage() {
         setIsClient(true);
     }, []);
 
+    // NEW: Team Members Data
+    const teamMembers = [
+        { name: "Shokina Akter", position: "Chairman", image: "/assets/employee/5.jpeg" },
+        { name: "Md. Mohiuddin Bhuiyan", position: "General Manager", image: "/assets/employee/4.jpg" },
+        { name: "Md. Zahedul Islam", position: "Executive Director", image: "/assets/employee/6.png" },
+        { name: "Md. Sohel", position: "Manager", image: "/assets/employee/2.jpg" },
+        { name: "Md. Saiful Arefin", position: "Manager", image: "/assets/employee/1.jpg" },
+    ];
+
     if (!isClient) return <div className="min-h-screen bg-white" />;
 
     return (
@@ -210,6 +219,51 @@ export default function AboutPage() {
                                 />
                             </p>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* --- COMPANY PEOPLE SECTION (NEW) --- */}
+            <section className="py-20 bg-white" aria-labelledby="team-heading">
+                <div className="container mx-auto px-6 lg:px-16">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16"
+                    >
+                        <span className="text-xs font-semibold text-blue-600 uppercase tracking-[0.3em]">Leadership Team</span>
+                        <h2 id="team-heading" className="text-4xl md:text-5xl font-bold text-slate-900 mt-2">
+                            Meet Our Experts
+                        </h2>
+                    </motion.div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                        {teamMembers.map((member, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: i * 0.1 }}
+                                className="text-center group"
+                            >
+                                <div className="relative aspect-square rounded-full overflow-hidden mb-5 border-4 border-slate-100 group-hover:border-blue-200 transition-colors shadow-inner">
+                                    <Image
+                                        src={member.image}
+                                        alt={member.name}
+                                        fill
+                                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                                    />
+                                </div>
+                                <h3 className="text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+                                    {member.name}
+                                </h3>
+                                <p className="text-sm text-slate-500 font-medium">
+                                    {member.position}
+                                </p>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
