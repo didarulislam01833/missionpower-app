@@ -10,24 +10,30 @@ export default function PortfolioPage() {
     const [filter, setFilter] = useState('All');
     const [isMounted, setIsMounted] = useState(false);
 
-    // Set mounted state to handle client-side specific logic
     useEffect(() => {
         setIsMounted(true);
     }, []);
 
+    // --- UPDATED DATA: All 13 Images Included ---
     const projects = [
-        { id: 1, category: 'Power', title: '132/33KV Substation Grid', location: 'Dhaka', img: '/assets/All/01-01.jpg' },
-        { id: 2, category: 'Civil', title: 'Riverbank Protection', location: 'Chandpur', img: '/assets/All/01-02.jpg' },
-        { id: 3, category: 'Land', title: 'Industrial Earth Filling', location: 'Gazipur', img: '/assets/All/01-03.jpg' },
-        { id: 4, category: 'Power', title: 'Transmission Line Project', location: 'Sylhet', img: '/assets/All/01-04.jpg' },
-        { id: 5, category: 'Civil', title: 'Bridge Piling Construction', location: 'Barishal', img: '/assets/All/01-05.jpg' },
-        { id: 6, category: 'Land', title: 'Economic Zone Development', location: 'Mirasarai', img: '/assets/All/01-01.jpg' },
+        { id: 1, category: 'Power', title: '230/132KV Transformer Bay', location: 'Dhaka', img: '/assets/portfolio-page/p-1.jpg' },
+        { id: 2, category: 'Power', title: '132/33KV Substation Grid', location: 'Chandpur', img: '/assets/portfolio-page/p-2.jpg' },
+        { id: 3, category: 'Power', title: 'Transformer Testing', location: 'Gazipur', img: '/assets/portfolio-page/p-3.jpg' },
+        { id: 4, category: 'Power', title: 'Transmission Line Project', location: 'Sylhet', img: '/assets/portfolio-page/p-4.jpg' },
+        { id: 5, category: 'Civil', title: 'Bridge Piling Construction', location: 'Barishal', img: '/assets/portfolio-page/p-5.jpg' },
+        { id: 6, category: 'Land', title: 'Industrial Earth Filling', location: 'Mirasarai', img: '/assets/portfolio-page/p-6.jpg' },
+        { id: 7, category: 'Power', title: 'Grid Control Room', location: 'Dhaka', img: '/assets/portfolio-page/p-7.jpg' },
+        { id: 8, category: 'Civil', title: 'Riverbank Protection', location: 'Chandpur', img: '/assets/portfolio-page/p-8.jpg' },
+        { id: 9, category: 'Land', title: 'Economic Zone Site', location: 'Gazipur', img: '/assets/portfolio-page/p-9.jpg' },
+        { id: 10, category: 'Power', title: 'Substation Maintenance', location: 'Sylhet', img: '/assets/portfolio-page/p-10.jpg' },
+        { id: 11, category: 'Civil', title: 'Foundation Engineering', location: 'Barishal', img: '/assets/portfolio-page/p-11.jpg' },
+        { id: 12, category: 'Land', title: 'Land Development', location: 'Mirasarai', img: '/assets/portfolio-page/p-12.jpg' },
+        { id: 13, category: 'Power', title: 'Power Distribution Grid', location: 'Dhaka', img: '/assets/portfolio-page/p-13.jpg' },
     ];
 
     const categories = ['All', 'Power', 'Civil', 'Land'];
     const filteredProjects = filter === 'All' ? projects : projects.filter(p => p.category === filter);
 
-    // Return a skeleton or consistent wrapper if not mounted to avoid hydration flash
     if (!isMounted) {
         return <div className="bg-white min-h-screen" />;
     }
@@ -42,7 +48,7 @@ export default function PortfolioPage() {
                             <h1 className="text-4xl font-black uppercase italic tracking-tighter text-[#0f172a]">
                                 Project <span className="text-blue-600">Gallery.</span>
                             </h1>
-                            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 mt-2">Engineering Excellence Since 2014</p>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 mt-2">Comprehensive Engineering Solutions</p>
                         </div>
 
                         {/* Filter Buttons */}
@@ -135,7 +141,7 @@ export default function PortfolioPage() {
                 </div>
             </section>
 
-            {/* --- CTA Sections --- */}
+            {/* --- CTA Section --- */}
             <section className="py-24 text-center">
                 <div className="max-w-xl mx-auto px-6">
                     <p className="text-[10px] font-bold text-blue-600 uppercase tracking-[0.4em] mb-4">Get in Touch</p>

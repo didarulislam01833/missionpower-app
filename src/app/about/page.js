@@ -4,37 +4,21 @@ import React, { useRef, useEffect, useLayoutEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Zap, Shield, Award, CheckCircle, ArrowRight, Building2 } from "lucide-react";
+import { Zap, Shield, ArrowRight, Building2, Phone, Mail, Award, Users, Target } from "lucide-react";
 
-// --- এনিমেশন কম্পোনেন্ট: প্রতিটি শব্দ আলাদাভাবে ফুটে উঠবে ---
+// --- ANIMATION: Reveal Component ---
 const RevealText = ({ text, delay = 0, className = "", speed = 0.08 }) => {
     if (!text || typeof text !== 'string') return null;
-
     const words = text.split(" ").filter(word => word.length > 0);
-
     return (
         <span className={className}>
             {words.map((word, i) => (
                 <motion.span
                     key={`${word}-${i}`}
-                    initial={{
-                        opacity: 0,
-                        y: 30,
-                        scale: 0.8,
-                        filter: "blur(10px)"
-                    }}
-                    whileInView={{
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        filter: "blur(0px)"
-                    }}
+                    initial={{ opacity: 0, y: 30, scale: 0.8, filter: "blur(10px)" }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                     viewport={{ once: true, margin: "-100px" }}
-                    transition={{
-                        duration: 0.7,
-                        delay: delay + i * speed,
-                        ease: [0.16, 1, 0.3, 1],
-                    }}
+                    transition={{ duration: 0.7, delay: delay + i * speed, ease: [0.16, 1, 0.3, 1] }}
                     className="inline-block mr-[0.35em]"
                 >
                     {word}
@@ -44,51 +28,30 @@ const RevealText = ({ text, delay = 0, className = "", speed = 0.08 }) => {
     );
 };
 
-// Custom hook for scroll-based animations (only works on client)
+// --- SCROLL ANIMATION ---
 const useScrollPathLength = (containerRef) => {
     const [isReady, setIsReady] = useState(false);
-
     useLayoutEffect(() => {
-        if (containerRef?.current) {
-            setIsReady(true);
-        }
+        if (containerRef?.current) setIsReady(true);
     }, [containerRef]);
-
     const { scrollYProgress } = useScroll({
         target: isReady && containerRef?.current ? containerRef : null,
         offset: ["start start", "end end"],
     });
-
     return useTransform(scrollYProgress, [0, 0.8], [0, 1]);
 };
 
-// Scroll-based animation component (only renders on client)
 const ScrollAnimatedSVG = ({ containerRef }) => {
     const pathLength = useScrollPathLength(containerRef);
-
     return (
-        <>
-            {/* SVGator Style Background Sketch */}
-            <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none">
-                <motion.path
-                    d="M 0 400 C 300 100 700 700 1200 400 S 1800 100 2400 400"
-                    fill="none"
-                    stroke="#2563eb"
-                    strokeWidth="1.5"
-                    style={{ pathLength }}
-                />
-            </svg>
-        </>
-    );
-};
-
-// Director section SVG animation component
-const DirectorSectionSVG = ({ containerRef }) => {
-    const pathLength = useScrollPathLength(containerRef);
-
-    return (
-        <svg className="absolute -inset-6 w-[calc(100%+48px)] h-[calc(100%+48px)] opacity-20 pointer-events-none">
-            <motion.rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#2563eb" strokeWidth="2" style={{ pathLength }} />
+        <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none">
+            <motion.path
+                d="M 0 400 C 300 100 700 700 1200 400 S 1800 100 2400 400"
+                fill="none"
+                stroke="#1d4ed8"
+                strokeWidth="1.5"
+                style={{ pathLength }}
+            />
         </svg>
     );
 };
@@ -101,246 +64,140 @@ export default function AboutPage() {
         setIsClient(true);
     }, []);
 
-    // NEW: Team Members Data
-    const teamMembers = [
+    // --- DATA: Team Members ---
+    const topLeadership = [
         { name: "Shokina Akter", position: "Chairman", image: "/assets/employee/5.jpeg" },
-        { name: "Md. Mohiuddin Bhuiyan", position: "General Manager", image: "/assets/employee/4.jpg" },
-        { name: "Md. Zahedul Islam", position: "Executive Director", image: "/assets/employee/6.png" },
-        { name: "Md. Sohel", position: "Manager", image: "/assets/employee/2.jpg" },
-        { name: "Md. Saiful Arefin", position: "Manager", image: "/assets/employee/1.jpg" },
+        { name: "Mr. Hasanur Jaman", position: "Managing Director", image: "/assets/employee/3.jpg" },
     ];
 
-    if (!isClient) return <div className="min-h-screen bg-white" />;
+    const otherLeaders = [
+        { name: "Md. Mohiuddin Bhuiyan", position: "General Manager", phone: "01810098907", image: "/assets/employee/4.jpg" },
+        { name: "Md. Zahedul Islam", position: "Executive Director", phone: "01810098905", email: "zahedbandt@gmail.com", image: "/assets/employee/6.png" },
+        { name: "Md. Sohel", position: "Manager in Business Development", phone: "01810098907", image: "/assets/employee/2.jpg" },
+        { name: "Md. Saiful Arefin", position: "Manager in Marketing", phone: "01810098911", image: "/assets/employee/1.jpg" },
+    ];
+
+    if (!isClient) return <div className="min-h-screen bg-slate-50" />;
 
     return (
-        <main ref={containerRef} className="bg-white text-[#0f172a] selection:bg-blue-600 selection:text-white">
+        <main ref={containerRef} className="bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-white">
 
-            {/* --- HERO SECTION: THE MISSION --- */}
-            <section className="relative h-[65vh] min-h-[450px] flex flex-col items-center justify-center bg-gradient-to-b from-white via-slate-50/50 to-white overflow-hidden" aria-label="Mission statement">
+            {/* --- HERO SECTION --- */}
+            <section className="relative h-[50vh] min-h-[400px] flex flex-col items-center justify-center bg-white border-b border-slate-100 overflow-hidden">
                 <ScrollAnimatedSVG containerRef={containerRef} />
-
-                <div className="z-10 text-center px-6 max-w-4xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="mb-6"
-                    >
-                        <span className="text-xs font-semibold text-blue-600 uppercase tracking-[0.3em]">Our Mission</span>
-                    </motion.div>
-
-                    <div className="mb-8">
-                        <RevealText
-                            text="Architecture of Power"
-                            className="text-3xl md:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight block leading-tight"
-                            delay={0.3}
-                            speed={0.1}
-                        />
-                    </div>
-                    <div className="text-slate-500 text-sm md:text-base font-light max-w-2xl mx-auto leading-relaxed">
-                        <RevealText
-                            text="Engineering the pulse of the nation through innovative power infrastructure and sustainable solutions"
-                            delay={1.5}
-                            speed={0.06}
-                        />
-                    </div>
-                </div>
-            </section>
-
-            {/* --- VISION & LEGACY SECTION --- */}
-            <section className="py-10 md:py-12 container mx-auto px-6 lg:px-16 border-t border-slate-100" aria-labelledby="vision-heading">
-                <div className="max-w-4xl space-y-4">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                    >
-                        <span className="text-xs font-semibold text-blue-600 uppercase tracking-[0.3em]">The Vision</span>
-                    </motion.div>
-                    <h2 id="vision-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight">
-                        <RevealText
-                            text="Leading the energy transformation through innovative engineering and precision."
-                            delay={0.2}
-                            speed={0.08}
-                        />
-                    </h2>
-                    <p className="text-slate-600 text-base md:text-lg leading-relaxed font-light max-w-3xl">
-                        <RevealText
-                            delay={0.5}
-                            speed={0.05}
-                            text="Our mission is to build robust power infrastructures that empower industries and light up every corner of the nation with sustainable solutions."
-                        />
+                <div className="z-10 text-center px-6 max-w-5xl mx-auto">
+                    <span className="text-sm font-bold text-blue-700 uppercase tracking-[0.3em]">About Us</span>
+                    <h1 className="text-6xl md:text-8xl font-extrabold text-slate-950 tracking-tighter mt-6">
+                        Architecture of Power
+                    </h1>
+                    <p className="text-xl text-slate-600 mt-8 max-w-2xl mx-auto leading-relaxed">
+                        Mission Power is dedicated to delivering robust engineering solutions and electrifying the nation through excellence.
                     </p>
                 </div>
             </section>
 
-            {/* --- MANAGING DIRECTOR SECTION --- */}
-            <section className="py-10 md:py-12 bg-gradient-to-b from-white to-slate-50/30 border-y border-slate-100" aria-labelledby="director-heading">
-                <div className="container mx-auto px-6 lg:px-16">
-                    <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                            className="w-full lg:w-2/5 relative"
-                        >
-                            <div className="relative aspect-[3/4] max-w-sm mx-auto rounded-lg overflow-hidden border-8 border-white shadow-xl">
-                                <Image
-                                    src="/assets/employee/3.jpg"
-                                    alt="Mr. Hasanur Jaman, Managing Director of Mission Power Land Limited"
-                                    fill
-                                    className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
-                                    sizes="(max-width: 1024px) 100vw, 40vw"
-                                    priority={false}
-                                />
+            {/* --- NEW: DETAILED ABOUT SECTION --- */}
+            <section className="py-24 bg-white">
+                <div className="container mx-auto px-6 lg:px-16 grid md:grid-cols-2 gap-16 items-center">
+                    <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+                        <h2 className="text-5xl font-extrabold text-slate-950 tracking-tighter">Empowering the Future</h2>
+                        <p className="text-slate-600 mt-6 leading-relaxed">
+                            With years of experience in high-voltage engineering, Mission Power has established itself as a leader in grid sub-station construction and maintenance. We bridge the gap between energy generation and consumption, ensuring reliable power delivery across Bangladesh.
+                        </p>
+                        <p className="text-slate-600 mt-4 leading-relaxed">
+                            Our team consists of industry veterans and certified engineers committed to safety, efficiency, and innovation.
+                        </p>
+                    </motion.div>
+                    <div className="grid grid-cols-2 gap-6">
+                        {[
+                            { icon: Target, title: "Our Mission", desc: "To deliver reliable power solutions safely." },
+                            { icon: Award, title: "Our Vision", desc: "To be the nation's premier energy partner." },
+                            { icon: Users, title: "Our Team", desc: "Industry experts committed to excellence." },
+                            { icon: Zap, title: "Our Impact", desc: "Connecting communities to the grid." },
+                        ].map((item, i) => (
+                            <div key={i} className="bg-slate-50 p-8 rounded-2xl border border-slate-100">
+                                <item.icon className="text-blue-600 mb-4" size={32} />
+                                <h4 className="text-xl font-bold">{item.title}</h4>
+                                <p className="text-slate-600 text-sm mt-2">{item.desc}</p>
                             </div>
-                            <DirectorSectionSVG containerRef={containerRef} />
-                        </motion.div>
-
-                        <div className="w-full lg:w-3/5 space-y-4">
-                            <h2 id="director-heading" className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight">
-                                <RevealText
-                                    text="A Decade of Trust and Technical Mastery."
-                                    delay={0.2}
-                                    speed={0.08}
-                                />
-                            </h2>
-                            <div className="space-y-2 pb-4 border-b border-slate-200">
-                                <p className="text-xl md:text-2xl font-semibold text-slate-900">Mr. Hasanur Jaman</p>
-                                <p className="text-blue-600 font-medium text-sm uppercase tracking-wider">Managing Director</p>
-                            </div>
-                            <p className="text-slate-600 text-base md:text-lg leading-relaxed border-l-2 border-blue-600 pl-6">
-                                <RevealText
-                                    delay={0.4}
-                                    speed={0.05}
-                                    text="At Mission Power Land, we don't just deliver electrical systems; we provide the foundation for a modern economy. Integrity and safety remain our core pillars."
-                                />
-                            </p>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            {/* --- COMPANY PEOPLE SECTION (NEW) --- */}
-            <section className="py-20 bg-white" aria-labelledby="team-heading">
+            {/* --- MANAGEMENT SECTION --- */}
+            <section className="py-24" aria-labelledby="team-heading">
                 <div className="container mx-auto px-6 lg:px-16">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-16"
-                    >
-                        <span className="text-xs font-semibold text-blue-600 uppercase tracking-[0.3em]">Leadership Team</span>
-                        <h2 id="team-heading" className="text-4xl md:text-5xl font-bold text-slate-900 mt-2">
-                            Meet Our Experts
-                        </h2>
+
+                    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-20">
+                        <h2 className="text-5xl font-extrabold text-slate-950 tracking-tighter">Meet Our Leadership</h2>
+                        <p className="text-slate-600 mt-4 max-w-xl mx-auto">The driving force behind our commitment to excellence and innovation.</p>
                     </motion.div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-                        {teamMembers.map((member, i) => (
+                    {/* --- Top Leadership (PREMIUM LARGE LAYOUT) --- */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 max-w-7xl mx-auto mb-32">
+                        {topLeadership.map((member, i) => (
                             <motion.div
                                 key={i}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: i * 0.1 }}
-                                className="text-center group"
+                                className="bg-white p-14 rounded-3xl shadow-2xl border border-slate-100 flex flex-col items-center text-center group hover:border-blue-200 transition-all duration-500 hover:-translate-y-2"
                             >
-                                <div className="relative aspect-square rounded-full overflow-hidden mb-5 border-4 border-slate-100 group-hover:border-blue-200 transition-colors shadow-inner">
-                                    <Image
-                                        src={member.image}
-                                        alt={member.name}
-                                        fill
-                                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                                    />
+                                <div className="relative w-64 h-64 rounded-full overflow-hidden mb-12 border-4 border-slate-100 shadow-inner ring-4 ring-slate-50">
+                                    <Image src={member.image} alt={member.name} fill className="object-cover" />
                                 </div>
-                                <h3 className="text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+                                <h3 className="text-5xl font-extrabold text-slate-950 tracking-tighter">{member.name}</h3>
+                                <p className="text-blue-700 font-semibold text-2xl mt-4 mb-8 tracking-wide uppercase text-sm tracking-widest">{member.position}</p>
+                                <div className="h-1.5 w-32 bg-blue-500 rounded-full"></div>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    {/* --- Other Leaders (Classy Grid) --- */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                        {otherLeaders.map((member, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.05 }}
+                                className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg hover:border-blue-100 transition-all duration-300 flex flex-col"
+                            >
+                                <div className="relative aspect-[4/5] rounded-xl overflow-hidden mb-8">
+                                    <Image src={member.image} alt={member.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                                </div>
+                                <h3 className="text-2xl font-bold text-slate-950 group-hover:text-blue-700 transition-colors tracking-tight">
                                     {member.name}
                                 </h3>
-                                <p className="text-sm text-slate-500 font-medium">
-                                    {member.position}
-                                </p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+                                <p className="text-sm text-blue-700 font-medium mb-6 uppercase tracking-wider">{member.position}</p>
 
-            {/* --- EXPERTISE GRID --- */}
-            <section className="py-10 md:py-12 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white" aria-labelledby="expertise-heading">
-                <h2 id="expertise-heading" className="sr-only">Our Expertise</h2>
-                <div className="container mx-auto px-6 lg:px-16">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="text-center mb-8"
-                    >
-                        <span className="text-xs font-semibold text-blue-400 uppercase tracking-[0.3em]">Our Expertise</span>
-                    </motion.div>
-                    <div className="grid md:grid-cols-3 gap-8 lg:gap-12 max-w-6xl mx-auto">
-                        {[
-                            { title: "Grid Stations", icon: Building2, desc: "Specialists in 132/33kV and 400kV grid sub-station construction." },
-                            { title: "Safety First", icon: Shield, desc: "100% adherence to international IEC standards and safety protocols." },
-                            { title: "National Power", icon: Zap, desc: "Connecting thousands of homes and industries to the national grid." }
-                        ].map((item, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6, delay: i * 0.1 }}
-                                className="space-y-4 p-6 rounded-lg border border-white/5 hover:border-blue-500/30 transition-all group bg-white/5 hover:bg-white/10"
-                            >
-                                <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
-                                    <item.icon className="text-blue-400 group-hover:scale-110 transition-transform" size={24} />
+                                <div className="mt-auto space-y-3 text-sm text-slate-600 border-t border-slate-100 pt-6">
+                                    {member.phone && (
+                                        <a href={`tel:${member.phone}`} className="flex items-center gap-3 hover:text-blue-700">
+                                            <Phone size={18} className="text-blue-500" /> {member.phone}
+                                        </a>
+                                    )}
+                                    {member.email && (
+                                        <a href={`mailto:${member.email}`} className="flex items-center gap-3 hover:text-blue-700">
+                                            <Mail size={18} className="text-blue-500" /> {member.email}
+                                        </a>
+                                    )}
                                 </div>
-                                <h4 className="text-xl font-semibold text-white">
-                                    <RevealText text={item.title} delay={0.2 + i * 0.1} speed={0.1} />
-                                </h4>
-                                <p className="text-slate-300 text-sm leading-relaxed">{item.desc}</p>
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* --- CALL TO ACTION (CTA) --- */}
-            <section className="py-10 md:py-12 bg-white text-center" aria-labelledby="cta-heading">
+            {/* --- CTA SECTION --- */}
+            <section className="py-24 bg-white text-center border-t border-slate-100">
                 <div className="container mx-auto px-6 lg:px-16 max-w-4xl">
-                    <h2 id="cta-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 leading-tight">
-                        <RevealText
-                            text="Ready to build the future?"
-                            delay={0.2}
-                            speed={0.08}
-                        />
-                    </h2>
-                    <div className="text-slate-500 text-base md:text-lg mb-8 max-w-2xl mx-auto">
-                        <RevealText
-                            text="Partner with us to power your next infrastructure project"
-                            delay={0.5}
-                            speed={0.06}
-                        />
-                    </div>
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 1 }}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                    >
-                        <Link
-                            href="/contact"
-                            className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg mx-auto shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all duration-300"
-                            aria-label="Contact our experts for power infrastructure solutions"
-                        >
-                            Contact Our Experts <ArrowRight size={18} aria-hidden="true" />
-                        </Link>
-                    </motion.div>
+                    <h2 className="text-5xl font-extrabold text-slate-950 mb-8 tracking-tighter">Ready to build the future?</h2>
+                    <Link href="/contact" className="inline-flex items-center gap-3 px-12 py-5 bg-blue-700 text-white font-semibold rounded-full shadow-lg hover:bg-blue-800 transition-all duration-300 text-lg">
+                        Contact Our Experts <ArrowRight size={22} />
+                    </Link>
                 </div>
             </section>
 
