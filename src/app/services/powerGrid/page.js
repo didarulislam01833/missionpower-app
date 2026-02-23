@@ -30,7 +30,7 @@ const PowerGridPage = () => {
         },
         three: {
             title: "Three Phase Transformer",
-            image: "/assets/powerGrid/p-1.jpg",
+            image: "/assets/powerGrid/banner-img-2.jpg",
             specs: [
                 { label: "Design Standard", value: "IEC-76, BS-171, ANSI" },
                 { label: "Voltage Range", value: "HT = 11kV / 33kV, LT = 415V" },
@@ -43,7 +43,7 @@ const PowerGridPage = () => {
         },
         power: {
             title: "Power Transformer",
-            image: "/assets/powerGrid/p-14.jpg",
+            image: "/assets/powerGrid/banner-img-5.jpg",
             specs: [
                 { label: "Voltage Class", value: "11, 22, 33, 66 kV" },
                 { label: "Rated Power", value: "10/14 MVA" },

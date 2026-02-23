@@ -10,13 +10,20 @@ import { Menu, X, ChevronDown, Zap, Shield, Building2, LayoutGrid, ArrowRight } 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [activeSubmenu, setActiveSubmenu] = useState(false);
     const pathname = usePathname();
 
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 10);
+        const handleScroll = () => setScrolled(window.scrollY > 20);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    // Close mobile menu when route changes
+    useEffect(() => {
+        setIsOpen(false);
+        setActiveSubmenu(false);
+    }, [pathname]);
 
     const navLinks = [
         { name: 'Home', href: '/' },
@@ -25,7 +32,8 @@ const Navbar = () => {
             name: 'Our Expertise',
             href: '#',
             submenu: [
-                { name: 'Power Grid', href: '/services/power-grid', icon: <Zap size={16} />, desc: 'Substations & HV engineering.' },
+                // আপনার ফোল্ডার স্ট্রাকচার অনুযায়ী পাথগুলো সেট করা হয়েছে
+                { name: 'Power Grid', href: '/services/powerGrid', icon: <Zap size={16} />, desc: 'Substations & HV engineering.' },
                 { name: 'Solar Solutions', href: '/services/solar', icon: <Shield size={16} />, desc: 'Renewable infrastructure.' },
                 { name: 'Civil Works', href: '/services/civil', icon: <Building2 size={16} />, desc: 'Industrial site development.' },
                 { name: 'Infrastructure', href: '/services/infrastructure', icon: <LayoutGrid size={16} />, desc: 'National scale projects.' },
@@ -37,27 +45,27 @@ const Navbar = () => {
 
     return (
         <nav
-            className={`fixed top-0 left-0 w-full z-[999] transition-all duration-300 ${scrolled
-                    ? 'py-2 bg-white/95 backdrop-blur-md shadow-md border-b border-slate-100'
-                    : 'py-4 bg-white border-b border-slate-50'
+            className={`fixed top-0 left-0 w-full z-[999] transition-all duration-500 ${scrolled
+                ? 'py-3 bg-white/95 backdrop-blur-md shadow-xl border-b border-slate-100'
+                : 'py-5 bg-white border-b border-slate-50'
                 }`}
         >
             <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
 
-                {/* HERO LOGO - Kept Big as requested */}
-                <Link href="/" className="flex items-center gap-4 group">
-                    <div className="relative w-[70px] h-[70px] transition-transform duration-500 group-hover:scale-105">
+                {/* --- LOGO --- */}
+                <Link href="/" className="flex items-center gap-3 group">
+                    <div className="relative w-[60px] h-[60px] md:w-[70px] md:h-[70px] transition-transform duration-500 group-hover:scale-105">
                         <Image
                             src="/assets/logo/logo.png"
                             alt="Mission Power Land Limited"
                             fill
-                            className="object-contain text-visible"
+                            className="object-contain"
                             priority
                         />
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-lg font-black tracking-tight leading-none text-slate-900">
-                            MISSION POWER <span className="text-blue-600">LAND</span>
+                        <span className="text-lg font-black tracking-tight leading-none text-slate-900 uppercase">
+                            Mission Power <span className="text-blue-600">Land</span>
                         </span>
                         <span className="text-[10px] font-bold text-slate-400 tracking-[0.3em] uppercase mt-1">
                             Limited
@@ -65,32 +73,47 @@ const Navbar = () => {
                     </div>
                 </Link>
 
-                {/* SLENDER NAVIGATION - Made smaller & refined */}
-                <div className="hidden lg:flex items-center gap-1">
+                {/* --- DESKTOP NAVIGATION --- */}
+                <div className="hidden lg:flex items-center gap-2">
                     {navLinks.map((link) => (
-                        <div key={link.name} className="relative group">
-                            <Link
-                                href={link.href}
-                                className={`px-4 py-2 text-[11px] font-bold uppercase tracking-widest flex items-center gap-1 transition-colors ${pathname === link.href
-                                        ? 'text-blue-600'
-                                        : 'text-slate-600 hover:text-blue-600'
-                                    }`}
-                            >
-                                {link.name}
-                                {link.submenu && <ChevronDown size={12} className="group-hover:rotate-180 transition-transform duration-200" />}
-                            </Link>
+                        <div
+                            key={link.name}
+                            className="relative"
+                            onMouseEnter={() => link.submenu && setActiveSubmenu(true)}
+                            onMouseLeave={() => link.submenu && setActiveSubmenu(false)}
+                        >
+                            {link.submenu ? (
+                                <button
+                                    className={`px-4 py-2 text-[11px] font-bold uppercase tracking-widest flex items-center gap-1 transition-all ${activeSubmenu ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}
+                                >
+                                    {link.name}
+                                    <ChevronDown size={14} className={`transition-transform duration-300 ${activeSubmenu ? 'rotate-180' : ''}`} />
+                                </button>
+                            ) : (
+                                <Link
+                                    href={link.href}
+                                    className={`px-4 py-2 text-[11px] font-bold uppercase tracking-widest flex items-center gap-1 transition-all ${pathname === link.href ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}
+                                >
+                                    {link.name}
+                                </Link>
+                            )}
 
-                            {/* DROPDOWN - Clean & Compact */}
-                            {link.submenu && (
-                                <div className="absolute top-full left-0 mt-2 w-[480px] opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300">
-                                    <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-3 grid grid-cols-2 gap-2">
+                            {/* --- DESKTOP DROPDOWN --- */}
+                            <AnimatePresence>
+                                {link.submenu && activeSubmenu && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 10 }}
+                                        className="absolute top-full left-0 mt-2 w-[480px] bg-white rounded-2xl shadow-2xl border border-slate-100 p-3 grid grid-cols-2 gap-2"
+                                    >
                                         {link.submenu.map((sub) => (
                                             <Link
                                                 key={sub.name}
                                                 href={sub.href}
-                                                className="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100"
+                                                className="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100 group/item"
                                             >
-                                                <div className="text-blue-600 p-2 bg-blue-50 rounded-lg group-hover:bg-blue-600 group-hover:text-white">
+                                                <div className="text-blue-600 p-2 bg-blue-50 rounded-lg group-hover/item:bg-blue-600 group-hover/item:text-white transition-colors">
                                                     {sub.icon}
                                                 </div>
                                                 <div>
@@ -99,22 +122,22 @@ const Navbar = () => {
                                                 </div>
                                             </Link>
                                         ))}
-                                    </div>
-                                </div>
-                            )}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     ))}
                 </div>
 
-                {/* COMPACT BUTTON */}
+                {/* --- CONTACT BUTTON --- */}
                 <div className="hidden lg:block">
-                    <Link href="/contact" className="flex items-center gap-2 bg-slate-900 hover:bg-blue-600 text-white px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-lg shadow-slate-200">
-                        <span>Contact Us</span>
-                        <ArrowRight size={14} />
+                    <Link href="/contact" className="group flex items-center gap-2 bg-slate-950 hover:bg-blue-600 text-white px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-lg">
+                        <span>Get Quote</span>
+                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
 
-                {/* MOBILE TOGGLE */}
+                {/* --- MOBILE TOGGLE --- */}
                 <button
                     className="lg:hidden p-2 text-slate-900"
                     onClick={() => setIsOpen(!isOpen)}
@@ -123,7 +146,7 @@ const Navbar = () => {
                 </button>
             </div>
 
-            {/* MOBILE MENU */}
+            {/* --- MOBILE MENU --- */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
@@ -135,27 +158,38 @@ const Navbar = () => {
                         <div className="p-6 space-y-4">
                             {navLinks.map((link) => (
                                 <div key={link.name}>
-                                    <Link
-                                        href={link.href}
-                                        onClick={() => !link.submenu && setIsOpen(false)}
-                                        className="text-sm font-black text-slate-900 flex justify-between items-center uppercase"
+                                    <div
+                                        className="flex justify-between items-center cursor-pointer"
+                                        onClick={() => link.submenu && setActiveSubmenu(!activeSubmenu)}
                                     >
-                                        {link.name}
-                                        {link.submenu && <ChevronDown size={16} />}
-                                    </Link>
-                                    {link.submenu && (
-                                        <div className="mt-2 grid grid-cols-1 gap-2 pl-4 border-l border-blue-100">
+                                        <Link
+                                            href={link.href}
+                                            onClick={(e) => link.submenu && e.preventDefault()}
+                                            className="text-sm font-black text-slate-900 uppercase"
+                                        >
+                                            {link.name}
+                                        </Link>
+                                        {link.submenu && <ChevronDown size={16} className={activeSubmenu ? 'rotate-180' : ''} />}
+                                    </div>
+
+                                    {link.submenu && activeSubmenu && (
+                                        <motion.div
+                                            initial={{ opacity: 0, x: -10 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            className="mt-4 grid grid-cols-1 gap-2 pl-4 border-l-2 border-blue-100"
+                                        >
                                             {link.submenu.map((sub) => (
                                                 <Link
                                                     key={sub.name}
                                                     href={sub.href}
                                                     onClick={() => setIsOpen(false)}
-                                                    className="py-1"
+                                                    className="py-1 flex items-center gap-2"
                                                 >
+                                                    <span className="text-blue-600">{sub.icon}</span>
                                                     <span className="text-[11px] font-bold text-slate-600 uppercase hover:text-blue-600">{sub.name}</span>
                                                 </Link>
                                             ))}
-                                        </div>
+                                        </motion.div>
                                     )}
                                 </div>
                             ))}
