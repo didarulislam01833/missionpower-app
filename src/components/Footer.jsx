@@ -1,11 +1,12 @@
 import React from 'react';
+import Link from 'next/link';
 
 const Footer = () => {
     return (
         <footer className="bg-[#0f172a] text-gray-300 pt-16 pb-8 border-t-4 border-blue-600">
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
-                {/* Brand Section */}
+                {/* --- Brand & Identity Section --- */}
                 <div className="space-y-6">
                     <div className="flex items-center gap-3">
                         <img
@@ -23,93 +24,104 @@ const Footer = () => {
                         </div>
                     </div>
                     <p className="text-sm leading-relaxed opacity-80 max-w-xs">
-                        Registered Class-A Govt. Contractor. Building the backbone of Bangladesh's infrastructure through power grids and land development.
+                        Registered Class-A Govt. Contractor. Bangladesh's premier manufacturer of high-voltage transformers and specialized power infrastructure.
                     </p>
 
-                    {/* Social Media - Full Names for Clarity */}
-                    <div className="space-y-2 pt-2">
+                    {/* Social Connect */}
+                    <div className="space-y-3 pt-2">
                         <h6 className="text-xs font-bold uppercase tracking-widest text-white opacity-50">Connect With Us</h6>
-                        <div className="flex flex-col gap-2">
-                            <a href="#" className="text-sm hover:text-blue-500 transition-colors flex items-center gap-2">
-                                <span className="w-5 text-blue-600 font-bold">f</span> Facebook
-                            </a>
-                            <a href="#" className="text-sm hover:text-blue-700 transition-colors flex items-center gap-2">
-                                <span className="w-5 text-blue-700 font-bold">in</span> LinkedIn
-                            </a>
-                            <a href="#" className="text-sm hover:text-sky-400 transition-colors flex items-center gap-2">
-                                <span className="w-5 text-sky-400 font-bold">𝕏</span> Twitter / X
-                            </a>
+                        <div className="flex gap-4">
+                            <a href="#" className="p-2.5 bg-slate-800 rounded-xl hover:bg-blue-600 transition-all text-white flex items-center justify-center w-10 h-10 shadow-lg shadow-black/20">f</a>
+                            <a href="#" className="p-2.5 bg-slate-800 rounded-xl hover:bg-blue-700 transition-all text-white flex items-center justify-center w-10 h-10 shadow-lg shadow-black/20">in</a>
+                            <a href="#" className="p-2.5 bg-slate-800 rounded-xl hover:bg-sky-500 transition-all text-white flex items-center justify-center w-10 h-10 shadow-lg shadow-black/20">𝕏</a>
                         </div>
                     </div>
                 </div>
 
-                {/* Core Divisions */}
+                {/* --- Core Divisions (Electrical Focused) --- */}
                 <div>
                     <h3 className="text-white font-bold text-lg mb-6 relative inline-block uppercase tracking-wider">
                         Core Divisions
                         <span className="absolute -bottom-2 left-0 w-10 h-1 bg-blue-600"></span>
                     </h3>
                     <ul className="space-y-4 text-sm">
-                        <li><a href="#" className="hover:text-blue-500 transition-colors">Power Infrastructure</a></li>
-                        <li><a href="#" className="hover:text-blue-500 transition-colors">Civil Engineering</a></li>
-                        <li><a href="#" className="hover:text-blue-500 transition-colors">Land Development</a></li>
-                        <li><a href="#" className="hover:text-blue-500 transition-colors">Logistics & Safety</a></li>
+                        <li><Link href="/services" className="hover:text-blue-500 transition-colors flex items-center gap-2"><span>⚡</span> Transformer Manufacturing</Link></li>
+                        <li><Link href="/services" className="hover:text-blue-500 transition-colors flex items-center gap-2"><span>⚡</span> Substation Engineering</Link></li>
+                        <li><Link href="/services" className="hover:text-blue-500 transition-colors flex items-center gap-2"><span>⚡</span> Switchgear Assembly</Link></li>
+                        <li><Link href="/services" className="hover:text-blue-500 transition-colors flex items-center gap-2"><span>⚡</span> Industrial Power Solutions</Link></li>
                     </ul>
                 </div>
 
-                {/* Corporate */}
+                {/* --- Contact & Hotline --- */}
                 <div>
                     <h3 className="text-white font-bold text-lg mb-6 relative inline-block uppercase tracking-wider">
-                        Corporate
+                        Contact Hotline
                         <span className="absolute -bottom-2 left-0 w-10 h-1 bg-blue-600"></span>
                     </h3>
-                    <ul className="space-y-4 text-sm">
-                        <li><a href="#" className="hover:text-blue-500 transition-colors">Our History</a></li>
-                        <li><a href="#" className="hover:text-blue-500 transition-colors">Safety Standards</a></li>
-                        <li><a href="#" className="hover:text-blue-500 transition-colors">Featured Tenders</a></li>
-                        <li><a href="#" className="hover:text-blue-500 transition-colors">Career Opportunity</a></li>
-                    </ul>
+                    <div className="space-y-5 text-sm">
+                        <div className="flex gap-4 items-center">
+                            <div className="bg-blue-600/10 p-2.5 rounded-lg">
+                                <span className="text-blue-500 text-xl">📞</span>
+                            </div>
+                            <div className="font-bold text-slate-100 tracking-wider">
+                                <p>01810-098911</p>
+                                <p>01810-098909</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-4 items-center">
+                            <div className="bg-blue-600/10 p-2.5 rounded-lg">
+                                <span className="text-blue-500">✉️</span>
+                            </div>
+                            <p className="lowercase font-medium opacity-90">missionpowerland@gmail.com</p>
+                        </div>
+                        <div className="pt-2 border-t border-slate-800">
+                            <h4 className="text-blue-500 font-bold text-[10px] uppercase mb-2 tracking-[0.1em]">Enlisted Contractor</h4>
+                            <p className="text-[10px] leading-relaxed opacity-60 font-medium">BPDB, BREB, PGCB, LGED, RHD, BPC, DESCO, DPDC.</p>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Headquarters */}
+                {/* --- Locations (Office & Factory) --- */}
                 <div>
                     <h3 className="text-white font-bold text-lg mb-6 relative inline-block uppercase tracking-wider">
-                        Head Office
+                        Office & Factory
                         <span className="absolute -bottom-2 left-0 w-10 h-1 bg-blue-600"></span>
                     </h3>
-                    <div className="space-y-4 text-sm">
+                    <div className="space-y-6 text-sm">
+                        {/* Corporate Office */}
                         <div className="flex gap-3 items-start">
-                            <span className="text-blue-500 text-lg">📍</span>
-                            <p className="leading-relaxed">
-                                House: 01, Road: 16, Sector: 07, <br />
-                                Uttara, Dhaka-1230, Bangladesh
-                            </p>
-                        </div>
-                        <div className="flex gap-3 items-center">
-                            <span className="text-blue-500">✉️</span>
-                            <p>missionpowerland@gmail.com</p>
+                            <span className="text-blue-500 text-lg mt-1">🏢</span>
+                            <div>
+                                <h4 className="text-white font-bold text-xs uppercase mb-1">Corporate Office</h4>
+                                <p className="leading-relaxed opacity-75">
+                                    House: 01, Road: 16, Sector: 07, <br />
+                                    Uttara, Dhaka-1230, Bangladesh
+                                </p>
+                            </div>
                         </div>
 
-                        {/* Google Map Link Button */}
-                        <a
-                            href="https://www.google.com/maps/@23.8690351,90.3952735,3a,89.9y,280.18h,76.66t/data=!3m7!1e1!3m5!1s2864TbyepjmFZ7I30PYJ4w!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D13.340000000000003%26panoid%3D2864TbyepjmFZ7I30PYJ4w%26yaw%3D280.18!7i16384!8i8192?entry=ttu&g_ep=EgoyMDI2MDEyOC4wIKXMDSoKLDEwMDc5MjA3MUgBUAM%3D"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center px-5 py-2.5 mt-2 bg-blue-600 text-white rounded font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg w-full md:w-auto"
-                        >
-                            Open Google Maps
-                        </a>
+                        {/* Factory: Manufacturing Unit */}
+                        <div className="flex gap-3 items-start border-t border-slate-800 pt-5">
+                            <span className="text-blue-500 text-lg mt-1">🏭</span>
+                            <div>
+                                <h4 className="text-white font-bold text-xs uppercase mb-1">Factory: Manufacturing Unit</h4>
+                                <p className="leading-relaxed opacity-75">
+                                    210/1, Nilerpara, Gazipur <br />
+                                    City Corporation, Gazipur
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Copyright Strip */}
-            <div className="mt-16 border-t border-gray-800/50 pt-8 text-center">
-                <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] uppercase tracking-widest opacity-60">
-                    <p>© {new Date().getFullYear()} Eye Catcher Brand & WEB Co. All Rights Reserved.</p>
-                    <div className="flex gap-6">
-                        <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                        <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            {/* --- Copyright Strip --- */}
+            <div className="mt-16 border-t border-slate-800 pt-8">
+                <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] uppercase tracking-widest opacity-50">
+                    <p className="font-medium tracking-tighter md:tracking-widest">© {new Date().getFullYear()} Mission Power Land Limited. All Rights Reserved.</p>
+                    <div className="flex gap-8">
+                        <a href="#" className="hover:text-blue-500 transition-colors">Privacy Policy</a>
+                        <a href="#" className="hover:text-white transition-colors">Site by Eye Catcher</a>
                     </div>
                 </div>
             </div>

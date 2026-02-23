@@ -22,7 +22,7 @@ export default function AboutSection() {
 
     return (
         <section className="relative py-24 bg-white overflow-hidden">
-            {/* Background Decorative Element - Animated */}
+            {/* Background Decorative Element */}
             <motion.div
                 initial={{ opacity: 0, x: 100 }}
                 whileInView={{ opacity: 1, x: 20 }}
@@ -33,10 +33,10 @@ export default function AboutSection() {
             <div className="container mx-auto px-6 lg:px-16 relative z-10">
                 <div className="flex flex-col lg:flex-row items-center gap-20">
 
-                    {/* Left Side: Creative Image Composition */}
+                    {/* Left Side: Transformer/Factory Composition */}
                     <div className="w-full lg:w-1/2 relative">
 
-                        {/* Floating Experience Badge - Unique Pop Animation */}
+                        {/* Floating Experience Badge */}
                         <motion.div
                             initial={{ scale: 0, rotate: -45 }}
                             whileInView={{ scale: 1, rotate: 0 }}
@@ -45,10 +45,10 @@ export default function AboutSection() {
                             className="absolute -top-10 -right-5 md:-right-10 w-32 h-32 bg-blue-600 rounded-full flex flex-col items-center justify-center text-white z-30 shadow-2xl border-4 border-white"
                         >
                             <span className="text-3xl font-black">15+</span>
-                            <span className="text-[10px] font-bold uppercase tracking-tighter">Years Exp.</span>
+                            <span className="text-[10px] font-bold uppercase tracking-tighter text-center">Years of<br />Excellence</span>
                         </motion.div>
 
-                        {/* Main Image Frame - Morphing Animation */}
+                        {/* Main Image Frame (Should show Factory/Transformer) */}
                         <motion.div
                             variants={fadeInSide("left", 0.2)}
                             initial="hidden"
@@ -62,16 +62,16 @@ export default function AboutSection() {
                                 className="h-full w-full relative"
                             >
                                 <Image
-                                    src="/assets/All/01-01.jpg"
-                                    alt="Mission Power Land Leadership"
+                                    src="/assets/Stats/threePhase.jpg" // Changed to a real electrical image
+                                    alt="Mission Power Land Transformer Factory"
                                     fill
                                     className="object-cover"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/30 to-transparent" />
+                                <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/40 to-transparent" />
                             </motion.div>
                         </motion.div>
 
-                        {/* Behind Decor: Animated Dots */}
+                        {/* Animated Grid Dots */}
                         <motion.div
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 0.4 }}
@@ -91,7 +91,7 @@ export default function AboutSection() {
                         </motion.div>
                     </div>
 
-                    {/* Right Side: Elite Content */}
+                    {/* Right Side: Electrical Content */}
                     <div className="w-full lg:w-1/2 space-y-10">
                         <div className="space-y-4">
                             <motion.div
@@ -108,7 +108,7 @@ export default function AboutSection() {
                                 viewport={{ once: true }}
                                 className="text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.1]"
                             >
-                                Defining <span className="text-blue-600 italic">Integrity</span> in Engineering.
+                                Powering <span className="text-blue-600 italic">Excellence</span> in Electrical Engineering.
                             </motion.h2>
                         </div>
 
@@ -119,16 +119,17 @@ export default function AboutSection() {
                             viewport={{ once: true }}
                             className="text-slate-600 text-xl leading-relaxed font-medium"
                         >
-                            Mission Power Land is more than a Class-A contractor. We are the architects of
-                            resilience, powering Bangladesh through innovative electrical grids and
-                            sustainable land development solutions.
+                            Mission Power Land is a premier **Class-A Government Contractor** specializing
+                            in the manufacturing of high-quality transformers and 33/11kV substation solutions.
+                            We are the architects of Bangladesh's modern power grid, delivering reliable energy
+                            infrastructure across the nation.
                         </motion.p>
 
-                        {/* Staggered Feature Cards */}
+                        {/* Staggered Electrical Feature Cards */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {[
-                                { title: "Technical Mastery", label: "Govt. Grade", icon: "💎" },
-                                { title: "Risk Management", label: "ISO Standard", icon: "🛡️" }
+                                { title: "Precision Manufacturing", label: "Transformer Specialist", icon: "⚡" },
+                                { title: "Grid Infrastructure", label: "Govt. Grade A", icon: "🏗️" }
                             ].map((item, i) => (
                                 <motion.div
                                     key={i}
@@ -141,8 +142,8 @@ export default function AboutSection() {
                                 >
                                     <span className="text-3xl">{item.icon}</span>
                                     <div>
-                                        <h4 className="font-bold text-slate-900">{item.title}</h4>
-                                        <p className="text-xs font-bold text-blue-500 uppercase tracking-widest">{item.label}</p>
+                                        <h4 className="font-bold text-slate-900 leading-none mb-1">{item.title}</h4>
+                                        <p className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">{item.label}</p>
                                     </div>
                                 </motion.div>
                             ))}
@@ -161,7 +162,7 @@ export default function AboutSection() {
                                 whileTap={{ scale: 0.95 }}
                                 className="px-10 py-5 bg-slate-900 text-white rounded-full font-black text-sm uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-100"
                             >
-                                View Company Profile
+                                Download Technical Specs
                             </motion.button>
 
                             <div className="flex items-center gap-4">
@@ -174,13 +175,13 @@ export default function AboutSection() {
                                             transition={{ delay: 1.2 + (i * 0.1) }}
                                             className="w-12 h-12 rounded-full border-4 border-white bg-slate-200 overflow-hidden relative shadow-sm"
                                         >
-                                            <Image src={`/assets/All/01-0${i}.jpg`} alt="worker" fill className="object-cover" />
+                                            <Image src={`/assets/Stats/singlePhase.jpg`} alt="engineer" fill className="object-cover" />
                                         </motion.div>
                                     ))}
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-xs font-black text-slate-900 uppercase tracking-tighter">Expert Team</span>
-                                    <span className="text-[10px] font-bold text-blue-600 underline cursor-pointer hover:text-slate-900 transition-colors">Meet Our Engineers</span>
+                                    <span className="text-xs font-black text-slate-900 uppercase tracking-tighter">Engineering Team</span>
+                                    <span className="text-[10px] font-bold text-blue-600 underline cursor-pointer hover:text-slate-900 transition-colors">Licensed BPDB/BREB Experts</span>
                                 </div>
                             </div>
                         </motion.div>
