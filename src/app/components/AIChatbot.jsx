@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot, User, Trash2 } from 'lucide-react';
+import { Bot, X, Send, Trash2, Smartphone, Briefcase, Factory } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
 
@@ -14,63 +14,80 @@ export default function AIChatbot() {
     const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef(null);
 
-    // ১. মাউস আইকনের ওপর নিলে টোস্ট মেসেজ দেখাবে
-    const handleMouseEnter = () => {
-        if (!isOpen) setShowToast(true);
-    };
+    const handleMouseEnter = () => { if (!isOpen) setShowToast(true); };
 
-    // ২. লোকাল স্টোরেজ থেকে চ্যাট হিস্ট্রি লোড করা
     useEffect(() => {
-        const saved = localStorage.getItem('mission_power_chat');
+        const saved = localStorage.getItem('mpl_ai_v2');
         if (saved) {
             setMessages(JSON.parse(saved));
         } else {
             setMessages([{
                 id: 1,
-                text: "Hello! I am **Mission Power Land AI**. How can I help you learn about our company today?",
+                text: "Welcome to **Mission Power Land Limited**! ⚡\n\nI am your AI assistant. I can help you with technical info about our **Power Grid solutions, Solar projects, or Manufacturing plant**. \n\nWhat can I help you with today?",
                 sender: 'bot',
                 timestamp: new Date()
             }]);
         }
     }, []);
 
-    // ৩. চ্যাট হিস্ট্রি সেভ করা এবং অটো-স্ক্রল
     useEffect(() => {
-        if (messages.length > 0) {
-            localStorage.setItem('mission_power_chat', JSON.stringify(messages));
-        }
+        localStorage.setItem('mpl_ai_v2', JSON.stringify(messages));
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
-    // ৪. কোম্পানির বিস্তারিত নলেজ বেস (AI লজিক পরিমার্জন)
+    // --- ইন্টেলিজেন্ট নলেজ লজিক ---
     const generateAIResponse = async (userMessage) => {
         setIsTyping(true);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 800)); // প্রাকৃতিক বিলম্ব
 
         const msg = userMessage.toLowerCase();
         let response = "";
 
-        // কন্টাক্ট ইনফো সাফিক্স (একই জিনিস বারবার না লিখে ভেরিয়েবল ব্যবহার)
-        const contactSuffix = "\n\n---\n👉 **Connect with us:**\n* Hit the **WhatsApp button** on the left to chat instantly.\n* Or visit our [Contact Page](/contact) to fill up the form. Our team will contact you soon!";
+        const contactInfo = "\n\n---\n📞 **Quick Connect:** [Call Us](tel:+8801511564639) | [WhatsApp](https://wa.me/8801511564639) | [Contact Form](/contact)";
 
-        if (msg.includes('hi') || msg.includes('hello') || msg.includes('hey')) {
-            response = "Hello! Welcome to **Mission Power Land Limited**. I'm here to assist you with information about our grid infrastructure, land development, and more. What would you like to know?";
+        // ১. কোম্পানি প্রোফাইল ও লিগ্যাল স্ট্যাটাস
+        if (msg.includes('who') || msg.includes('about') || msg.includes('company')) {
+            response = "## About Mission Power Land Limited\nMission Power Land (MPL) is a leading **ISO 9001:2015 Certified** Engineering firm in Bangladesh, operating since **2014**.\n\n* **Classification:** Class-A Govt. Contractor.\n* **Core Focus:** Power Generation, Transmission & Distribution.\n* **Clients:** PGCB, BPDB, BREB, and various private industrial giants.";
         }
-        else if (msg.includes('company') || msg.includes('about') || msg.includes('who are you')) {
-            response = "## About Mission Power Land Limited\n\nWe are a premier **Engineering & Construction** firm in Bangladesh, dedicated to power infrastructure and land development.\n\n* **Established:** Founded in **2014**.\n* **Experience:** Over **15 years of combined engineering expertise**.\n* **Status:** A **Class-A registered government contractor** (working with BPDB, PGCB, BREB).\n* **Quality:** An **ISO 9001:2015 Certified** company." + contactSuffix;
+
+        // ২. পাওয়ার গ্রিড ও ইঞ্জিনিয়ারিং (Technical)
+        else if (msg.includes('power') || msg.includes('grid') || msg.includes('substation') || msg.includes('132kv')) {
+            response = "### Power Division Expertise ⚡\nWe specialize in **Turnkey Solutions** for High Voltage infrastructure:\n* Construction of **132/33kV & 400kV Grid Sub-stations**.\n* Installation of **GIS & AIS System**.\n* High-tension transmission line stringing.\n* Testing & Commissioning of Power Transformers." + contactInfo;
         }
-        else if (msg.includes('service') || msg.includes('what do you do') || msg.includes('work')) {
-            response = "### Our Specialized Services:\n\n1. **Power Grid Solutions:** Expert construction of **132/33kV and 400kV Grid Sub-stations**.\n2. **Land Development:** Large-scale **earth filling and piling** for industrial and residential sites.\n3. **National Grid Integration:** Connecting industrial plants to the national power network.\n4. **Consultancy:** Project planning and structural engineering." + contactSuffix;
+
+        // ৩. ম্যানুফ্যাকচারিং এক্সেলেন্স (New Section)
+        else if (msg.includes('manufacturing') || msg.includes('factory') || msg.includes('make') || msg.includes('excellence')) {
+            response = "### Manufacturing Excellence 🏭\nOur state-of-the-art facility produces high-quality electrical components:\n* **LT/HT Switchgear** & Control Panels.\n* **PFI Plant** (Power Factor Improvement).\n* Cable Trays and Distribution Boards.\n\nVisit our [Manufacturing Excellence Page](/manufacture-excellence) for more.";
         }
-        else if (msg.includes('project') || msg.includes('portfolio') || msg.includes('experience')) {
-            response = "Mission Power Land has successfully executed over **150+ projects** across Bangladesh.\n\nOur portfolio includes high-voltage transmission lines, grid station commissioning, and extensive civil engineering works for major government organizations like **PGCB and BPDB**. You can see our photos on the [Portfolio page](/portfolio)!" + contactSuffix;
+
+        // ৪. সোলার ও রিনিউয়েবল এনার্জি
+        else if (msg.includes('solar') || msg.includes('renewable') || msg.includes('green')) {
+            response = "### Solar Energy Solutions ☀️\nWe are committed to sustainable energy:\n* **Utility-scale Solar Parks**.\n* On-Grid & Off-Grid Solar Power Systems for Industries.\n* Net-metering solutions to reduce electricity costs." + contactInfo;
         }
-        else if (msg.includes('contact') || msg.includes('address') || msg.includes('phone') || msg.includes('email')) {
-            response = "### Contact Information\n\n📍 **HQ:** House 01, Road 16, Sector 07, Uttara, Dhaka-1230.\n📞 **Phone:** +8801511564639\n📧 **Email:** info@missionpowerland.com\n\nFeel free to drop by or reach out via WhatsApp!";
+
+        // ৫. সিভিল ও ল্যান্ড ইনফ্রাস্ট্রাকচার
+        else if (msg.includes('land') || msg.includes('civil') || msg.includes('construction') || msg.includes('piling')) {
+            response = "### Land & Civil Infrastructure 🏗️\nBeyond power, we are experts in industrial site development:\n* **Earth filling & Massive excavation**.\n* Structural Piling (RCC & Sand piling).\n* Road construction & Drainage systems for industrial zones.";
         }
+
+        // ৬. প্রজেক্ট লিস্ট ও ক্লায়েন্ট
+        else if (msg.includes('project') || msg.includes('portfolio') || msg.includes('done') || msg.includes('clients')) {
+            response = "Mission Power Land has successfully completed over **150+ major projects**. \n\nKey Clients include:\n* **PGCB** (Power Grid Company of Bangladesh)\n* **BPDB** (Bangladesh Power Development Board)\n* **BREB** (Rural Electrification Board)\n\nYou can explore our [Project Portfolio](/portfolio) for visual details.";
+        }
+
+        // ৭. ঠিকানা ও কন্টাক্ট
+        else if (msg.includes('contact') || msg.includes('address') || msg.includes('office') || msg.includes('location')) {
+            response = "📍 **Head Office:** \nSector 07, Road 16, House 01, Uttara, Dhaka-1230, Bangladesh.\n\n📧 **Email:** info@missionpowerland.com\n📞 **Phone:** +8801511564639\n\n[Get Directions on Google Maps](https://google.com/maps)";
+        }
+
+        // ৮. মূল্য বা কোটেশন (Lead Generation)
+        else if (msg.includes('price') || msg.includes('cost') || msg.includes('quote') || msg.includes('hiring')) {
+            response = "For pricing or a formal quotation, we need to review your technical requirements. \n\nPlease click here: **[Request a Quote](/contact?type=quote)**. \n\nOur engineering team will provide a cost analysis within 24 hours.";
+        }
+
+        // ৯. ডিফল্ট স্মার্ট রেসপন্স
         else {
-            // ডিফল্ট উত্তর যেখানে হোয়াটসঅ্যাপ ও কন্টাক্ট পেজে গুরুত্ব দেওয়া হয়েছে
-            response = `I understand you're asking about **"${userMessage}"**. \n\nFor a detailed technical discussion or a precise project quote, please:\n1. Click the **WhatsApp button** (bottom-left).\n2. Or go to our **[Contact Page](/contact)** and fill out the form.\n\nOur engineering team will review your query and get back to you immediately!`;
+            response = "I'm not sure I understand about **'" + userMessage + "'**. \n\nAre you interested in our **Power Grid solutions**, **Solar Energy**, or **Manufacturing services**? \n\nYou can also talk to our engineer directly via **WhatsApp** (button on the bottom left).";
         }
 
         setIsTyping(false);
@@ -83,136 +100,97 @@ export default function AIChatbot() {
 
         const userMsg = inputValue.trim();
         setInputValue('');
-
-        const newUserMessage = { id: Date.now(), text: userMsg, sender: 'user' };
-        setMessages(prev => [...prev, newUserMessage]);
+        setMessages(prev => [...prev, { id: Date.now(), text: userMsg, sender: 'user' }]);
 
         const aiRes = await generateAIResponse(userMsg);
         setMessages(prev => [...prev, { id: Date.now() + 1, text: aiRes, sender: 'bot' }]);
     };
 
     const clearChat = () => {
-        const initialMsg = [{ id: Date.now(), text: "Chat history cleared. How can I help you?", sender: 'bot' }];
-        setMessages(initialMsg);
-        localStorage.setItem('mission_power_chat', JSON.stringify(initialMsg));
+        const initial = [{ id: Date.now(), text: "Chat history cleared. How can I assist you?", sender: 'bot' }];
+        setMessages(initial);
     };
 
     return (
         <>
-            {/* AI Icon with Toast Label */}
+            {/* AI Icon */}
             <div className="fixed bottom-6 right-6 z-[999] flex flex-col items-end">
                 <AnimatePresence>
                     {showToast && !isOpen && (
-                        <motion.div
-                            initial={{ opacity: 0, x: 20, scale: 0.8 }}
-                            animate={{ opacity: 1, x: 0, scale: 1 }}
-                            exit={{ opacity: 0, x: 20, scale: 0.8 }}
-                            className="mb-3 bg-white text-slate-800 p-4 rounded-2xl shadow-2xl border border-blue-100 text-sm font-medium w-48 relative"
+                        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}
+                            className="mb-3 bg-white text-slate-800 p-3 rounded-xl shadow-2xl border border-blue-100 text-xs font-bold w-44"
                         >
-                            <div className="absolute -bottom-2 right-6 w-4 h-4 bg-white border-b border-r border-blue-100 rotate-45"></div>
-                            Hello! How can I help you? <br />
-                            <span className="text-blue-600 font-bold">I am Mission Power Land AI</span>
+                            ⚡ MPL AI is Online! <br />
+                            <span className="text-blue-600">Ask about Grid or Solar</span>
                         </motion.div>
                     )}
                 </AnimatePresence>
-
-                <motion.button
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={() => setShowToast(false)}
+                <motion.button onMouseEnter={handleMouseEnter} onMouseLeave={() => setShowToast(false)}
                     onClick={() => { setIsOpen(true); setShowToast(false); }}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-2xl relative"
+                    whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+                    className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-2xl"
                 >
                     <Bot size={30} />
-                    <span className="absolute top-0 right-0 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></span>
                 </motion.button>
             </div>
 
             {/* Chat Window */}
             <AnimatePresence>
                 {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 50, scale: 0.9 }}
-                        className="fixed bottom-6 right-6 z-[1000] w-[380px] h-[600px] max-h-[85vh] bg-white rounded-2xl shadow-2xl flex flex-col border border-slate-200 overflow-hidden"
+                    <motion.div initial={{ opacity: 0, y: 100 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 100 }}
+                        className="fixed bottom-6 right-6 z-[1000] w-[380px] h-[550px] bg-white rounded-3xl shadow-2xl flex flex-col border border-slate-200 overflow-hidden"
                     >
                         {/* Header */}
-                        <div className="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
-                            <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                                    <Bot size={18} />
-                                </div>
+                        <div className="bg-slate-900 text-white p-5 flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-blue-600 rounded-lg"><Bot size={20} /></div>
                                 <div>
-                                    <h3 className="font-bold text-sm leading-none">MPL AI Assistant</h3>
-                                    <span className="text-[10px] text-blue-100">Always Online</span>
+                                    <h3 className="font-black text-xs uppercase tracking-widest">MPL Assistant</h3>
+                                    <div className="flex items-center gap-1.5">
+                                        <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                                        <span className="text-[9px] text-slate-400 font-bold uppercase">Engineering Expert</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <button onClick={clearChat} className="hover:bg-white/20 p-1.5 rounded-lg transition-colors" title="Clear History">
-                                    <Trash2 size={16} />
-                                </button>
-                                <button onClick={() => setIsOpen(false)} className="hover:bg-white/20 p-1.5 rounded-lg transition-colors">
-                                    <X size={20} />
-                                </button>
+                            <div className="flex gap-2">
+                                <button onClick={clearChat} className="p-2 hover:bg-white/10 rounded-lg transition-colors"><Trash2 size={16} /></button>
+                                <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/10 rounded-lg transition-colors"><X size={20} /></button>
                             </div>
                         </div>
 
-                        {/* Messages Area */}
-                        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50">
+                        {/* Messages */}
+                        <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-slate-50">
                             {messages.map((msg) => (
                                 <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                    {msg.sender === 'bot' && (
-                                        <div className="w-7 h-7 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-2 flex-shrink-0 mt-1">
-                                            <Bot size={14} />
-                                        </div>
-                                    )}
-                                    <div className={`max-w-[85%] p-3 rounded-2xl text-sm ${msg.sender === 'user'
-                                        ? 'bg-blue-600 text-white rounded-tr-none shadow-md'
-                                        : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none shadow-sm'
+                                    <div className={`max-w-[85%] p-4 rounded-2xl text-[13px] shadow-sm ${msg.sender === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-white text-slate-700 rounded-bl-none border border-slate-100'
                                         }`}>
                                         <ReactMarkdown components={{
-                                            p: ({ ...props }) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
                                             a: ({ ...props }) => <Link href={props.href} className="text-blue-500 font-bold underline" {...props} />,
-                                            h2: ({ ...props }) => <h2 className="font-bold text-md mb-2 border-b pb-1" {...props} />,
-                                            h3: ({ ...props }) => <h3 className="font-bold text-sm mb-1" {...props} />,
-                                            ul: ({ ...props }) => <ul className="list-disc ml-4 mb-2 space-y-1" {...props} />,
+                                            h3: ({ ...props }) => <h3 className="font-black text-slate-900 mb-1 mt-2 uppercase text-[11px]" {...props} />,
+                                            ul: ({ ...props }) => <ul className="list-disc ml-4 space-y-1 my-2" {...props} />
                                         }}>
                                             {msg.text}
                                         </ReactMarkdown>
                                     </div>
                                 </div>
                             ))}
-                            {isTyping && (
-                                <div className="flex items-center gap-2 text-slate-400 text-xs ml-9">
-                                    <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></span>
-                                    <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
-                                    <span>Assistant is typing...</span>
-                                </div>
-                            )}
+                            {isTyping && <div className="text-[10px] text-slate-400 font-bold animate-pulse">AI is thinking...</div>}
                             <div ref={messagesEndRef} />
                         </div>
 
-                        {/* Input Area */}
-                        <form onSubmit={handleSend} className="p-4 border-t bg-white">
+                        {/* Input */}
+                        <form onSubmit={handleSend} className="p-4 bg-white border-t">
                             <div className="flex gap-2">
-                                <input
-                                    value={inputValue}
-                                    onChange={(e) => setInputValue(e.target.value)}
-                                    onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) handleSend(e); }}
-                                    placeholder="Ask about our grid projects..."
-                                    className="flex-1 p-2.5 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm transition-all"
+                                <input value={inputValue} onChange={(e) => setInputValue(e.target.value)}
+                                    placeholder="Type your engineering query..."
+                                    className="flex-1 px-4 py-3 bg-slate-100 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 transition-all"
                                 />
-                                <button
-                                    type="submit"
-                                    disabled={!inputValue.trim() || isTyping}
-                                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white p-2.5 rounded-xl transition-all shadow-md active:scale-95"
+                                <button type="submit" disabled={!inputValue.trim() || isTyping}
+                                    className="bg-slate-900 text-white p-3 rounded-xl hover:bg-blue-600 transition-colors disabled:bg-slate-200"
                                 >
                                     <Send size={18} />
                                 </button>
                             </div>
-                            <p className="text-[10px] text-center text-slate-400 mt-2">Mission Power Land Assistant</p>
                         </form>
                     </motion.div>
                 )}
