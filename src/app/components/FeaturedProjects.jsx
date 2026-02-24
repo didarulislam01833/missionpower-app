@@ -3,21 +3,75 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ExternalLink, X, Zap } from 'lucide-react';
+import { X, Zap, Activity } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function FeaturedProjects() {
-    // 9 Projects with Universal Electrical Engineering Titles
+    // 9 Projects with Correct Technical Titles and Descriptions as per your photos
     const projects = [
-        { id: 1, title: "High-Voltage Transformer Assembly", image: "/assets/portfolio/p-1.jpg", category: "Manufacturing", desc: "Precision assembly of industrial-grade transformers ensuring peak performance and durability." },
-        { id: 2, title: "33/11kV Substation Engineering", image: "/assets/portfolio/p-2.jpg", category: "Substation", desc: "Comprehensive substation design and integration for national power distribution networks." },
-        { id: 3, title: "HT/LT Control Panel Board", image: "/assets/portfolio/p-3.jpg", category: "Engineering", desc: "Customized electrical control panels designed for maximum safety and load management." },
-        { id: 4, title: "Three-Phase Grid Solutions", image: "/assets/portfolio/p-4.jpg", category: "Power Grid", desc: "Deploying robust three-phase systems for large-scale industrial and commercial sectors." },
-        { id: 5, title: "Distribution Transformer Unit", image: "/assets/portfolio/p-5.jpg", category: "Transformer", desc: "Efficient power distribution units built to international standards for urban electrification." },
-        { id: 6, title: "Advanced Protection Systems", image: "/assets/portfolio/p-6.jpg", category: "Safety Gear", desc: "Implementing VCBs and protection relays to safeguard critical electrical infrastructure." },
-        { id: 7, title: "Industrial Switchgear Setup", image: "/assets/portfolio/p-7.jpg", category: "Manufacturing", desc: "High-precision switchgear assembly for stable and reliable power flow control." },
-        { id: 8, title: "Quality Assurance & Testing", image: "/assets/portfolio/p-8.jpg", category: "Compliance", desc: "Rigorous diagnostic and load testing performed on every unit before site deployment." },
-        { id: 9, title: "Power Infrastructure Project", image: "/assets/portfolio/p-9.jpg", category: "Turnkey", desc: "Complete turnkey electrical solutions from design to commissioning for national projects." }
+        {
+            id: 1,
+            title: "High-Voltage Bushings & Switches",
+            image: "/assets/portfolio/p-1.jpg",
+            category: "Substation Components",
+            desc: "Close-up of high-voltage bushings and disconnect switches on a power transformer. These components ensure electricity moves safely from high-voltage lines into the transformer."
+        },
+        {
+            id: 2,
+            title: "Three-Phase Distribution Transformer",
+            image: "/assets/portfolio/p-2.jpg",
+            category: "Finished Goods",
+            desc: "Standard three-phase distribution transformer shown as finished goods, engineered for reliable power distribution in industrial networks."
+        },
+        {
+            id: 3,
+            title: "High-Voltage Substation Switchyard",
+            image: "/assets/portfolio/p-3.jpg",
+            category: "Infrastructure",
+            desc: "Outdoor switchyard featuring instrument transformers and busbars designed to prevent electrical arcing and manage high-voltage routing."
+        },
+        {
+            id: 4,
+            title: "Three-Phase Transformer (Industrial View)",
+            image: "/assets/portfolio/p-4.jpg",
+            category: "Finished Goods",
+            desc: "Detailed industrial view of a three-phase distribution transformer finished unit, showcased from a specialized assembly angle."
+        },
+        {
+            id: 5,
+            title: "Single-Phase Transformer Fleet",
+            image: "/assets/portfolio/p-5.jpg",
+            category: "Distribution",
+            desc: "A fleet of single-phase pole-mounted transformers ready for dispatch, commonly utilized for residential and rural electrification projects."
+        },
+        {
+            id: 6,
+            title: "Final Assembly & Oil Filling",
+            image: "/assets/portfolio/p-6.jpg",
+            category: "Manufacturing",
+            desc: "The final assembly stage involving vacuum drying, oil filling, and the installation of bushings and critical external components."
+        },
+        {
+            id: 7,
+            title: "Impulse & Stability Testing",
+            image: "/assets/portfolio/p-7.jpg",
+            category: "Quality Assurance",
+            desc: "Rigorous high-voltage impulse testing performed in our facility to ensure equipment stability under extreme grid conditions."
+        },
+        {
+            id: 8,
+            title: "Single-Phase Pole-Mounted Unit",
+            image: "/assets/portfolio/p-8.jpg",
+            category: "Distribution",
+            desc: "A single-phase transformer installed on-site, providing efficient power distribution for localized grid requirements."
+        },
+        {
+            id: 9,
+            title: "Single-Phase Distribution Unit",
+            image: "/assets/portfolio/p-9.jpg",
+            category: "Distribution",
+            desc: "Precision-engineered single-phase transformer featuring advanced insulation and compact design for long-term reliability."
+        }
     ];
 
     const [selectedProject, setSelectedProject] = useState(null);
@@ -26,7 +80,7 @@ export default function FeaturedProjects() {
         <section className="py-24 bg-white overflow-hidden">
             <div className="container mx-auto px-6 lg:px-16">
 
-                {/* --- HEADER --- */}
+                {/* --- UPDATED HEADER --- */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -35,16 +89,16 @@ export default function FeaturedProjects() {
                 >
                     <div className="max-w-2xl">
                         <div className="flex items-center gap-2 text-blue-600 mb-4">
-                            <Zap size={20} fill="currentColor" />
-                            <span className="font-black uppercase tracking-[0.3em] text-xs">Project Portfolio</span>
+                            <Activity size={20} />
+                            <span className="font-black uppercase tracking-[0.3em] text-xs">Product Showcase</span>
                         </div>
                         <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight">
-                            Engineering Excellence <br />
-                            <span className="text-blue-600">Across Power Sectors</span>
+                            Precision Engineering <br />
+                            <span className="text-blue-600">& Power Distribution</span>
                         </h2>
                     </div>
-                    <Link href="/portfolio" className="text-slate-900 font-bold border-b-2 border-blue-600 pb-1 hover:text-blue-600 transition-colors">
-                        View All Projects
+                    <Link href="/contact" className="text-slate-900 font-bold border-b-2 border-blue-600 pb-1 hover:text-blue-600 transition-colors">
+                        Request a Custom Quote
                     </Link>
                 </motion.div>
 
@@ -60,14 +114,14 @@ export default function FeaturedProjects() {
                             className="group cursor-pointer"
                             onClick={() => setSelectedProject(project)}
                         >
-                            <div className="relative h-72 w-full rounded-2xl overflow-hidden shadow-md">
+                            <div className="relative h-72 w-full rounded-2xl overflow-hidden shadow-md bg-slate-50">
                                 <Image
                                     src={project.image}
                                     alt={project.title}
                                     fill
                                     className="object-cover transition-transform duration-1000 group-hover:scale-110"
                                 />
-                                <div className="absolute inset-0 bg-blue-900/20 group-hover:bg-blue-900/60 transition-all duration-500 flex items-center justify-center">
+                                <div className="absolute inset-0 bg-blue-900/10 group-hover:bg-blue-900/60 transition-all duration-500 flex items-center justify-center">
                                     <div className="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
                                         <span className="bg-white text-blue-600 px-6 py-2 rounded-full font-bold text-sm shadow-xl">View Details</span>
                                     </div>
@@ -102,8 +156,13 @@ export default function FeaturedProjects() {
                                 <X size={24} />
                             </button>
 
-                            <div className="relative h-64 md:h-80 w-full rounded-2xl overflow-hidden mb-8 shadow-inner">
-                                <Image src={selectedProject.image} alt={selectedProject.title} fill className="object-cover" />
+                            <div className="relative h-64 md:h-80 w-full rounded-2xl overflow-hidden mb-8 shadow-inner bg-slate-50">
+                                <Image
+                                    src={selectedProject.image}
+                                    alt={selectedProject.title}
+                                    fill
+                                    className="object-contain"
+                                />
                             </div>
 
                             <span className="text-blue-600 font-black text-xs uppercase tracking-widest">{selectedProject.category}</span>

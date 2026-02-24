@@ -4,22 +4,23 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 export default function TrustLogos() {
+    // Corrected logos list based on your provided organizations
     const logos = [
+        { name: "BREB", full: "Bangladesh Rural Electrification Board" },
         { name: "BPDB", full: "Bangladesh Power Development Board" },
-        { name: "PGCB", full: "Power Grid Company of Bangladesh" },
-        { name: "BREB", full: "Rural Electrification Board" },
-        { name: "LGED", full: "Local Govt. Engineering Dept" },
-        { name: "RHD", full: "Roads and Highways Department" },
-        { name: "BPC", full: "Bangladesh Petroleum Corp" },
-        { name: "DESCO", full: "Dhaka Electric Supply Co." },
-        { name: "DPDC", full: "Power Distribution Co." },
+        { name: "DESCO", full: "Dhaka Electric Supply Company Ltd." },
+        { name: "DPDC", full: "Dhaka Power Distribution Company Ltd." },
+        { name: "BMDA", full: "Barind Multipurpose Development Authority" },
+        { name: "BADC", full: "Bangladesh Agricultural Development Corp." },
+        { name: "PBS", full: "Palli Bidyut Samity (80+ Units)" },
     ];
 
-    const duplicatedLogos = [...logos, ...logos, ...logos];
+    // Duplicating the list to ensure the infinite scroll has enough content to loop seamlessly
+    const duplicatedLogos = [...logos, ...logos, ...logos, ...logos];
 
     return (
         <section className="py-24 bg-[#f8fafc] relative overflow-hidden">
-            {/* Background Gradient Accents - এই হালকা কালারগুলো সাইটকে দামী লুক দেয় */}
+            {/* Background Gradient Accents */}
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
             <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-50/50 blur-[100px] rounded-full" />
 
@@ -38,21 +39,21 @@ export default function TrustLogos() {
                         Powering <span className="text-blue-600">National</span> Infrastructure
                     </h3>
                     <p className="mt-4 text-slate-500 font-medium max-w-xl text-lg">
-                        Working alongside Bangladesh's most vital government organizations.
+                        Working alongside Bangladesh's most vital electrical and agricultural power organizations.
                     </p>
                 </div>
 
-                {/* Infinite Cinematic Slider (Go and Go) */}
+                {/* Infinite Cinematic Slider */}
                 <div className="relative mt-10">
-                    {/* Cinematic Side Blurs - দামী ফিনিশিং */}
+                    {/* Cinematic Side Blurs */}
                     <div className="absolute inset-y-0 left-0 w-40 md:w-72 bg-gradient-to-r from-[#f8fafc] via-[#f8fafc]/90 to-transparent z-20 pointer-events-none" />
                     <div className="absolute inset-y-0 right-0 w-40 md:w-72 bg-gradient-to-l from-[#f8fafc] via-[#f8fafc]/90 to-transparent z-20 pointer-events-none" />
 
                     <motion.div
                         className="flex gap-8 py-10"
-                        animate={{ x: ["0%", "-33.33%"] }}
+                        animate={{ x: ["0%", "-50%"] }} // Adjusted to 50% for a smoother loop with duplicated items
                         transition={{
-                            duration: 35,
+                            duration: 25, // Adjusted speed for better readability
                             ease: "linear",
                             repeat: Infinity
                         }}
@@ -64,18 +65,18 @@ export default function TrustLogos() {
                                 className="flex-shrink-0"
                             >
                                 {/* Logo Card - Glass Design */}
-                                <div className="w-56 h-32 flex flex-col items-center justify-center bg-white border border-slate-200 rounded-[2.5rem] shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_25px_50px_-12px_rgba(37,99,235,0.15)] hover:border-blue-400 transition-all duration-500 relative group overflow-hidden">
+                                <div className="w-64 h-36 flex flex-col items-center justify-center bg-white border border-slate-200 rounded-[2.5rem] shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_25px_50px_-12px_rgba(37,99,235,0.15)] hover:border-blue-400 transition-all duration-500 relative group overflow-hidden">
 
                                     {/* Hover Glow */}
                                     <div className="absolute top-0 left-0 w-full h-1 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
-                                    {/* Main Logo Text - স্পষ্ট এবং প্রিমিয়াম স্লেট কালার */}
+                                    {/* Main Logo Text */}
                                     <span className="text-3xl font-black text-slate-800 tracking-tighter group-hover:text-blue-600 transition-colors">
                                         {logo.name}
                                     </span>
 
-                                    <span className="mt-2 text-[8px] font-bold text-slate-400 uppercase tracking-widest text-center px-4 leading-tight opacity-100 group-hover:text-slate-600 transition-colors">
-                                        {logo.full || "Authorized Entity"}
+                                    <span className="mt-2 text-[9px] font-bold text-slate-400 uppercase tracking-widest text-center px-6 leading-tight group-hover:text-slate-600 transition-colors">
+                                        {logo.full}
                                     </span>
 
                                     {/* Small Decoration dot */}
@@ -89,8 +90,8 @@ export default function TrustLogos() {
                 {/* Bottom Trust Indicators */}
                 <div className="mt-16 pt-16 border-t border-slate-200 flex flex-wrap justify-center gap-12 md:gap-24 opacity-80">
                     <div className="text-center group cursor-default">
-                        <p className="text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">150+</p>
-                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Projects Completed</p>
+                        <p className="text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">80+</p>
+                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Active PBS Partners</p>
                     </div>
                     <div className="text-center group cursor-default">
                         <p className="text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">Class-A</p>

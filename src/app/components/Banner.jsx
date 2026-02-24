@@ -32,7 +32,7 @@ const WordByWord = ({ text, className, delay = 0 }) => {
 };
 
 const bannerData = [
-    { id: 1, image: "/assets/banner/banner-img-5.jpg", title: "Welcome to", highlight: "Mission Power Land Limited", description: "A leading transformer manufacturing company in Bangladesh, engineering the future of the national power grid.", cta: "OUR LEGACY" },
+    { id: 1, image: "/assets/banner/banner-img-3.jpg", title: "Welcome to", highlight: "Mission Power Land Limited", description: "A leading transformer manufacturing company in Bangladesh, engineering the future of the national power grid.", cta: "OUR LEGACY" },
     { id: 2, image: "/assets/banner/banner-img-6.jpg", title: "Precision Built", highlight: "High-Voltage Transformers", description: "Engineered for maximum efficiency and durability in the most demanding industrial environments.", cta: "VIEW PRODUCTS" },
     { id: 3, image: "/assets/banner/banner-img-7.jpg", title: "Advanced Grid", highlight: "Substation Solutions", description: "Specialized in 33/11KV substation equipment and comprehensive power distribution networks.", cta: "EXPLORE TECH" },
     { id: 4, image: "/assets/banner/banner-img-2.jpg", title: "Certified Quality", highlight: "Reliable Energy Delivery", description: "Our units undergo rigorous testing to ensure 100% safety and compliance with international standards.", cta: "QUALITY ASSURANCE" },
@@ -53,7 +53,7 @@ const Banner = () => {
 
             {/* --- SLIDER INDICATORS (ARROWS) IN THE MIDDLE --- */}
             {/* hidden md:flex ensures arrows don't cover text on mobile */}
-            <div className="absolute top-1/2 -translate-y-1/2 w-full hidden md:flex justify-between px-6 lg:px-12 z-[100] pointer-events-none">
+            <div className="absolute top-1/2 -translate-y-1/2 w-full hidden md:flex justify-between px-6 lg:px-12 `z-[100]` pointer-events-none">
                 <button
                     ref={prevRef}
                     className="pointer-events-auto w-14 h-14 rounded-full border border-white/20 flex items-center justify-center text-white bg-white/5 backdrop-blur-lg hover:bg-blue-600 hover:scale-110 transition-all duration-300 shadow-2xl"
@@ -101,7 +101,7 @@ const Banner = () => {
                                                 {item.description}
                                             </motion.p>
                                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.8 }}>
-                                                <Link href="/services" className="bg-blue-600 text-white px-8 py-4 font-bold inline-block hover:bg-blue-700 transition-all shadow-lg">
+                                                <Link href="/about" className="bg-blue-600 text-white px-8 py-4 font-bold inline-block hover:bg-blue-700 transition-all shadow-lg">
                                                     EXPLORE MORE →
                                                 </Link>
                                             </motion.div>

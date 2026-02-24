@@ -1,10 +1,20 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react'; // Added useState and useEffect
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function AboutSection() {
+    const [showComingSoon, setShowComingSoon] = useState(false);
+
+    // Auto-hide the message after 3 seconds
+    useEffect(() => {
+        if (showComingSoon) {
+            const timer = setTimeout(() => setShowComingSoon(false), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [showComingSoon]);
 
     const fadeInSide = (direction = "up", delay = 0) => ({
         hidden: {
@@ -35,7 +45,6 @@ export default function AboutSection() {
 
                     {/* Left Side: Transformer/Factory Composition */}
                     <div className="w-full lg:w-1/2 relative">
-
                         {/* Floating Experience Badge */}
                         <motion.div
                             initial={{ scale: 0, rotate: -45 }}
@@ -48,7 +57,7 @@ export default function AboutSection() {
                             <span className="text-[10px] font-bold uppercase tracking-tighter text-center">Years of<br />Excellence</span>
                         </motion.div>
 
-                        {/* Main Image Frame (Should show Factory/Transformer) */}
+                        {/* Main Image Frame */}
                         <motion.div
                             variants={fadeInSide("left", 0.2)}
                             initial="hidden"
@@ -62,32 +71,13 @@ export default function AboutSection() {
                                 className="h-full w-full relative"
                             >
                                 <Image
-                                    src="/assets/Stats/threePhase.jpg" // Changed to a real electrical image
+                                    src="/assets/Stats/threePhase.jpg"
                                     alt="Mission Power Land Transformer Factory"
                                     fill
                                     className="object-cover"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/40 to-transparent" />
                             </motion.div>
-                        </motion.div>
-
-                        {/* Animated Grid Dots */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 0.4 }}
-                            transition={{ delay: 1 }}
-                            className="absolute -bottom-10 -left-10 w-40 h-40 z-0"
-                        >
-                            <div className="grid grid-cols-4 gap-4">
-                                {[...Array(16)].map((_, i) => (
-                                    <motion.div
-                                        key={i}
-                                        animate={{ scale: [1, 1.2, 1] }}
-                                        transition={{ repeat: Infinity, duration: 3, delay: i * 0.1 }}
-                                        className="w-2 h-2 bg-blue-600 rounded-full"
-                                    />
-                                ))}
-                            </div>
                         </motion.div>
                     </div>
 
@@ -121,33 +111,7 @@ export default function AboutSection() {
                         >
                             Mission Power Land is a premier **Class-A Government Contractor** specializing
                             in the manufacturing of high-quality transformers and 33/11kV substation solutions.
-                            We are the architects of Bangladesh's modern power grid, delivering reliable energy
-                            infrastructure across the nation.
                         </motion.p>
-
-                        {/* Staggered Electrical Feature Cards */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {[
-                                { title: "Precision Manufacturing", label: "Transformer Specialist", icon: "⚡" },
-                                { title: "Grid Infrastructure", label: "Govt. Grade A", icon: "🏗️" }
-                            ].map((item, i) => (
-                                <motion.div
-                                    key={i}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: 0.6 + (i * 0.2) }}
-                                    whileHover={{ y: -8, backgroundColor: "#eff6ff" }}
-                                    className="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-4 transition-colors"
-                                >
-                                    <span className="text-3xl">{item.icon}</span>
-                                    <div>
-                                        <h4 className="font-bold text-slate-900 leading-none mb-1">{item.title}</h4>
-                                        <p className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">{item.label}</p>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
 
                         {/* Final CTA Action */}
                         <motion.div
@@ -155,15 +119,34 @@ export default function AboutSection() {
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: true }}
-                            className="flex flex-wrap gap-8 items-center pt-4"
+                            className="flex flex-wrap gap-8 items-center pt-4 relative"
                         >
-                            <motion.button
-                                whileHover={{ scale: 1.05, boxShadow: "0 20px 25px -5px rgb(59 130 246 / 0.5)" }}
-                                whileTap={{ scale: 0.95 }}
-                                className="px-10 py-5 bg-slate-900 text-white rounded-full font-black text-sm uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-100"
-                            >
-                                Download Technical Specs
-                            </motion.button>
+                            {/* DOWNLOAD BUTTON WITH NOTIFICATION */}
+                            <div className="relative group">
+                                <AnimatePresence>
+                                    {showComingSoon && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                                            animate={{ opacity: 1, y: -60, scale: 1 }}
+                                            exit={{ opacity: 0, y: 10, scale: 0.9 }}
+                                            className="absolute left-0 right-0 mx-auto w-max px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-lg shadow-xl z-50 pointer-events-none"
+                                        >
+                                            🚀 Coming Soon! We're updating our profile.
+                                            {/* Small Arrow */}
+                                            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-blue-600 rotate-45" />
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+
+                                <motion.button
+                                    onClick={() => setShowComingSoon(true)}
+                                    whileHover={{ scale: 1.05, boxShadow: "0 20px 25px -5px rgb(59 130 246 / 0.5)" }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="px-10 py-5 bg-slate-900 text-white rounded-full font-black text-sm uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-100"
+                                >
+                                    Download Company Profile
+                                </motion.button>
+                            </div>
 
                             <div className="flex items-center gap-4">
                                 <div className="flex -space-x-3">
@@ -179,14 +162,13 @@ export default function AboutSection() {
                                         </motion.div>
                                     ))}
                                 </div>
-                                <div className="flex flex-col">
-                                    <span className="text-xs font-black text-slate-900 uppercase tracking-tighter">Engineering Team</span>
-                                    <span className="text-[10px] font-bold text-blue-600 underline cursor-pointer hover:text-slate-900 transition-colors">Licensed BPDB/BREB Experts</span>
-                                </div>
+                                <Link href="/about#employee" className="flex flex-col group cursor-pointer">
+                                    <span className="text-xs font-black text-slate-900 uppercase tracking-tighter group-hover:text-blue-600 transition-colors">Engineering Team</span>
+                                    <span className="text-[10px] font-bold text-blue-600 underline group-hover:text-slate-900 transition-colors">Licensed BPDB/BREB Experts</span>
+                                </Link>
                             </div>
                         </motion.div>
                     </div>
-
                 </div>
             </div>
         </section>
