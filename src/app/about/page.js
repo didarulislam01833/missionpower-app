@@ -38,7 +38,7 @@ export default function AboutPage() {
         others: [
             { name: "Md. Zahedul Islam", position: "Executive Director", phone: "01810098905", email: "zahedbandt@gmail.com", image: "/assets/employee/6.png" },
             { name: "Md. Mohiuddin Bhuiyan", position: "General Manager", phone: "01810098907", image: "/assets/employee/4.jpg" },
-            { name: "Md. Sohel", position: "Manager (Business Dev.)", phone: "01810098907", image: "/assets/employee/2.jpg" },
+            { name: "Md. Sohel", position: "Manager (Business Development)", phone: "018100989009", image: "/assets/employee/2.jpg" },
             { name: "Md. Saiful Arefin", position: "Manager (Marketing)", phone: "01810098911", image: "/assets/employee/1.jpg" },
         ]
     };

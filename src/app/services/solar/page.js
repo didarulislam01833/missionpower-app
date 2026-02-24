@@ -6,207 +6,181 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import {
     Sun, Battery, Zap, BarChart3, ArrowRight, ShieldCheck,
-    Settings, PenTool, ClipboardCheck, Activity, Droplets, ShieldAlert
+    Droplets, ShieldAlert, Plus
 } from 'lucide-react';
 
 const SolarPage = () => {
-    const targetRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: targetRef,
-        offset: ["start start", "end end"]
-    });
-
     const gallery = [
-        "/assets/solar/solar1.jpg",
-        "/assets/solar/solar2.jpg",
-        "/assets/solar/solar3.jpg",
-        "/assets/solar/solar4.jpg",
-        "/assets/solar/solar5.jpg",
+        { url: "/assets/solar/solar1.jpg", title: "Industrial Plant A", location: "Dhaka" },
+        { url: "/assets/solar/solar2.jpg", title: "Rooftop Array B", location: "Chittagong" },
+        { url: "/assets/solar/solar3.jpg", title: "Grid Solution C", location: "Gazipur" },
+        { url: "/assets/solar/solar4.jpg", title: "Commercial PV D", location: "Sylhet" },
     ];
 
-    // এনিমেশন সেটিংস
     const fadeInUp = {
-        initial: { opacity: 0, y: 30 },
+        initial: { opacity: 0, y: 40 },
         whileInView: { opacity: 1, y: 0 },
         viewport: { once: true },
-        transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+        transition: { duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }
     };
 
     return (
-        <main ref={targetRef} className="bg-white text-slate-900 min-h-screen overflow-x-hidden pt-20">
+        <main className="bg-white text-slate-900 min-h-screen selection:bg-blue-100">
 
-            {/* --- HERO: DYNAMIC SCALE ANIMATION --- */}
-            <section className="relative h-[90vh] flex items-center justify-center bg-slate-50 overflow-hidden px-6">
-                <motion.div
-                    initial={{ opacity: 0, scale: 1.1 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1.5 }}
-                    className="absolute inset-0 z-0"
-                >
-                    <Image src={gallery[0]} alt="Hero" fill className="object-cover opacity-20" />
-                </motion.div>
-
-                <div className="container mx-auto text-center relative z-10">
-                    <motion.div {...fadeInUp}>
-                        <h1 className="text-[10vw] md:text-[7vw] font-black leading-none tracking-tighter uppercase mb-6">
-                            Solar <span className="text-blue-600 italic font-light">Evolved.</span>
+            {/* --- HERO: MINIMALIST & BOLD --- */}
+            <section className="relative h-[85vh] flex items-center pt-20 overflow-hidden">
+                <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 1 }}
+                    >
+                        <h1 className="text-[clamp(3rem,8vw,6rem)] font-bold leading-[0.9] tracking-tighter mb-8">
+                            SOLAR <br />
+                            <span className="font-light italic text-blue-600">ENGINEERING</span><br />
+                            FOR INDUSTRY.
                         </h1>
-                        <p className="max-w-xl mx-auto text-slate-500 text-lg md:text-xl font-light mb-10 leading-relaxed">
-                            We don't just install panels. We engineer high-yield energy ecosystems for the next generation of industry.
+                        <p className="max-w-md text-slate-500 text-lg mb-10 font-light">
+                            Mission Powerland delivers high-yield energy ecosystems. Precision-built, data-driven, and guaranteed for 25 years.
                         </p>
-                        <div className="flex flex-wrap justify-center gap-4">
-                            <button className="bg-slate-900 text-white px-10 py-5 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-blue-600 transition-all duration-500">
-                                View Technical Specs
+                        <div className="flex items-center gap-6">
+                            <button className="bg-slate-900 text-white px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-blue-600 transition-all">
+                                Get an Audit
                             </button>
+                            <div className="h-px w-12 bg-slate-200" />
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Scroll to Explore</span>
                         </div>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 1.2 }}
+                        className="relative h-[500px] rounded-[2rem] overflow-hidden shadow-2xl shadow-blue-100"
+                    >
+                        <Image src={gallery[0].url} alt="Main" fill className="object-cover" priority />
                     </motion.div>
                 </div>
             </section>
 
-            {/* --- 01. THE CORE SERVICES (EXPANDED) --- */}
-            <section className="py-32 container mx-auto px-6">
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-slate-100 border border-slate-100">
-                    {[
-                        { icon: <Sun />, title: "PV System Design", desc: "Customized 3D modeling and shadow analysis for maximum yield." },
-                        { icon: <Zap />, title: "Grid Integration", desc: "Seamless synchronization with PDB/DESCO/DPDC national grids." },
-                        { icon: <Battery />, title: "Battery Storage", desc: "Lithium-ion BESS solutions for 24/7 industrial uptime." },
-                        { icon: <PenTool />, title: "Structural Analysis", desc: "Roof load-bearing tests ensuring structural safety and integrity." },
-                        { icon: <BarChart3 />, title: "Smart Telemetry", desc: "IoT-based remote monitoring with AI performance alerts." },
-                        { icon: <ShieldCheck />, title: "O&M Services", desc: "25-year performance guarantee and regular system audits." }
-                    ].map((item, idx) => (
-                        <motion.div
-                            key={idx}
-                            whileHover={{ backgroundColor: "#f8fafc" }}
-                            className="bg-white p-12 group transition-all duration-500 cursor-default"
-                        >
-                            <div className="text-blue-600 mb-8 group-hover:rotate-12 transition-transform">
-                                {React.cloneElement(item.icon, { size: 36, strokeWidth: 1 })}
-                            </div>
-                            <h3 className="text-xl font-bold mb-4 tracking-tight uppercase">{item.title}</h3>
-                            <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
-                        </motion.div>
-                    ))}
+            {/* --- 01. THE SERVICES: CLEAN WHITE CARDS --- */}
+            <section className="py-32 bg-slate-50/50">
+                <div className="container mx-auto px-6">
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                        <h2 className="text-4xl font-bold tracking-tighter uppercase">Core <br />Specialization</h2>
+                        <p className="max-w-xs text-slate-400 text-sm">Our technical expertise spans the entire lifecycle of solar energy assets.</p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {[
+                            { icon: <Sun />, title: "PV System Design", desc: "Advanced shadow analysis and 3D terrain modeling." },
+                            { icon: <Zap />, title: "Grid Sync", desc: "Expert integration with national power infrastructure." },
+                            { icon: <Battery />, title: "Storage", desc: "BESS solutions for uninterruptible operations." },
+                        ].map((item, idx) => (
+                            <motion.div
+                                key={idx}
+                                {...fadeInUp}
+                                whileHover={{ y: -10 }}
+                                className="bg-white p-10 rounded-3xl shadow-sm border border-slate-100 group"
+                            >
+                                <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                    {React.cloneElement(item.icon, { size: 24 })}
+                                </div>
+                                <h3 className="text-xl font-bold mb-3 uppercase tracking-tight">{item.title}</h3>
+                                <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
             </section>
 
-            {/* --- 02. UNIQUE SCROLL REVEAL SECTION --- */}
-            <section className="py-32 bg-slate-900 text-white">
+            {/* --- 02. SMOOTH PROJECT GALLERY: STAGGERED REVEAL --- */}
+            <section className="py-32">
                 <div className="container mx-auto px-6">
-                    <div className="grid lg:grid-cols-2 gap-24 items-center">
-                        <div className="relative h-[600px] rounded-sm overflow-hidden group">
-                            <Image src={gallery[1]} alt="Engineering" fill className="object-cover transition-transform duration-1000 group-hover:scale-105" />
-                            <div className="absolute inset-0 bg-blue-600/10" />
-                        </div>
-                        <div className="space-y-12">
-                            <h2 className="text-5xl font-light leading-tight">Beyond <br /><span className="text-blue-400 font-bold uppercase tracking-tighter">Installation.</span></h2>
+                    <div className="text-center mb-20">
+                        <span className="text-blue-600 font-bold text-[10px] uppercase tracking-[0.4em]">Portfolio</span>
+                        <h2 className="text-5xl font-bold tracking-tighter uppercase mt-4">Selected Works</h2>
+                    </div>
 
-                            <div className="space-y-8">
-                                {[
-                                    { step: "01", t: "Feasibility", d: "Deep site audits and irradiation mapping." },
-                                    { step: "02", t: "Procurement", d: "Sourcing Tier-1 Bloomberg listed PV modules." },
-                                    { step: "03", t: "Deployment", d: "Precision installation by Class-A engineers." }
-                                ].map((step, i) => (
-                                    <motion.div
-                                        key={i}
-                                        initial={{ x: 50, opacity: 0 }}
-                                        whileInView={{ x: 0, opacity: 1 }}
-                                        transition={{ delay: i * 0.2 }}
-                                        className="flex gap-6 border-b border-white/10 pb-6"
-                                    >
-                                        <span className="text-blue-500 font-mono text-xl">{step.step}</span>
-                                        <div>
-                                            <h4 className="font-bold uppercase tracking-widest mb-2">{step.t}</h4>
-                                            <p className="text-slate-400 text-sm">{step.d}</p>
+                    <div className="grid md:grid-cols-2 gap-12">
+                        {gallery.map((project, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: i * 0.1 }}
+                                className="group cursor-pointer"
+                            >
+                                <div className="relative h-[400px] w-full rounded-[2rem] overflow-hidden mb-6">
+                                    <Image
+                                        src={project.url}
+                                        alt={project.title}
+                                        fill
+                                        className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                                    />
+                                    <div className="absolute top-6 right-6">
+                                        <div className="w-12 h-12 bg-white/90 backdrop-blur rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <Plus size={20} />
                                         </div>
-                                    </motion.div>
+                                    </div>
+                                </div>
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <h4 className="text-xl font-bold uppercase tracking-tight">{project.title}</h4>
+                                        <p className="text-slate-400 text-sm uppercase font-medium tracking-widest">{project.location}</p>
+                                    </div>
+                                    <ArrowRight className="text-slate-300 group-hover:text-blue-600 transition-colors" />
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* --- 03. TECHNICAL SPECS: MINIMALIST TABLE --- */}
+            <section className="py-32 bg-slate-900 text-white rounded-[3rem] mx-4">
+                <div className="container mx-auto px-6">
+                    <div className="grid lg:grid-cols-2 gap-20 items-center">
+                        <div>
+                            <h2 className="text-4xl font-bold tracking-tighter uppercase mb-8">Engineering <br />Standards</h2>
+                            <div className="space-y-6">
+                                {[
+                                    { label: "Module Type", val: "Tier-1 Bi-facial Monocrystalline" },
+                                    { label: "Inverter", val: "String/Central High-Efficiency" },
+                                    { label: "Mounting", val: "Hot-dip Galvanized / Aluminum" },
+                                    { label: "Monitoring", val: "SCADA & Cloud-based IoT" }
+                                ].map((spec, idx) => (
+                                    <div key={idx} className="flex justify-between border-b border-white/10 pb-4">
+                                        <span className="text-slate-400 text-sm uppercase tracking-widest">{spec.label}</span>
+                                        <span className="font-bold text-sm">{spec.val}</span>
+                                    </div>
                                 ))}
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="p-8 bg-white/5 rounded-3xl border border-white/10">
+                                <h5 className="text-3xl font-bold mb-2">25Y</h5>
+                                <p className="text-[10px] text-slate-400 uppercase tracking-widest">Warranty</p>
+                            </div>
+                            <div className="p-8 bg-blue-600 rounded-3xl">
+                                <h5 className="text-3xl font-bold mb-2">99%</h5>
+                                <p className="text-[10px] text-blue-100 uppercase tracking-widest">Efficiency</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* --- 03. MAINTENANCE & PROTECTION (NEW CONTENT) --- */}
-            <section className="py-32 container mx-auto px-6">
-                <div className="text-center mb-20">
-                    <h2 className="text-sm font-bold text-blue-600 uppercase tracking-[0.5em] mb-4">Lifecycle Care</h2>
-                    <h3 className="text-4xl font-black uppercase tracking-tighter">Asset Protection</h3>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-8">
-                    <motion.div whileHover={{ y: -10 }} className="p-10 bg-slate-50 flex gap-8 rounded-2xl">
-                        <Droplets className="text-blue-600 shrink-0" size={40} />
-                        <div>
-                            <h4 className="font-bold mb-3 uppercase tracking-wider">Automated Cleaning</h4>
-                            <p className="text-slate-600 text-sm leading-relaxed">Robotic or high-pressure water-fed pole systems to ensure panels maintain 100% efficiency in dusty environments.</p>
-                        </div>
-                    </motion.div>
-                    <motion.div whileHover={{ y: -10 }} className="p-10 bg-slate-50 flex gap-8 rounded-2xl">
-                        <ShieldAlert className="text-blue-600 shrink-0" size={40} />
-                        <div>
-                            <h4 className="font-bold mb-3 uppercase tracking-wider">Lightning Protection</h4>
-                            <p className="text-slate-600 text-sm leading-relaxed">Advanced ESE lightning arrestors and surge protection devices (SPD) to safeguard your multi-million dollar investment.</p>
-                        </div>
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* --- 04. HORIZONTAL PROJECT SHOWCASE --- */}
-            <section className="bg-slate-50 py-32 overflow-hidden">
-                <div className="container mx-auto px-6 mb-12 flex justify-between items-end">
-                    <h2 className="text-3xl font-black uppercase italic tracking-tighter">Our Footprint</h2>
-                    <div className="text-slate-400 text-[10px] uppercase font-bold tracking-[0.3em]">Scroll Experience</div>
-                </div>
-
-                <motion.div
-                    style={{ x: useTransform(scrollYProgress, [0.5, 1], [0, -1000]) }}
-                    className="flex gap-8 px-6"
-                >
-                    {gallery.map((img, i) => (
-                        <div key={i} className="relative w-[500px] h-[350px] shrink-0 overflow-hidden group">
-                            <Image src={img} alt="Project" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
-                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <span className="text-white text-xs font-bold uppercase tracking-widest border border-white p-4">View Project Case Study</span>
-                            </div>
-                        </div>
-                    ))}
-                </motion.div>
-            </section>
-
-            {/* --- 05. DYNAMIC STATS --- */}
-            <section className="py-32 bg-white text-center">
-                <div className="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12">
-                    {[
-                        { val: "25MW+", t: "Installed Capacity" },
-                        { id: "02", val: "99.9%", t: "System Uptime" },
-                        { id: "03", val: "150+", t: "Projects Delivered" },
-                        { id: "04", val: "25Y", t: "Linear Warranty" }
-                    ].map((stat, idx) => (
-                        <div key={idx} className="space-y-2">
-                            <motion.div
-                                initial={{ scale: 0.5, opacity: 0 }}
-                                whileInView={{ scale: 1, opacity: 1 }}
-                                className="text-5xl font-black text-slate-900 tracking-tighter"
-                            >
-                                {stat.val}
-                            </motion.div>
-                            <div className="text-[10px] text-blue-600 font-bold uppercase tracking-widest">{stat.t}</div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* --- FINAL CALL TO ACTION --- */}
-            <section className="py-40 bg-slate-900 flex justify-center items-center text-center px-6">
-                <div>
-                    <h2 className="text-6xl md:text-9xl font-black text-white/5 uppercase leading-none mb-[-2rem]">Precision</h2>
-                    <h3 className="text-4xl md:text-6xl font-black text-white uppercase relative z-10 mb-12">Built to Last.</h3>
-                    <Link href="/contact">
-                        <button className="bg-blue-600 text-white px-16 py-6 rounded-full font-bold uppercase text-xs tracking-[0.3em] hover:bg-white hover:text-slate-900 transition-all duration-500">
-                            Request Technical Audit
-                        </button>
+            {/* --- CTA --- */}
+            <section className="py-40 text-center">
+                <motion.div {...fadeInUp}>
+                    <h2 className="text-6xl md:text-8xl font-bold tracking-tighter uppercase mb-12">
+                        Start your <br /><span className="text-blue-600 italic font-light">Transition.</span>
+                    </h2>
+                    <Link href="/contact" className="inline-block border-2 border-slate-900 px-12 py-5 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-slate-900 hover:text-white transition-all">
+                        Technical Consultation
                     </Link>
-                </div>
+                </motion.div>
             </section>
         </main>
     );

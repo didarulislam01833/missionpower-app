@@ -35,8 +35,8 @@ const Navbar = () => {
                 // আপনার ফোল্ডার স্ট্রাকচার অনুযায়ী পাথগুলো সেট করা হয়েছে
                 { name: 'Power Divison', href: '/services/powerGrid', icon: <Zap size={16} />, desc: 'Substations & HV engineering.' },
                 { name: 'Solar Solutions', href: '/services/solar', icon: <Shield size={16} />, desc: 'Renewable infrastructure.' },
-                { name: 'Civil Works', href: '/services/civil', icon: <Building2 size={16} />, desc: 'Industrial site development.' },
-                { name: 'Infrastructure', href: '/services/infrastructure', icon: <LayoutGrid size={16} />, desc: 'National scale projects.' },
+                { name: 'Land & Infrastructure', href: '/services/civil', icon: <Building2 size={16} />, desc: 'Industrial site development.' },
+                { name: 'National Infrastructure', href: '/services/public', icon: <LayoutGrid size={16} />, desc: 'National scale projects.' },
             ]
         },
         { name: 'Projects', href: '/portfolio' },
