@@ -39,7 +39,7 @@ const Navbar = () => {
                 { name: 'National Infrastructure', href: '/services/public', icon: <LayoutGrid size={16} />, desc: 'National scale projects.' },
             ]
         },
-        { name: 'Projects', href: '/portfolio' },
+        { name: 'Manufacturing Excellence', href: '/manufacture-excellence' },
         { name: 'Contact', href: '/contact' },
     ];
 
