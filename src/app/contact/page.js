@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // useEffect যোগ করা হয়েছে
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ContactPage() {
@@ -8,11 +8,21 @@ export default function ContactPage() {
     const [errorMessage, setErrorMessage] = useState("");
     const [showToast, setShowToast] = useState(false);
 
-    //  Background Map: Search-based URL to ensure it never says "Link Not Found"
-    const bgMapEmbed = "https://maps.google.com/maps?q=Mission%20Power%20Land%20Limited%20Uttara%20Sector%207&t=&z=15&ie=UTF8&iwloc=&output=embed";
+    // Form States for Auto-fill
+    const [subject, setSubject] = useState("General Inquiry");
+    const [message, setMessage] = useState("");
 
-    //  The specific link you requested for the button
+    const bgMapEmbed = "https://maps.google.com/maps?q=Mission%20Power%20Land%20Limited%20Uttara%20Sector%207&t=&z=15&ie=UTF8&iwloc=&output=embed";
     const userPreferredLink = "https://www.google.com/maps/@23.8690351,90.3952735,3a,89.9y,280.18h,76.66t/data=!3m7!1e1!3m5!1s2864TbyepjmFZ7I30PYJ4w!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D13.340000000000003%26panoid%3D2864TbyepjmFZ7I30PYJ4w%26yaw%3D280.18!7i16384!8i8192?entry=ttu&g_ep=EgoyMDI2MDEyOC4wIKXMDSoKLDEwMDc5MjA3MUgBUAM%3D";
+
+    // Smart Logic: URL থেকে চেক করবে এটি কি সাধারণ কন্টাক্ট নাকি কোটেশন
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('type') === 'quote') {
+            setSubject("Request for Quotation");
+            setMessage("I am interested in a technical quotation.\nProduct Name: \nRequired Capacity (kVA): \nQuantity: ");
+        }
+    }, []);
 
     const validateForm = (data) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,8 +41,8 @@ export default function ContactPage() {
             name: e.target.name.value.trim(),
             email: e.target.email.value.trim(),
             phone: e.target.phone.value.trim(),
-            subject: e.target.subject.value.trim(),
-            message: e.target.message.value.trim(),
+            subject: subject, // State থেকে নেওয়া হচ্ছে
+            message: message, // State থেকে নেওয়া হচ্ছে
         };
 
         const error = validateForm(formData);
@@ -54,6 +64,7 @@ export default function ContactPage() {
             if (res.ok && result.success) {
                 setStatus("success");
                 e.target.reset();
+                setMessage("");
                 setTimeout(() => setStatus("idle"), 5000);
             } else {
                 setStatus("error");
@@ -85,7 +96,6 @@ export default function ContactPage() {
                 onMouseLeave={() => setShowToast(false)}
                 className="relative h-screen w-full overflow-hidden"
             >
-                {/* Background Map - Using the Embed search string */}
                 <div className="absolute inset-0 z-0 grayscale contrast-125 opacity-30">
                     <iframe
                         src={bgMapEmbed}
@@ -113,13 +123,7 @@ export default function ContactPage() {
                                 <p className="text-sm font-bold text-slate-700 leading-tight">Sector 07, Road 16, House 01, <br /> Uttara, Dhaka-1230</p>
                             </div>
 
-                            {/* DIRECTIONS BUTTON - Opens your preferred Link */}
-                            <a
-                                href={userPreferredLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex flex-col items-center group"
-                            >
+                            <a href={userPreferredLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group">
                                 <div className="bg-blue-600 p-3 rounded-full text-white group-hover:bg-slate-950 transition-colors shadow-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                                         <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
@@ -134,11 +138,30 @@ export default function ContactPage() {
                                 <input required name="name" type="text" placeholder="Full Name" className="bg-slate-100 rounded-xl p-3 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder:text-slate-400" />
                                 <input required name="email" type="email" placeholder="Email" className="bg-slate-100 rounded-xl p-3 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder:text-slate-400" />
                             </div>
-                            <div className="grid grid-cols-2 gap-3">
-                                <input required name="phone" type="tel" placeholder="Phone" className="bg-slate-100 rounded-xl p-3 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder:text-slate-400" />
-                                <input required name="subject" type="text" placeholder="Subject" className="bg-slate-100 rounded-xl p-3 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder:text-slate-400" />
+
+                            <div className="grid grid-cols-1 gap-3">
+                                <input required name="phone" type="tel" placeholder="Phone Number" className="bg-slate-100 rounded-xl p-3 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black placeholder:text-slate-400" />
+
+                                {/* SUBJECT DROPDOWN */}
+                                <select
+                                    value={subject}
+                                    onChange={(e) => setSubject(e.target.value)}
+                                    className="bg-slate-100 rounded-xl p-3 text-xs font-bold outline-none focus:ring-2 focus:ring-blue-600 text-black cursor-pointer"
+                                >
+                                    <option value="General Inquiry">General Inquiry</option>
+                                    <option value="Request for Quotation">Request for Quotation (RFQ)</option>
+                                    <option value="Technical Support">Technical Support</option>
+                                    <option value="Others">Others</option>
+                                </select>
                             </div>
-                            <textarea required name="message" placeholder="Project Details" className="w-full bg-slate-100 rounded-xl p-3 text-xs font-bold h-24 outline-none focus:ring-2 focus:ring-blue-600 resize-none text-black placeholder:text-slate-400"></textarea>
+
+                            <textarea
+                                required
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                placeholder="How can we help you?"
+                                className="w-full bg-slate-100 rounded-xl p-3 text-xs font-bold h-24 outline-none focus:ring-2 focus:ring-blue-600 resize-none text-black placeholder:text-slate-400"
+                            ></textarea>
 
                             <button
                                 type="submit"

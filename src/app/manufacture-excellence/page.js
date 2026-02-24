@@ -3,112 +3,140 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const manufacturingSteps = [
-    { title: "Raw Material Sourcing", file: "Raw Metarials Store.JPG", desc: "আমরা সর্বোচ্চ মানের কপার এবং CRGO সিলিকন স্টিল সংগ্রহ করি যা ট্রান্সফরমারের দীর্ঘস্থায়িত্ব নিশ্চিত করে।" },
-    { title: "Copper Up-casting", file: "Copper Up-casting Machine.JPG", desc: "নিজস্ব প্রযুক্তিতে বিশুদ্ধ কপার রড প্রক্রিয়াকরণ, যা বিদ্যুৎ অপচয় রোধ করে।" },
-    { title: "Insulation Covering", file: "Copper Strip Paper Covering Machine.jpg", desc: "উচ্চমানের ইনসুলেশন পেপার ব্যবহার করে কপার স্ট্রিপ ঢেকে দেওয়া হয় যাতে ইন্টার-টার্ন শর্ট সার্কিট না হয়।" },
-    { title: "Super Enameling", file: "Super Enameling Machine.JPG", desc: "তারের ওপর বিশেষ এনামেল কোটিং দেওয়া হয় যা উচ্চ তাপমাত্রায় ট্রান্সফরমারকে সুরক্ষিত রাখে।" },
-    { title: "Precision Winding", file: "Winding Section.JPG", desc: "কম্পিউটারাইজড টেনশন কন্ট্রোল মেশিনে কয়েল উইন্ডিং করা হয় যা সঠিক ভোল্টেজ রেশিও বজায় রাখে।" },
-    { title: "CRGO Slitting", file: "CRGO Slitting Machine.JPG", desc: "অত্যাধুনিক স্লিটিং মেশিনে কোর শিটগুলোকে নির্ভুল মাপে কাটা হয়।" },
-    { title: "Right Angle Cutting", file: "CRGO Right Angle Cutting Machine.JPG", desc: "কোর জয়েন্টগুলোতে লস কমানোর জন্য প্রতিটি শিটকে সঠিক কোণে কাটা হয়।" },
-    { title: "Vacuum Annealing", file: "CRGO Vacuum Annealing Furnace.JPG", desc: "ভ্যাকুয়াম ফার্নেসে কোরগুলোকে হিট ট্রিটমেন্ট করা হয়, যা নো-লোড লস সর্বনিম্ন পর্যায়ে নিয়ে আসে।" },
-    { title: "Core & Coil Assembly", file: "Core & Coil Assembly.JPG", desc: "কোর এবং কয়েলকে নিখুঁতভাবে একত্রিত করে ট্রান্সফরমারের মূল কাঠামো তৈরি করা হয়।" },
-    { title: "Assembly Finalization", file: "Core & Coil Final Work.JPG", desc: "ট্যাঙ্কিং করার আগে সব কানেকশন এবং ইনসুলেশন পুনরায় পরীক্ষা করা হয়।" },
-    { title: "Tank Fabrication", file: "Tank Welding Machine.JPG", desc: "ভারী স্টিল প্লেট দিয়ে লিক-প্রুফ ট্যাঙ্ক তৈরি করা হয় যা সব ধরনের আবহাওয়া সহ্য করতে সক্ষম।" },
-    { title: "Powder Coating", file: "Tank Powder Coating Machine.jpg", desc: "ইলেক্ট্রোস্ট্যাটিক পাউডার কোটিং দেওয়া হয় যা ২০ বছরেরও বেশি সময় মরিচা রোধ করে।" },
-    { title: "Final Tanking", file: "Final Assembly.JPG", desc: "ট্যাঙ্কের ভেতরে কোর-কয়েল স্থাপন করে উচ্চমানের ট্রান্সফরমার অয়েল দিয়ে পূর্ণ করা হয়।" },
-    { title: "Impulse Testing", file: "Impluse Test.JPG", desc: "বজ্রপাত বা হাই-ভোল্টেজ সার্জ থেকে সুরক্ষার জন্য আমাদের ল্যাবে ইমপালস টেস্ট করা হয়।" },
-    { title: "Technical Inspection", file: "Testing Section.JPG", desc: "BPDB ও BREB এর মানদণ্ড অনুযায়ী প্রতিটি ট্রান্সফরমারের লোড ও লস টেস্ট করা হয়।" },
-    { title: "Quality Audit", file: "p-1.jpg", desc: "শিপমেন্টের আগে প্রতিটি ইউনিটের কোয়ালিটি সার্টিফিকেট নিশ্চিত করা হয়।" },
-    { title: "Grid Integration", file: "p-11.jpg", desc: "জাতীয় গ্রিডের সাবস্টেশনগুলোতে আমাদের উৎপাদিত ইউনিটের সফল পদচারণা।" },
-    { title: "Installation Ready", file: "p-12.jpg", desc: "মাঠে স্থাপনের জন্য প্রস্তুত আমাদের উচ্চমানের সাবস্টেশন ইকুইপমেন্ট।" },
-    { title: "Final Dispatch", file: "p-13.jpg", desc: "পুরো দেশজুড়ে বিদ্যুৎ সরবরাহের উদ্দেশ্যে ট্রাক লোডিং এবং ডেলিভারি প্রক্রিয়া।" },
-    { title: "Plant Excellence", file: "banner-img-2.jpg", desc: "আমাদের সুবিশাল প্রোডাকশন ফ্লোর যেখানে নিয়মিত কয়েকশ ট্রান্সফরমার তৈরি হচ্ছে।" }
+const manufacturingItems = [
+    { title: "Raw Material Sourcing", file: "Raw Metarials Store.JPG", desc: "Sourcing premium-grade CRGO silicon steel and high-purity copper to ensure maximum efficiency." },
+    { title: "Copper Up-casting", file: "Copper Up-casting Machine.JPG", desc: "In-house processing of oxygen-free copper rods to maintain superior conductivity standards." },
+    { title: "Insulation Covering", file: "Copper Strip Paper Covering Machine.jpg", desc: "Precision paper insulation for copper strips to prevent inter-turn short circuits." },
+    { title: "Super Enameling", file: "Super Enameling Machine.JPG", desc: "Application of heat-resistant enamel coating for superior winding protection." },
+    { title: "Precision Coil Winding", file: "Winding Section.JPG", desc: "Automated tension-controlled winding ensuring exact voltage ratios and magnetic flux." },
+    { title: "CRGO Slitting Line", file: "CRGO Slitting Machine.JPG", desc: "High-speed precision slitting of core steel to meet exact design specifications." },
+    { title: "Right Angle Cutting", file: "CRGO Right Angle Cutting Machine.JPG", desc: "CNC-controlled right-angle cutting to minimize core gaps and energy losses." },
+    { title: "Vacuum Annealing", file: "CRGO Vacuum Annealing Furnace.JPG", desc: "Restoring magnetic properties of the core via specialized vacuum heat treatment." },
+    { title: "Core & Coil Assembly", file: "Core & Coil Assembly.JPG", desc: "The critical integration of the active core with the precision-wound coil structure." },
+    { title: "Core-Coil Calibration", file: "Core & Coil Final Work.JPG", desc: "Final technical calibration and insulation checks prior to tank insertion." },
+    { title: "Heavy Tank Welding", file: "Tank Welding Machine.JPG", desc: "Fabrication of hermetically sealed, leak-proof steel tanks for long-term durability." },
+    { title: "Elite Powder Coating", file: "Tank Powder Coating Machine.jpg", desc: "Electrostatic powder finish providing 20+ years of anti-corrosive protection." },
+    { title: "Tanking & Oil Filling", file: "Final Assembly.JPG", desc: "Vacuum tanking process followed by high-grade dielectric oil filling." },
+    { title: "Impulse Surge Lab", file: "Impluse Test.JPG", desc: "Simulating lightning strikes to verify high-voltage surge resistance." },
+    { title: "Technical Diagnostics", file: "Testing Section.JPG", desc: "Full diagnostic testing including load loss, no-load loss, and pressure tests." },
+    { title: "Quality Audit Control", file: "p-1.jpg", desc: "Rigorous final inspection and quality certification before product release." },
+    { title: "Substation Installation", file: "p-11.jpg", desc: "Successful integration and deployment of units within national power substations." },
+    { title: "Field-Ready Deployment", file: "p-12.jpg", desc: "Standardized units ready for rural and urban grid distribution." },
+    { title: "Finished Single-Phase Units", file: "p-13.jpg", desc: "Completed single-phase transformers inspected and prepared for global dispatch." },
+    { title: "Modern Production Facility", file: "banner-img-2.jpg", desc: "An overview of our world-class, integrated transformer manufacturing plant." }
+];
+
+const partners = [
+    { name: "BREB", full: "Bangladesh Rural Electrification Board" },
+    { name: "BPDB", full: "Bangladesh Power Development Board" },
+    { name: "DESCO", full: "Dhaka Electric Supply Company Ltd." },
+    { name: "DPDC", full: "Dhaka Power Distribution Company Ltd." },
+    { name: "BMDA", full: "Barind Multipurpose Development Authority" },
+    { name: "BADC", full: "Bangladesh Agricultural Development Corp." },
+    { name: "PBS", full: "Palli Bidyut Samity (80+ Units)" },
 ];
 
 const ManufacturingExcellence = () => {
     return (
-        <div className="bg-white text-slate-900 min-h-screen font-sans">
+        <div className="bg-[#fafafa] text-slate-900 min-h-screen font-sans selection:bg-blue-600 selection:text-white">
 
-            {/* HERO SECTION - Cover Image */}
-            <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
-                <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105"
-                    style={{ backgroundImage: "url('/assets/manufacturing-excellence/banner-img-2.jpg')" }}
+            {/* HERO SECTION */}
+            <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
+                <motion.div
+                    initial={{ scale: 1.1 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 1.5 }}
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: "url('/assets/manufacturing-excellence/banner.jpg')" }}
                 >
-                    <div className="absolute inset-0 bg-black/50"></div>
-                </div>
-                <div className="relative z-10 text-center px-4">
-                    <motion.h1
-                        initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
-                        className="text-5xl md:text-8xl font-black text-white mb-6 uppercase tracking-tighter"
-                    >
-                        Manufacturing <span className="text-blue-400">Excellence</span>
-                    </motion.h1>
-                    <p className="max-w-2xl mx-auto text-gray-200 text-lg md:text-xl font-light leading-relaxed">
-                        Mission Powerland combining world-class engineering with local expertise to power Bangladesh.
-                        Witness our complete 20-step production journey.
-                    </p>
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div>
+                </motion.div>
+                <div className="relative z-10 text-center px-6">
+                    <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+                        <h1 className="text-6xl md:text-9xl font-black text-white mb-6 uppercase tracking-tighter leading-none">
+                            MANUFACTURING <br /> <span className="text-blue-500 italic">EXCELLENCE</span>
+                        </h1>
+                        <p className="max-w-3xl mx-auto text-blue-50 text-xl md:text-2xl font-light leading-relaxed backdrop-blur-sm bg-white/10 p-4 rounded-lg">
+                            The industrial heart of Mission Powerland. <br />
+                            <span className="font-semibold text-white uppercase tracking-widest text-sm">Powering global grids through precision engineering.</span>
+                        </p>
+                    </motion.div>
                 </div>
             </section>
 
-            {/* SPECIAL SECTION: Single-Phase Pole-Mounted Unit */}
-            <section className="py-24 bg-blue-50">
+            {/* SINGLE PHASE POLE-MOUNTED SECTION */}
+            <section className="py-28 bg-white overflow-hidden border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="flex flex-col lg:flex-row items-center gap-16">
-                        <div className="flex-1">
-                            <h2 className="text-4xl font-bold text-slate-900 mb-6 uppercase">Single-Phase <br /> <span className="text-blue-600">Pole-Mounted Unit</span></h2>
-                            <div className="space-y-6 text-gray-700 text-lg leading-relaxed text-justify">
+                    <div className="flex flex-col lg:flex-row items-center gap-20">
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="flex-1 space-y-8"
+                        >
+                            <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight uppercase">
+                                Single-Phase <br />
+                                <span className="text-blue-600">Pole-Mounted Units</span>
+                            </h2>
+                            <div className="space-y-6 text-gray-700 text-lg leading-relaxed text-justify border-l-4 border-blue-600 pl-8 font-light">
                                 <p>
-                                    আমাদের <strong>Single-Phase Pole-Mounted Substation Unit</strong> বিশেষভাবে গ্রামীণ এবং আবাসিক এলাকার বিদ্যুৎ বিতরণের জন্য তৈরি।
-                                    এর উৎপাদন প্রক্রিয়া শুরু হয় বিশেষ 'Wound Core' ডিজাইনের মাধ্যমে যা বিদ্যুতের অপচয় (No-load loss) কমিয়ে আনে।
+                                    Our <strong>Single-Phase Pole-Mounted Units</strong> are the backbone of residential and rural power distribution.
+                                    Engineered with high-performance CRGO cores, these units are optimized for ultra-low energy loss.
                                 </p>
-                                <p>
-                                    উচ্চমানের কপার উইন্ডিং এবং হারমেটিক্যালি সিলড (Hermetically Sealed) বডি নিশ্চিত করে যে এটি ঝড়-বৃষ্টি বা চরম আবহাওয়ায় বছরের পর বছর নিরবচ্ছিন্ন সেবা দিবে।
-                                    তৈরির পর প্রতিটি ইউনিটকে <strong>Impulse Test</strong> এর মাধ্যমে বজ্রপাত সহ্য করার ক্ষমতা যাচাই করা হয় এবং এরপর <strong>BREB</strong> বা <strong>BPDB</strong> এর গাইডলাইন অনুযায়ী সরাসরি সরবরাহ করা হয়।
+                                <p className="italic text-gray-400">
+                                    Hermetically sealed and oil-insulated, these units are designed to withstand extreme environmental conditions,
+                                    ensuring reliable energy access for the global grid.
                                 </p>
                             </div>
-                        </div>
-                        <div className="flex-1">
-                            <motion.div whileHover={{ scale: 1.02 }} className="rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
-                                <img src="/assets/manufacturing-excellence/p-12.jpg" alt="Pole Mounted Unit" className="w-full h-auto" />
-                            </motion.div>
-                        </div>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            className="flex-1"
+                        >
+                            <img src="/assets/manufacturing-excellence/p-12.jpg" alt="Installation" className="rounded-[40px] shadow-2xl border-8 border-gray-50" />
+                        </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* FULL 20 STEPS GRID */}
-            <section className="py-24 px-6 max-w-[1500px] mx-auto">
-                <h2 className="text-4xl font-black text-center mb-20 uppercase tracking-widest text-slate-800 underline underline-offset-8 decoration-blue-500">
-                    Our 20-Step Production Flow
-                </h2>
+            {/* MAIN GALLERY GRID */}
+            <section className="py-20 px-6 max-w-[1600px] mx-auto bg-slate-50 rounded-[60px] my-10 shadow-inner">
+                <div className="text-center mb-24">
+                    <motion.h2
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        className="text-4xl md:text-6xl font-black text-slate-900 uppercase tracking-tighter"
+                    >
+                        THE ENGINEERING <span className="text-blue-600">PULSE</span>
+                    </motion.h2>
+                    <p className="text-gray-400 mt-4 text-sm tracking-[0.5em] font-bold uppercase">Manufacturing Capabilities & Plant Infrastructure</p>
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-                    {manufacturingSteps.map((step, index) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {manufacturingItems.map((item, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 40 }}
+                            initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: index * 0.05 }}
                             viewport={{ once: true }}
-                            className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100"
+                            className="group relative bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100"
                         >
-                            <div className="h-64 overflow-hidden relative">
+                            <div className="h-72 overflow-hidden relative">
                                 <img
-                                    src={`/assets/manufacturing-excellence/${step.file}`}
-                                    alt={step.title}
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    src={`/assets/manufacturing-excellence/${item.file}`}
+                                    alt={item.title}
+                                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                                 />
-                                <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-md">
-                                    STEP {index + 1}
-                                </div>
                             </div>
-                            <div className="p-6">
-                                <h3 className="text-xl font-bold text-slate-900 mb-3 uppercase leading-tight group-hover:text-blue-600 transition-colors">
-                                    {step.title}
+                            <div className="p-8">
+                                <h3 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors uppercase tracking-tight">
+                                    {item.title}
                                 </h3>
-                                <p className="text-gray-600 text-sm leading-relaxed">
-                                    {step.desc}
+                                <p className="text-gray-400 text-sm leading-relaxed font-light">
+                                    {item.desc}
                                 </p>
                             </div>
                         </motion.div>
@@ -116,19 +144,38 @@ const ManufacturingExcellence = () => {
                 </div>
             </section>
 
-            {/* SUPPLY SECTION */}
-            <section className="bg-slate-900 py-20 text-white text-center">
-                <div className="max-w-5xl mx-auto px-6">
-                    <h2 className="text-3xl md:text-5xl font-bold mb-10 uppercase tracking-tighter">Trusted Supplier to National Organizations</h2>
-                    <div className="flex flex-wrap justify-center gap-10 text-2xl font-black text-slate-500">
-                        <span className="hover:text-blue-400 cursor-default transition-colors">BREB</span>
-                        <span className="hover:text-blue-400 cursor-default transition-colors">BPDB</span>
-                        <span className="hover:text-blue-400 cursor-default transition-colors">DPDC</span>
-                        <span className="hover:text-blue-400 cursor-default transition-colors">DESCO</span>
-                        <span className="hover:text-blue-400 cursor-default transition-colors">BADC</span>
+            {/* AUTHORIZED PARTNER LOGO SECTION */}
+            <section className="bg-white py-32 text-center border-t border-gray-50">
+                <div className="max-w-7xl mx-auto px-6">
+                    <h3 className="text-xs font-bold text-blue-600 uppercase tracking-[0.5em] mb-20 underline underline-offset-[12px] decoration-1">Authorized Supply Partners</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-10">
+                        {partners.map((partner, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                transition={{ delay: index * 0.1 }}
+                                className="flex flex-col items-center group"
+                            >
+                                <span className="text-4xl font-black text-slate-200 group-hover:text-blue-900 transition-all duration-500 cursor-default mb-2">
+                                    {partner.name}
+                                </span>
+                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter group-hover:text-slate-600 transition-colors">
+                                    {partner.full}
+                                </p>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
+
+            {/* CALL TO ACTION */}
+            <footer className="bg-blue-600 py-16 text-center text-white">
+                <h3 className="text-2xl font-bold uppercase tracking-widest mb-4">Request Technical Specifications</h3>
+                <button className="bg-white text-blue-600 px-10 py-4 rounded-full font-black uppercase hover:bg-slate-900 hover:text-white transition-all">
+                    Download Catalog
+                </button>
+            </footer>
 
         </div>
     );
