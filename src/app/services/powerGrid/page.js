@@ -7,7 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
     Zap, Shield, Settings, Cpu, ArrowRight,
     CheckCircle2, Factory, Construction, Info,
-    ChevronRight, Layers, Building2
+    ChevronRight, Layers, Building2, Wind,
+    FlaskConical, Hammer, Gauge
 } from 'lucide-react';
 
 const PowerGridPage = () => {
@@ -69,6 +70,63 @@ const PowerGridPage = () => {
         }
     };
 
+    const manufacturingSteps = [
+        {
+            title: "Raw Material Sourcing",
+            desc: "High-grade copper, CRGO steel, and insulation stored in contamination-free environments.",
+            image: "/assets/powerGrid/manufacture/Raw Metarials Store.JPG",
+            icon: <Layers size={18} />
+        },
+        {
+            title: "Copper Up-casting",
+            desc: "Producing high-purity copper rods from cathode to ensure maximum electrical conductivity.",
+            image: "/assets/powerGrid/manufacture/Copper Up-casting Machine.JPG",
+            icon: <Zap size={18} />
+        },
+        {
+            title: "Conductor Preparation",
+            desc: "Precision paper covering and super enameling for superior dielectric strength.",
+            image: "/assets/powerGrid/manufacture/Copper Strip Paper Covering Machine.jpg",
+            icon: <Wind size={18} />
+        },
+        {
+            title: "CRGO Core Slitting",
+            desc: "Precision cutting of steel laminations to ensure a perfect magnetic circuit and low loss.",
+            image: "/assets/powerGrid/manufacture/CRGO Slitting Machine.JPG",
+            icon: <Shield size={18} />
+        },
+        {
+            title: "Vacuum Annealing",
+            desc: "Laminations are processed to relieve internal stresses and restore magnetic properties.",
+            image: "/assets/powerGrid/manufacture/CRGO Vacuum Annealing Furnace.JPG",
+            icon: <FlaskConical size={18} />
+        },
+        {
+            title: "Winding & Assembly",
+            desc: "High-precision winding and core-coil assembly with strict clearance standards.",
+            image: "/assets/powerGrid/manufacture/Winding Section.JPG",
+            icon: <Settings size={18} />
+        },
+        {
+            title: "Tank Fabrication",
+            desc: "Heavy-duty welding and powder coating for durable, leak-proof transformer housings.",
+            image: "/assets/powerGrid/manufacture/Tank Welding Machine.JPG",
+            icon: <Hammer size={18} />
+        },
+        {
+            title: "Final Assembly",
+            desc: "Vacuum drying, oil filling, and installation of bushings and external components.",
+            image: "/assets/powerGrid/manufacture/Final Assembly.JPG",
+            icon: <Cpu size={18} />
+        },
+        {
+            title: "Impulse Testing",
+            desc: "Rigorous high-voltage testing to ensure stability under extreme grid conditions.",
+            image: "/assets/powerGrid/manufacture/Impluse Test.JPG",
+            icon: <Gauge size={18} />
+        }
+    ];
+
     return (
         <main className="bg-white text-slate-900 min-h-screen">
             {/* --- HERO SECTION --- */}
@@ -102,7 +160,7 @@ const PowerGridPage = () => {
 
                         <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-light mb-10 leading-relaxed">
                             Mission Power Land Ltd. is a Registered Class-A Government Contractor specializing in
-                            high-voltage infrastructure and 33/11 KV complete substation EPC services across Bangladesh.
+                            high-voltage infrastructure and 33/11 KV complete substation EPC services.
                         </p>
 
                         <div className="flex flex-wrap gap-4">
@@ -125,7 +183,6 @@ const PowerGridPage = () => {
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-12">
-                    {/* Sidebar Tabs */}
                     <div className="lg:w-1/3 space-y-2">
                         {Object.keys(products).map((key) => (
                             <button
@@ -147,7 +204,6 @@ const PowerGridPage = () => {
                         ))}
                     </div>
 
-                    {/* Content Display */}
                     <div className="lg:w-2/3">
                         <AnimatePresence mode="wait">
                             <motion.div
@@ -156,18 +212,16 @@ const PowerGridPage = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.5 }}
-                                className="bg-white rounded-3xl border border-slate-100 shadow-sm p-8 md:p-12 overflow-hidden relative"
+                                className="bg-white rounded-3xl border border-slate-100 shadow-sm p-8 md:p-12 overflow-hidden"
                             >
                                 <div className="grid md:grid-cols-2 gap-12 items-center">
-                                    <div>
-                                        <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl group">
-                                            <Image
-                                                src={products[activeTab].image}
-                                                alt={products[activeTab].title}
-                                                fill
-                                                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                            />
-                                        </div>
+                                    <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl group">
+                                        <Image
+                                            src={products[activeTab].image}
+                                            alt={products[activeTab].title}
+                                            fill
+                                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                        />
                                     </div>
 
                                     <div className="space-y-8">
@@ -191,14 +245,62 @@ const PowerGridPage = () => {
                                                 ))}
                                             </div>
                                         </div>
-
-                                        <button className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-blue-600 transition-colors">
-                                            Request Technical Datasheet
-                                        </button>
                                     </div>
                                 </div>
                             </motion.div>
                         </AnimatePresence>
+                    </div>
+                </div>
+            </section>
+
+            {/* --- MANUFACTURING PROCESS SECTION --- */}
+            <section className="py-24 bg-slate-950 text-white">
+                <div className="container mx-auto px-6">
+                    <div className="max-w-3xl mb-16">
+                        <h2 className="text-blue-500 text-xs font-black uppercase tracking-[0.4em] mb-4">Precision Engineering</h2>
+                        <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none mb-6">
+                            Manufacturing <br /> <span className="text-blue-500 italic">Excellence</span>
+                        </h3>
+                        <p className="text-slate-400 text-lg font-light leading-relaxed">
+                            Every transformer at Mission Power Land Limited is built using advanced technology and end-to-end
+                            in-house production to maintain international quality standards.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {manufacturingSteps.map((step, idx) => (
+                            <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: idx * 0.1 }}
+                                className="group bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden hover:border-blue-600/50 transition-all duration-500"
+                            >
+                                <div className="relative h-56 w-full overflow-hidden">
+                                    <Image
+                                        src={step.image}
+                                        alt={step.title}
+                                        fill
+                                        className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+                                    />
+                                    <div className="absolute top-4 left-4 bg-blue-600 p-2 rounded-lg text-white shadow-xl">
+                                        {step.icon}
+                                    </div>
+                                    <div className="absolute bottom-4 right-4 bg-slate-950/80 backdrop-blur-sm px-3 py-1 rounded-full border border-blue-500/30">
+                                        <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Stage 0{idx + 1}</span>
+                                    </div>
+                                </div>
+                                <div className="p-8">
+                                    <h4 className="text-lg font-black uppercase tracking-tight mb-3 group-hover:text-blue-400 transition-colors">
+                                        {step.title}
+                                    </h4>
+                                    <p className="text-slate-400 text-sm leading-relaxed font-light">
+                                        {step.desc}
+                                    </p>
+                                </div>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -257,23 +359,13 @@ const PowerGridPage = () => {
                         <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-8 leading-none">
                             Ready to Power <br /><span className="text-blue-500">Your Project?</span>
                         </h2>
-                        <p className="text-slate-400 mb-12 text-lg font-light leading-relaxed">
-                            Connect with our technical team for a comprehensive consultation on your power grid
-                            or substation requirements. We deliver compliant, safe, and efficient energy solutions.
-                        </p>
-                        <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-12">
                             <Link href="/contact" className="w-full md:w-auto bg-blue-600 text-white px-12 py-6 rounded-full font-black uppercase text-xs tracking-[0.2em] hover:bg-blue-700 transition-all flex items-center justify-center gap-3">
                                 Get a Quote <ArrowRight size={16} />
                             </Link>
-                            <a href="tel:+8801XXXXXXX" className="text-white font-bold hover:text-blue-400 transition-colors uppercase text-xs tracking-widest">
-                                Emergency Support →
-                            </a>
                         </div>
                     </motion.div>
                 </div>
-                {/* Decoration */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full" />
-                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full" />
             </section>
         </main>
     );
