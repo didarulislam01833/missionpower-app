@@ -1,7 +1,7 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const manufacturingItems = [
     { title: "Raw Material Sourcing", file: "Raw Metarials Store.JPG", desc: "Sourcing premium-grade CRGO silicon steel and high-purity copper to ensure maximum efficiency." },
@@ -37,8 +37,40 @@ const partners = [
 ];
 
 const ManufacturingExcellence = () => {
+    const [showToast, setShowToast] = useState(false);
+
+    const handleDownloadClick = () => {
+        setShowToast(true);
+        // Automatically hide the message after 4 seconds
+        setTimeout(() => setShowToast(false), 4000);
+    };
+
     return (
-        <div className="bg-[#fafafa] text-slate-900 min-h-screen font-sans selection:bg-blue-600 selection:text-white">
+        <div className="relative bg-[#fafafa] text-slate-900 min-h-screen font-sans selection:bg-blue-600 selection:text-white">
+
+            {/* SWEET "COMING SOON" NOTIFICATION */}
+            <AnimatePresence>
+                {showToast && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 20, scale: 0.9 }}
+                        className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[100] bg-slate-900 text-white px-8 py-5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-blue-500/20 flex flex-col items-center gap-1 min-w-[300px]"
+                    >
+                        <div className="flex items-center gap-2">
+                            <span className="text-blue-400 text-xl">⚡</span>
+                            <span className="font-black uppercase tracking-widest text-sm">Technical Catalog</span>
+                        </div>
+                        <p className="text-gray-400 text-xs font-medium">Unavailable Now Coming soon</p>
+                        <motion.div
+                            initial={{ width: "0%" }}
+                            animate={{ width: "100%" }}
+                            transition={{ duration: 4 }}
+                            className="absolute bottom-0 left-0 h-1 bg-blue-600 rounded-b-2xl"
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* HERO SECTION */}
             <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
@@ -172,7 +204,10 @@ const ManufacturingExcellence = () => {
             {/* CALL TO ACTION */}
             <footer className="bg-blue-600 py-16 text-center text-white">
                 <h3 className="text-2xl font-bold uppercase tracking-widest mb-4">Request Technical Specifications</h3>
-                <button className="bg-white text-blue-600 px-10 py-4 rounded-full font-black uppercase hover:bg-slate-900 hover:text-white transition-all">
+                <button
+                    onClick={handleDownloadClick}
+                    className="bg-white text-blue-600 px-10 py-4 rounded-full font-black uppercase hover:bg-slate-900 hover:text-white transition-all active:scale-95 shadow-lg"
+                >
                     Download Catalog
                 </button>
             </footer>

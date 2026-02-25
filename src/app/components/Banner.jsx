@@ -50,9 +50,6 @@ const Banner = () => {
 
     return (
         <section className="relative w-full h-screen bg-black overflow-hidden z-10">
-
-            {/* --- SLIDER INDICATORS (ARROWS) IN THE MIDDLE --- */}
-            {/* hidden md:flex ensures arrows don't cover text on mobile */}
             <div className="absolute top-1/2 -translate-y-1/2 w-full hidden md:flex justify-between px-6 lg:px-12 `z-[100]` pointer-events-none">
                 <button
                     ref={prevRef}

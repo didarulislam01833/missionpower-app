@@ -1,8 +1,7 @@
-"use client"; // এটি অবশ্যই দিতে হবে
+"use client";
 
 import dynamic from 'next/dynamic';
 
-// এখানে ssr: false কাজ করবে কারণ এটি একটি Client Component
 const AIChatbot = dynamic(() => import('./AIChatbot'), {
     ssr: false,
 });
