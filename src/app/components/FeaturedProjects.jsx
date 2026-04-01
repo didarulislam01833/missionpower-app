@@ -7,7 +7,7 @@ import { X, Zap, Activity } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function FeaturedProjects() {
-    // 9 Projects with Correct Technical Titles and Descriptions as per your photos
+    // 9 Projects with  Technical Titles and Descriptions 
     const projects = [
         {
             id: 1,
@@ -80,7 +80,7 @@ export default function FeaturedProjects() {
         <section className="py-24 bg-white overflow-hidden">
             <div className="container mx-auto px-6 lg:px-16">
 
-                {/* --- UPDATED HEADER --- */}
+                {/* --- HEADER --- */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     whileInView={{ opacity: 1, y: 0 }}
