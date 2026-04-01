@@ -37,7 +37,13 @@ export default function AboutPage() {
         ],
         others: [
             { name: "Md. Zahedul Islam", position: "Executive Director", phone: "01810098905", email: "zahedbandt@gmail.com", image: "/assets/employee/6.png" },
-            { name: "Md. Mohiuddin Bhuiyan", position: "General Manager", phone: "01810098907", image: "/assets/employee/4.jpeg" },
+            {
+                name: "Md. Mohiuddin Bhuiyan",
+                position: "General Manager",
+                phone: "01810098907",
+                image: "/assets/employee/4.jpeg",
+                objectPosition: "object-top" // Specifically fixes the top-cut issue for this photo
+            },
             { name: "Md. Sohel", position: "Manager (Business Development)", phone: "018100989009", image: "/assets/employee/2.jpg" },
             { name: "Md. Saiful Arefin", position: "Manager (Marketing)", phone: "01810098911", image: "/assets/employee/1.png" },
         ]
@@ -163,7 +169,12 @@ export default function AboutPage() {
                             <SmoothReveal key={i} delay={i * 0.1}>
                                 <div className="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 group hover:bg-white hover:shadow-2xl transition-all duration-500">
                                     <div className="relative aspect-square rounded-2xl overflow-hidden mb-6 bg-slate-200">
-                                        <Image src={member.image} alt={member.name} fill className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                                        <Image
+                                            src={member.image}
+                                            alt={member.name}
+                                            fill
+                                            className={`object-cover ${member.objectPosition || 'object-center'} grayscale group-hover:grayscale-0 transition-all duration-500`}
+                                        />
                                     </div>
                                     <h4 className="text-lg font-bold">{member.name}</h4>
                                     <p className="text-blue-600 text-[10px] font-black uppercase tracking-widest mb-4">{member.position}</p>
