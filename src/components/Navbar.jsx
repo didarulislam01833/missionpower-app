@@ -52,7 +52,8 @@ const Navbar = () => {
 
                 {/* --- LOGO --- */}
                 <Link href="/" className="flex items-center gap-3 group">
-                    <div className="relative w-[70px] h-[70px] md:w-[60px] md:h-[60px] transition-transform duration-500 group-hover:scale-105">
+                    {/* Increased container size */}
+                    <div className="relative w-[80px] h-[80px] md:w-[70px] md:h-[70px] transition-transform duration-500 group-hover:scale-105">
                         <Image
                             src="/assets/logo/logo.png"
                             alt="Mission Power Land Limited"
@@ -62,10 +63,14 @@ const Navbar = () => {
                         />
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-base md:text-lg font-black tracking-tighter leading-none text-slate-900 uppercase">
+                        {/* Increased text size and weight */}
+                        <span className="text-lg md:text-xl font-extrabold tracking-tight leading-none text-slate-900 uppercase">
                             Mission Power <span className="text-blue-600 italic">Land</span>
                         </span>
-                        <span className="text-[9px] font-bold text-amber-500 tracking-[0.4em] uppercase mt-1">
+                        <span
+                            className="text-[10px] font-bold tracking-[0.45em] uppercase mt-1"
+                            style={{ color: '#B45309' }}
+                        >
                             Limited
                         </span>
                     </div>
@@ -82,7 +87,8 @@ const Navbar = () => {
                         >
                             {link.submenu ? (
                                 <button
-                                    className={`px-4 py-2 text-[11px] font-black uppercase tracking-widest flex items-center gap-1 transition-all ${isSubmenuOpen ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}
+                                    // Increased font size and clarity
+                                    className={`px-4 py-2 text-xs font-extrabold uppercase tracking-wide flex items-center gap-1 transition-all ${isSubmenuOpen ? 'text-blue-600' : 'text-slate-800 hover:text-blue-600'}`}
                                 >
                                     {link.name}
                                     <ChevronDown size={14} className={`transition-transform duration-300 ${isSubmenuOpen ? 'rotate-180' : ''}`} />
@@ -90,7 +96,8 @@ const Navbar = () => {
                             ) : (
                                 <Link
                                     href={link.href}
-                                    className={`px-4 py-2 text-[11px] font-black uppercase tracking-widest transition-all ${pathname === link.href ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}
+                                    // Increased font size and clarity
+                                    className={`px-4 py-2 text-xs font-extrabold uppercase tracking-wide transition-all ${pathname === link.href ? 'text-blue-600' : 'text-slate-800 hover:text-blue-600'}`}
                                 >
                                     {link.name}
                                 </Link>
