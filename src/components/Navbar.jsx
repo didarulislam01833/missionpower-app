@@ -52,7 +52,7 @@ const Navbar = () => {
 
                 {/* --- LOGO --- */}
                 <Link href="/" className="flex items-center gap-3 group">
-                    <div className="relative w-[50px] h-[50px] md:w-[60px] md:h-[60px] transition-transform duration-500 group-hover:scale-105">
+                    <div className="relative w-[70px] h-[70px] md:w-[60px] md:h-[60px] transition-transform duration-500 group-hover:scale-105">
                         <Image
                             src="/assets/logo/logo.png"
                             alt="Mission Power Land Limited"
@@ -65,7 +65,7 @@ const Navbar = () => {
                         <span className="text-base md:text-lg font-black tracking-tighter leading-none text-slate-900 uppercase">
                             Mission Power <span className="text-blue-600 italic">Land</span>
                         </span>
-                        <span className="text-[9px] font-bold text-slate-400 tracking-[0.4em] uppercase mt-1">
+                        <span className="text-[9px] font-bold text-amber-500 tracking-[0.4em] uppercase mt-1">
                             Limited
                         </span>
                     </div>

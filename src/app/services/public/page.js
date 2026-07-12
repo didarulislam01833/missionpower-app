@@ -25,7 +25,7 @@ const PublicInfrastructure = () => {
         offset: ["start start", "end end"]
     });
 
-    // ১০টি ছবির পাথ (public1.jpg থেকে public10.jpg)
+
     const images = Array.from({ length: 10 }, (_, i) => `/assets/public/public${i + 1}.jpg`);
 
     const textVariant = {
