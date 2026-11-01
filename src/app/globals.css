@@ -1,0 +1,94 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* --- 1. General UI & Root Fixes --- */
+/* html এবং body-তে পজিশন 'relative' রাখা হয়েছে যাতে HubSpot/Framer Motion সঠিকভাবে স্ক্রল মাপতে পারে */
+html,
+body {
+    position: relative;
+    min-height: 100vh;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- 2. Custom Animations --- */
+@layer utilities {
+
+    /* Hero সেকশনের জন্য slow zoom ইফেক্ট */
+    .animate-slow-zoom {
+        animation: slow-zoom 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes slow-zoom {
+        0% {
+            transform: scale(1);
+        }
+
+        100% {
+            transform: scale(1.15);
+        }
+    }
+}
+
+/* --- 3. Swiper Pagination Custom Styling --- */
+.mpl-pagination .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: white;
+    opacity: 0.5;
+    border-radius: 99px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.mpl-pagination .swiper-pagination-bullet-active {
+    width: 40px;
+    background: #3b82f6;
+    /* blue-500 */
+    opacity: 1;
+}
+
+/* --- 4. Custom Scrollbar (Professional Look) --- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0f172a;
+    /* Slate-900 */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    /* Blue-500 */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+    /* Blue-600 */
+}
+
+/* --- 5. Fix for Browser Extensions (Optional but helpful) --- */
+/* এক্সটেনশন যদি অতিরিক্ত মার্জিন যোগ করে তা আটকানোর জন্য */
+#root,
+.__next {
+    position: relative;
+}
+
+/* --- 6. Hide HubSpot Default Chat Button (Using AI Chatbot Instead) --- */
+/* HubSpot chat widget button hide করা হয়েছে কারণ আমরা custom AI chatbot ব্যবহার করছি */
+#hubspot-messages-iframe-container,
+iframe[title="Messages"],
+.hs-messages-widget-open,
+#hs-messages-mount-point {
+    display: none !important;
+}
+
+/* HubSpot widget button hide */
+.hs-messages-widget-container,
+.hs-messages-widget {
+    display: none !important;
+}

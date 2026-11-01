@@ -1,0 +1,162 @@
+"use client";
+
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight, MapPin } from 'lucide-react';
+
+export default function PortfolioPage() {
+    const [filter, setFilter] = useState('All');
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    // --- UPDATED DATA: All 13 Images Included ---
+    const projects = [
+        { id: 1, category: 'Power', title: '230/132KV Transformer Bay', location: 'Dhaka', img: '/assets/portfolio-page/p-1.jpg' },
+        { id: 2, category: 'Power', title: '132/33KV Substation Grid', location: 'Chandpur', img: '/assets/portfolio-page/p-2.jpg' },
+        { id: 3, category: 'Power', title: 'Transformer Testing', location: 'Gazipur', img: '/assets/portfolio-page/p-3.jpg' },
+        { id: 4, category: 'Power', title: 'Transmission Line Project', location: 'Sylhet', img: '/assets/portfolio-page/p-4.jpg' },
+        { id: 5, category: 'Civil', title: 'Bridge Piling Construction', location: 'Barishal', img: '/assets/portfolio-page/p-5.jpg' },
+        { id: 6, category: 'Land', title: 'Industrial Earth Filling', location: 'Mirasarai', img: '/assets/portfolio-page/p-6.jpg' },
+        { id: 7, category: 'Power', title: 'Grid Control Room', location: 'Dhaka', img: '/assets/portfolio-page/p-7.jpg' },
+        { id: 8, category: 'Civil', title: 'Riverbank Protection', location: 'Chandpur', img: '/assets/portfolio-page/p-8.jpg' },
+        { id: 9, category: 'Land', title: 'Economic Zone Site', location: 'Gazipur', img: '/assets/portfolio-page/p-9.jpg' },
+        { id: 10, category: 'Power', title: 'Substation Maintenance', location: 'Sylhet', img: '/assets/portfolio-page/p-10.jpg' },
+        { id: 11, category: 'Civil', title: 'Foundation Engineering', location: 'Barishal', img: '/assets/portfolio-page/p-11.jpg' },
+        { id: 12, category: 'Land', title: 'Land Development', location: 'Mirasarai', img: '/assets/portfolio-page/p-12.jpg' },
+        { id: 13, category: 'Power', title: 'Power Distribution Grid', location: 'Dhaka', img: '/assets/portfolio-page/p-13.jpg' },
+    ];
+
+    const categories = ['All', 'Power', 'Civil', 'Land'];
+    const filteredProjects = filter === 'All' ? projects : projects.filter(p => p.category === filter);
+
+    if (!isMounted) {
+        return <div className="bg-white min-h-screen" />;
+    }
+
+    return (
+        <main className="bg-white min-h-screen text-[#1e293b]">
+            {/* --- HEADER --- */}
+            <section className="pt-32 pb-12">
+                <div className="container mx-auto px-6 lg:px-20">
+                    <div className="border-b border-slate-100 pb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                        <div>
+                            <h1 className="text-4xl font-black uppercase italic tracking-tighter text-[#0f172a]">
+                                Project <span className="text-blue-600">Gallery.</span>
+                            </h1>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 mt-2">Comprehensive Engineering Solutions</p>
+                        </div>
+
+                        {/* Filter Buttons */}
+                        <div className="flex gap-6 overflow-x-auto no-scrollbar">
+                            {categories.map((cat) => (
+                                <button
+                                    key={cat}
+                                    onClick={() => setFilter(cat)}
+                                    className={`text-[10px] font-black uppercase tracking-widest transition-all relative pb-2 ${filter === cat ? 'text-blue-600' : 'text-slate-400 hover:text-[#0f172a]'
+                                        }`}
+                                >
+                                    {cat}
+                                    {filter === cat && (
+                                        <motion.div
+                                            layoutId="underline"
+                                            className="absolute bottom-0 left-0 w-full h-[2px] bg-blue-600"
+                                        />
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* --- GRID --- */}
+            <section className="pb-20">
+                <div className="container mx-auto px-6 lg:px-20">
+                    <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <AnimatePresence mode="popLayout">
+                            {filteredProjects.map((project) => (
+                                <motion.div
+                                    key={project.id}
+                                    layout
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="group cursor-pointer"
+                                >
+                                    <div className="relative aspect-video overflow-hidden bg-slate-100 rounded-lg shadow-sm">
+                                        <Image
+                                            src={project.img}
+                                            alt={project.title}
+                                            fill
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-[#0f172a]/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                            <div className="bg-white p-2 rounded-full shadow-xl">
+                                                <ArrowUpRight size={20} className="text-blue-600" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-4 px-1">
+                                        <h3 className="text-base font-bold text-[#0f172a] leading-tight group-hover:text-blue-600 transition-colors uppercase italic tracking-tight">
+                                            {project.title}
+                                        </h3>
+                                        <div className="flex items-center justify-between mt-2">
+                                            <span className="text-[9px] font-black text-blue-600/60 uppercase tracking-widest">{project.category}</span>
+                                            <div className="flex items-center gap-1 text-slate-400 text-[9px] font-bold uppercase tracking-wider">
+                                                <MapPin size={10} /> {project.location}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* --- STATS --- */}
+            <section className="py-16 bg-[#f8fafc] border-y border-slate-100">
+                <div className="container mx-auto px-6 lg:px-20">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        {[
+                            { label: "Substations", val: "45+" },
+                            { label: "Transmission", val: "120km" },
+                            { label: "Civil Works", val: "85+" },
+                            { label: "Client Base", val: "30+" }
+                        ].map((stat, i) => (
+                            <div key={i} className="text-center md:text-left">
+                                <h4 className="text-2xl font-black text-[#0f172a] italic leading-none">{stat.val}</h4>
+                                <p className="text-[8px] font-bold uppercase tracking-[0.3em] text-slate-400 mt-1">{stat.label}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* --- CTA Section --- */}
+            <section className="py-24 text-center">
+                <div className="max-w-xl mx-auto px-6">
+                    <p className="text-[10px] font-bold text-blue-600 uppercase tracking-[0.4em] mb-4">Get in Touch</p>
+                    <h2 className="text-3xl font-black text-[#0f172a] uppercase italic tracking-tighter mb-8 leading-tight">
+                        Building the foundations <br /> of Tomorrow.
+                    </h2>
+
+                    <Link
+                        href="/contact"
+                        className="inline-block px-10 py-4 bg-[#0f172a] text-white text-[10px] font-black uppercase tracking-widest rounded-full hover:bg-blue-600 transition-all shadow-lg shadow-slate-200"
+                    >
+                        Work With Us
+                    </Link>
+                </div>
+            </section>
+        </main>
+    );
+}
