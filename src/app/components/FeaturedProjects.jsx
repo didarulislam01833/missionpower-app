@@ -2,180 +2,150 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { X, Zap, Activity } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function FeaturedProjects() {
-    // 9 Projects with  Technical Titles and Descriptions 
-    const projects = [
-        {
-            id: 1,
-            title: "High-Voltage Bushings & Switches",
-            image: "/assets/portfolio/p-1.jpg",
-            category: "Substation Components",
-            desc: "Close-up of high-voltage bushings and disconnect switches on a power transformer. These components ensure electricity moves safely from high-voltage lines into the transformer."
-        },
-        {
-            id: 2,
-            title: "Three-Phase Distribution Transformer",
-            image: "/assets/portfolio/p-2.jpg",
-            category: "Finished Goods",
-            desc: "Standard three-phase distribution transformer shown as finished goods, engineered for reliable power distribution in industrial networks."
-        },
-        {
-            id: 3,
-            title: "High-Voltage Substation Switchyard",
-            image: "/assets/portfolio/p-3.jpg",
-            category: "Infrastructure",
-            desc: "Outdoor switchyard featuring instrument transformers and busbars designed to prevent electrical arcing and manage high-voltage routing."
-        },
-        {
-            id: 4,
-            title: "Three-Phase Transformer (Industrial View)",
-            image: "/assets/portfolio/p-4.jpg",
-            category: "Finished Goods",
-            desc: "Detailed industrial view of a three-phase distribution transformer finished unit, showcased from a specialized assembly angle."
-        },
-        {
-            id: 5,
-            title: "Single-Phase Transformer Fleet",
-            image: "/assets/portfolio/p-5.jpg",
-            category: "Distribution",
-            desc: "A fleet of single-phase pole-mounted transformers ready for dispatch, commonly utilized for residential and rural electrification projects."
-        },
-        {
-            id: 6,
-            title: "Final Assembly & Oil Filling",
-            image: "/assets/portfolio/p-6.jpg",
-            category: "Manufacturing",
-            desc: "The final assembly stage involving vacuum drying, oil filling, and the installation of bushings and critical external components."
-        },
-        {
-            id: 7,
-            title: "Impulse & Stability Testing",
-            image: "/assets/portfolio/p-7.jpg",
-            category: "Quality Assurance",
-            desc: "Rigorous high-voltage impulse testing performed in our facility to ensure equipment stability under extreme grid conditions."
-        },
-        {
-            id: 8,
-            title: "Single-Phase Pole-Mounted Unit",
-            image: "/assets/portfolio/p-8.jpg",
-            category: "Distribution",
-            desc: "A single-phase transformer installed on-site, providing efficient power distribution for localized grid requirements."
-        },
-        {
-            id: 9,
-            title: "Single-Phase Distribution Unit",
-            image: "/assets/portfolio/p-9.jpg",
-            category: "Distribution",
-            desc: "Precision-engineered single-phase transformer featuring advanced insulation and compact design for long-term reliability."
-        }
-    ];
+const PROJECTS_DATA = [
+    {
+        id: "01",
+        title: "Commercial & Industrial Rooftop Solar EPC",
+        category: "Renewable Energy",
+        image: "/assets/solar-home-page/solar-pic.png",
+        location: "Gazipur Industrial Zone, Bangladesh",
+        capacity: "500 kWp Grid-Tie System",
+        desc: "High-efficiency photovoltaic installation engineered for heavy industrial power generation, reducing operational overhead and carbon emissions."
+    },
+    {
+        id: "02",
+        title: "Utility-Scale Solar PV Installation",
+        category: "Green Power Grid",
+        image: "/assets/solar-home-page/solar5.jpg",
+        location: "Dhaka Division, Bangladesh",
+        capacity: "1.2 MW Hybrid Solar Farm",
+        desc: "Advanced solar farm setup complete with string inverters, intelligent monitoring, and seamless synchronization with local substations."
+    },
+    {
+        id: "03",
+        title: "33/11KV Grid Substation Integration",
+        category: "Power Infrastructure",
+        image: "/assets/banner/banner-img-7.jpg",
+        location: "BREB / BPDB Network",
+        capacity: "33/11kV Turnkey Setup",
+        desc: "Complete HT/LT switchgear assembly, transformer erection, and automated control panel setup for reliable national grid distribution."
+    },
+    {
+        id: "04",
+        title: "Heavy-Duty Three-Phase Transformers",
+        category: "Manufacturing",
+        image: "/assets/banner/banner-img-6.jpg",
+        location: "Mission Power Land Factory",
+        capacity: "5000kVA Industrial Class",
+        desc: "Precision-crafted power transformers tested under rigorous impulse and stability standards for maximum thermal and structural durability."
+    }
+];
 
-    const [selectedProject, setSelectedProject] = useState(null);
+export default function FeaturedProjects() {
+    const [activeTab, setActiveTab] = useState("All");
+
+    const filteredProjects = activeTab === "All"
+        ? PROJECTS_DATA
+        : PROJECTS_DATA.filter(p => p.category === activeTab);
 
     return (
-        <section className="py-24 bg-white overflow-hidden">
-            <div className="container mx-auto px-6 lg:px-16">
+        <section className="py-20 md:py-28 bg-[#070A11] text-slate-100 relative overflow-hidden">
+            {/* Background Glow Accents */}
+            <div className="absolute top-1/4 left-0 w-96 h-96 bg-amber-500/10 blur-[150px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-blue-600/10 blur-[150px] rounded-full pointer-events-none" />
+
+            <div className="container mx-auto px-5 sm:px-6 lg:px-16 relative z-10">
 
                 {/* --- HEADER --- */}
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6"
-                >
-                    <div className="max-w-2xl">
-                        <div className="flex items-center gap-2 text-blue-600 mb-4">
-                            <Activity size={20} />
-                            <span className="font-black uppercase tracking-[0.3em] text-xs">Product Showcase</span>
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                    <div>
+                        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-widest mb-4 shadow-lg">
+                            <span>⚡ Proven Engineering Track Record</span>
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight">
-                            Precision Engineering <br />
-                            <span className="text-blue-600">& Power Distribution</span>
+                        <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white leading-tight uppercase tracking-tight">
+                            Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">Projects</span> & Works
                         </h2>
                     </div>
-                    <Link href="/contact" className="text-slate-900 font-bold border-b-2 border-blue-600 pb-1 hover:text-blue-600 transition-colors">
-                        Request a Custom Quote
-                    </Link>
-                </motion.div>
 
-                {/* --- 9-PROJECT GRID --- */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    {projects.map((project, index) => (
-                        <motion.div
-                            key={project.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="group cursor-pointer"
-                            onClick={() => setSelectedProject(project)}
-                        >
-                            <div className="relative h-72 w-full rounded-2xl overflow-hidden shadow-md bg-slate-50">
-                                <Image
-                                    src={project.image}
-                                    alt={project.title}
-                                    fill
-                                    className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-blue-900/10 group-hover:bg-blue-900/60 transition-all duration-500 flex items-center justify-center">
-                                    <div className="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                                        <span className="bg-white text-blue-600 px-6 py-2 rounded-full font-bold text-sm shadow-xl">View Details</span>
+                    {/* Filter Tabs */}
+                    <div className="flex flex-wrap gap-2 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800">
+                        {["All", "Renewable Energy", "Power Infrastructure", "Manufacturing"].map((tab) => (
+                            <button
+                                key={tab}
+                                onClick={() => setActiveTab(tab)}
+                                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === tab
+                                        ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20"
+                                        : "text-slate-400 hover:text-white hover:bg-slate-800"
+                                    }`}
+                            >
+                                {tab}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* --- PROJECTS GRID --- */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <AnimatePresence mode="popLayout">
+                        {filteredProjects.map((project) => (
+                            <motion.div
+                                key={project.id}
+                                layout
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.4 }}
+                                className="group relative bg-slate-900/90 border border-slate-800 rounded-3xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:border-amber-500/50 transition-all duration-500 flex flex-col justify-between"
+                            >
+                                {/* Project Image Container */}
+                                <div className="relative h-[260px] sm:h-[320px] w-full overflow-hidden bg-slate-950">
+                                    <Image
+                                        src={project.image}
+                                        alt={project.title}
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
+
+                                    {/* Category Badge */}
+                                    <div className="absolute top-4 left-4 bg-slate-950/80 backdrop-blur-md border border-amber-500/30 px-3 py-1.5 rounded-full text-[11px] font-extrabold text-amber-400 uppercase tracking-wider shadow-lg">
+                                        {project.category}
+                                    </div>
+
+                                    {/* Capacity Badge */}
+                                    <div className="absolute top-4 right-4 bg-amber-500 text-slate-950 px-3 py-1.5 rounded-full text-[11px] font-black uppercase tracking-wider shadow-lg">
+                                        {project.capacity}
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="mt-6 space-y-2">
-                                <span className="text-blue-600 font-bold text-[10px] uppercase tracking-widest">{project.category}</span>
-                                <h3 className="text-xl font-black text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
-                                    {project.title}
-                                </h3>
-                            </div>
-                        </motion.div>
-                    ))}
+                                {/* Content Details */}
+                                <div className="p-6 sm:p-8 flex flex-col justify-between flex-grow space-y-4">
+                                    <div>
+                                        <p className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                                            <span>📍</span> {project.location}
+                                        </p>
+                                        <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight group-hover:text-amber-400 transition-colors">
+                                            {project.title}
+                                        </h3>
+                                        <p className="text-sm text-slate-300 leading-relaxed mt-3">
+                                            {project.desc}
+                                        </p>
+                                    </div>
+
+                                    <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Mission Power Land Execution</span>
+                                        <span className="w-8 h-8 rounded-full bg-slate-800 group-hover:bg-amber-500 group-hover:text-slate-950 text-white flex items-center justify-center transition-colors">
+                                            →
+                                        </span>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
                 </div>
             </div>
-
-            {/* --- MODAL --- */}
-            <AnimatePresence>
-                {selectedProject && (
-                    <motion.div
-                        className="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[999] flex items-center justify-center p-4"
-                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                        onClick={() => setSelectedProject(null)}
-                    >
-                        <motion.div
-                            className="bg-white rounded-3xl p-6 md:p-10 max-w-2xl w-full shadow-2xl relative"
-                            initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <button className="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-900" onClick={() => setSelectedProject(null)}>
-                                <X size={24} />
-                            </button>
-
-                            <div className="relative h-64 md:h-80 w-full rounded-2xl overflow-hidden mb-8 shadow-inner bg-slate-50">
-                                <Image
-                                    src={selectedProject.image}
-                                    alt={selectedProject.title}
-                                    fill
-                                    className="object-contain"
-                                />
-                            </div>
-
-                            <span className="text-blue-600 font-black text-xs uppercase tracking-widest">{selectedProject.category}</span>
-                            <h3 className="text-3xl font-black text-slate-900 mt-2 mb-4 leading-tight">{selectedProject.title}</h3>
-                            <p className="text-slate-600 text-lg leading-relaxed mb-8">{selectedProject.desc}</p>
-
-                            <Link href="/contact" className="inline-block w-full text-center bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 transition-all">
-                                Request Quote for this Product
-                            </Link>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </section>
     );
 }

@@ -11,6 +11,7 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
+    const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState(false);
     const pathname = usePathname();
 
     useEffect(() => {
@@ -22,6 +23,7 @@ const Navbar = () => {
     useEffect(() => {
         setIsOpen(false);
         setIsSubmenuOpen(false);
+        setMobileSubmenuOpen(false);
     }, [pathname]);
 
     const navLinks = [
@@ -44,16 +46,15 @@ const Navbar = () => {
     return (
         <nav
             className={`fixed top-0 left-0 w-full z-[999] transition-all duration-500 ${scrolled
-                ? 'py-3 bg-white/95 backdrop-blur-lg shadow-lg border-b border-slate-200/50'
-                : 'py-4 bg-white border-b border-slate-100/50'
+                    ? 'py-3 bg-[#070A11]/95 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.6)] border-b border-slate-800'
+                    : 'py-4 bg-[#070A11]/90 backdrop-blur-md border-b border-slate-800/80'
                 }`}
         >
-            <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div className="max-w-7xl mx-auto px-5 sm:px-6 flex justify-between items-center">
 
                 {/* --- LOGO --- */}
-                <Link href="/" className="flex items-center gap-4 group">
-                    {/* Logo container */}
-                    <div className="relative w-[55px] h-[55px] md:w-[60px] md:h-[60px] flex-shrink-0 transition-transform duration-500 group-hover:scale-105">
+                <Link href="/" className="flex items-center gap-3 group">
+                    <div className="relative w-[48px] h-[48px] md:w-[54px] md:h-[54px] flex-shrink-0 transition-transform duration-500 group-hover:scale-105">
                         <Image
                             src="/assets/logo/logo.png"
                             alt="Mission Power Land Limited"
@@ -63,19 +64,16 @@ const Navbar = () => {
                         />
                     </div>
 
-                    {/* Brand name with elegant styling */}
                     <div className="flex flex-col leading-none">
-                        {/* Main brand name */}
-                        <span className="text-lg md:text-xl font-bold tracking-tight text-slate-900">
-                            Mission Power <span className="text-blue-600">Land</span>
+                        <span className="text-base md:text-xl font-black tracking-tight text-white uppercase">
+                            Mission Power <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">Land</span>
                         </span>
 
-                        {/* "Limited" - Now BOLD, VISIBLE, and ELEGANT */}
                         <div className="flex items-center gap-2 mt-1">
-                            <span className="text-xs md:text-sm font-extrabold text-blue-700 tracking-wider">
+                            <span className="text-[10px] md:text-xs font-black text-amber-400 tracking-widest">
                                 LIMITED
                             </span>
-                            <span className="hidden md:block w-8 h-[2px] bg-gradient-to-r from-blue-600 to-transparent"></span>
+                            <span className="hidden md:block w-8 h-[2px] bg-gradient-to-r from-amber-400 to-transparent"></span>
                         </div>
                     </div>
                 </Link>
@@ -91,16 +89,20 @@ const Navbar = () => {
                         >
                             {link.submenu ? (
                                 <button
-                                    className={`px-4 py-2 text-sm font-semibold tracking-wide flex items-center gap-1 transition-all rounded-lg ${isSubmenuOpen ? 'text-blue-600 bg-blue-50' : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50/50'
+                                    className={`px-4 py-2 text-xs md:text-sm font-extrabold uppercase tracking-wider flex items-center gap-1.5 transition-all rounded-xl ${isSubmenuOpen
+                                            ? 'text-amber-400 bg-amber-500/10 border border-amber-500/30'
+                                            : 'text-slate-300 hover:text-amber-400 hover:bg-slate-800/60'
                                         }`}
                                 >
-                                    {link.name}
+                                    <span>{link.name}</span>
                                     <ChevronDown size={15} className={`transition-transform duration-300 ${isSubmenuOpen ? 'rotate-180' : ''}`} />
                                 </button>
                             ) : (
                                 <Link
                                     href={link.href}
-                                    className={`px-4 py-2 text-sm font-semibold tracking-wide transition-all rounded-lg ${pathname === link.href ? 'text-blue-600 bg-blue-50' : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50/50'
+                                    className={`px-4 py-2 text-xs md:text-sm font-extrabold uppercase tracking-wider transition-all rounded-xl ${pathname === link.href
+                                            ? 'text-amber-400 bg-amber-500/10 border border-amber-500/30'
+                                            : 'text-slate-300 hover:text-amber-400 hover:bg-slate-800/60'
                                         }`}
                                 >
                                     {link.name}
@@ -111,23 +113,23 @@ const Navbar = () => {
                             <AnimatePresence>
                                 {link.submenu && isSubmenuOpen && (
                                     <motion.div
-                                        initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                                        initial={{ opacity: 0, y: 12, scale: 0.98 }}
                                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                                        exit={{ opacity: 0, y: 10, scale: 0.98 }}
-                                        className="absolute top-full left-0 mt-2 w-[520px] bg-white rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-slate-100 p-4 grid grid-cols-2 gap-2"
+                                        exit={{ opacity: 0, y: 12, scale: 0.98 }}
+                                        className="absolute top-full left-0 mt-2 w-[500px] bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-amber-500/30 p-3 grid grid-cols-2 gap-2 z-50"
                                     >
                                         {link.submenu.map((sub) => (
                                             <Link
                                                 key={sub.name}
                                                 href={sub.href}
-                                                className="flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50/60 transition-all border border-transparent hover:border-blue-100 group/item"
+                                                className="flex items-start gap-3.5 p-3 rounded-xl hover:bg-slate-800/80 transition-all border border-transparent hover:border-amber-500/40 group/item"
                                             >
-                                                <div className="text-blue-600 p-2.5 bg-blue-50 rounded-xl group-hover/item:bg-blue-600 group-hover/item:text-white transition-all duration-300">
+                                                <div className="text-amber-400 p-2.5 bg-amber-500/10 rounded-xl group-hover/item:bg-amber-500 group-hover/item:text-slate-950 transition-all duration-300 shrink-0">
                                                     {sub.icon}
                                                 </div>
                                                 <div>
-                                                    <div className="text-xs font-bold text-slate-900">{sub.name}</div>
-                                                    <p className="text-[10px] text-slate-500 leading-tight mt-1">{sub.desc}</p>
+                                                    <div className="text-xs font-black text-white uppercase tracking-tight group-hover/item:text-amber-400 transition-colors">{sub.name}</div>
+                                                    <p className="text-[10px] text-slate-400 leading-tight mt-1">{sub.desc}</p>
                                                 </div>
                                             </Link>
                                         ))}
@@ -142,19 +144,20 @@ const Navbar = () => {
                 <div className="hidden lg:block">
                     <Link
                         href="/contact?type=quote"
-                        className="group flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all active:scale-95 shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40"
+                        className="group flex items-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-slate-950 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all active:scale-95 shadow-[0_0_20px_rgba(245,158,11,0.25)]"
                     >
                         <span>Get Quote</span>
-                        <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
 
                 {/* --- MOBILE TOGGLE --- */}
                 <button
-                    className="lg:hidden p-2 text-slate-700 hover:bg-slate-100 rounded-xl transition-colors"
+                    className="lg:hidden p-2.5 text-amber-400 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 transition-colors"
                     onClick={() => setIsOpen(!isOpen)}
+                    aria-label="Toggle menu"
                 >
-                    {isOpen ? <X size={26} /> : <Menu size={26} />}
+                    {isOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
             </div>
 
@@ -165,55 +168,61 @@ const Navbar = () => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="lg:hidden bg-white border-t border-slate-100 overflow-hidden"
+                        className="lg:hidden bg-slate-950/98 backdrop-blur-2xl border-t border-slate-800 overflow-hidden"
                     >
-                        <div className="p-6 space-y-4">
+                        <div className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
                             {navLinks.map((link) => (
-                                <div key={link.name} className="border-b border-slate-50 pb-3 last:border-0">
+                                <div key={link.name} className="border-b border-slate-800/80 pb-3 last:border-0">
                                     <div
                                         className="flex justify-between items-center py-2 cursor-pointer"
-                                        onClick={() => link.submenu && setIsSubmenuOpen(!isSubmenuOpen)}
+                                        onClick={() => link.submenu && setMobileSubmenuOpen(!mobileSubmenuOpen)}
                                     >
                                         {link.submenu ? (
-                                            <span className="text-base font-semibold text-slate-900">
+                                            <span className="text-sm font-extrabold text-white uppercase tracking-wider">
                                                 {link.name}
                                             </span>
                                         ) : (
-                                            <Link href={link.href} className="text-base font-semibold text-slate-900">
+                                            <Link href={link.href} className="text-sm font-extrabold text-white uppercase tracking-wider">
                                                 {link.name}
                                             </Link>
                                         )}
                                         {link.submenu && (
-                                            <ChevronDown size={20} className={`text-blue-600 transition-transform duration-300 ${isSubmenuOpen ? 'rotate-180' : ''}`} />
+                                            <ChevronDown size={18} className={`text-amber-400 transition-transform duration-300 ${mobileSubmenuOpen ? 'rotate-180' : ''}`} />
                                         )}
                                     </div>
 
-                                    {link.submenu && isSubmenuOpen && (
+                                    {link.submenu && mobileSubmenuOpen && (
                                         <motion.div
                                             initial={{ opacity: 0, x: -10 }}
                                             animate={{ opacity: 1, x: 0 }}
-                                            className="mt-2 grid grid-cols-1 gap-1 pl-4 border-l-2 border-blue-500/20"
+                                            className="mt-2 grid grid-cols-1 gap-2 pl-3 border-l-2 border-amber-500/40"
                                         >
                                             {link.submenu.map((sub) => (
                                                 <Link
                                                     key={sub.name}
                                                     href={sub.href}
-                                                    className="py-3 flex items-center gap-3 group"
+                                                    className="py-2.5 flex items-center gap-3 group bg-slate-900/60 px-3 rounded-xl border border-slate-800"
                                                 >
-                                                    <div className="text-blue-600 bg-blue-50 p-2 rounded-lg">{sub.icon}</div>
-                                                    <span className="text-sm font-medium text-slate-700 group-active:text-blue-600">{sub.name}</span>
+                                                    <div className="text-amber-400 bg-amber-500/10 p-2 rounded-lg shrink-0">{sub.icon}</div>
+                                                    <div>
+                                                        <span className="text-xs font-bold text-white uppercase tracking-tight block">{sub.name}</span>
+                                                        <span className="text-[10px] text-slate-400">{sub.desc}</span>
+                                                    </div>
                                                 </Link>
                                             ))}
                                         </motion.div>
                                     )}
                                 </div>
                             ))}
-                            <Link
-                                href="/contact?type=quote"
-                                className="flex justify-center items-center w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-2xl font-semibold text-sm shadow-lg shadow-blue-600/25"
-                            >
-                                Get a Quote
-                            </Link>
+
+                            <div className="pt-2">
+                                <Link
+                                    href="/contact?type=quote"
+                                    className="flex justify-center items-center w-full bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 py-3.5 rounded-xl font-black text-xs uppercase tracking-widest shadow-lg shadow-amber-500/20 active:scale-95 transition-transform"
+                                >
+                                    Get a Quote
+                                </Link>
+                            </div>
                         </div>
                     </motion.div>
                 )}

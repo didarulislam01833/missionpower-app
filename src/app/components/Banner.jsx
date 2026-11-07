@@ -4,39 +4,68 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectFade, Navigation } from 'swiper/modules';
+import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const WordByWord = ({ text, className, delay = 0 }) => {
     const words = text.split(" ");
     const container = {
         hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: delay } },
+        visible: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: delay } },
     };
     const child = {
-        visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 12, stiffness: 100 } },
-        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 12, stiffness: 140 } },
+        hidden: { opacity: 0, y: 12 },
     };
 
     return (
         <motion.div variants={container} initial="hidden" animate="visible" className={`flex flex-wrap ${className}`}>
             {words.map((word, index) => (
-                <motion.span variants={child} key={index} className="mr-3 md:mr-5">{word}</motion.span>
+                <motion.span variants={child} key={index} className="mr-2 md:mr-3">{word}</motion.span>
             ))}
         </motion.div>
     );
 };
 
 const bannerData = [
-    { id: 1, image: "/assets/banner/banner-img-3.jpg", title: "Welcome to", highlight: "Mission Power Land Limited", description: "A leading transformer manufacturing company in Bangladesh, engineering the future of the national power grid.", cta: "OUR LEGACY" },
-    { id: 2, image: "/assets/banner/banner-img-6.jpg", title: "Precision Built", highlight: "High-Voltage Transformers", description: "Engineered for maximum efficiency and durability in the most demanding industrial environments.", cta: "VIEW PRODUCTS" },
-    { id: 3, image: "/assets/banner/banner-img-7.jpg", title: "Advanced Grid", highlight: "Substation Solutions", description: "Specialized in 33/11KV substation equipment and comprehensive power distribution networks.", cta: "EXPLORE TECH" },
-    { id: 4, image: "/assets/banner/banner-img-2.jpg", title: "Certified Quality", highlight: "Reliable Energy Delivery", description: "Our units undergo rigorous testing to ensure 100% safety and compliance with international standards.", cta: "QUALITY ASSURANCE" },
-    { id: 5, image: "/assets/banner/banner-img-1.jpg", title: "Engineering The", highlight: "Future of Bangladesh", description: "Driving industrial growth through innovative electrical engineering and sustainable power solutions.", cta: "CONTACT EXPERTS" }
+    {
+        id: 1,
+        image: "/assets/banner/banner-img-3.jpg",
+        badge: "⭐ REGISTERED CLASS-A GOVT CONTRACTOR",
+        title: "Mission Power Land Limited",
+        subtitle: "Engineering The Future of Bangladesh Power Grid",
+        description: "Premier manufacturer of high-voltage transformers, 33/11kV substations, and heavy industrial power distribution infrastructure.",
+        ctaText: "EXPLORE PRODUCTS",
+        ctaLink: "/services",
+        phone: "01810-098911"
+    },
+    {
+        id: 2,
+        image: "/assets/banner/banner-img-6.jpg",
+        badge: "⚡ BREB & BPDB APPROVED SPECIFICATIONS",
+        title: "Precision-Built Transformers",
+        subtitle: "Single & Three-Phase Heavy Duty Solutions",
+        description: "Crafted for maximum thermal durability, zero failure rate, and compliance with rigorous national utility standards.",
+        ctaText: "VIEW TECHNICAL SPECS",
+        ctaLink: "/manufacture-excellence",
+        phone: "01810-098909"
+    },
+    {
+        id: 3,
+        image: "/assets/banner/banner-img-7.jpg",
+        badge: "🏗️ TURNKEY SUBSTATION EXPERTISE",
+        title: "33/11KV Substation & Switchgear",
+        subtitle: "Advanced Automation & Control Panels",
+        description: "End-to-end electrical substation design, installation, and impulse testing for uninterrupted industrial operation.",
+        ctaText: "CHECK PORTFOLIO",
+        ctaLink: "/portfolio",
+        phone: "01810-098911"
+    }
 ];
 
 const Banner = () => {
@@ -46,32 +75,25 @@ const Banner = () => {
     const nextRef = useRef(null);
 
     useEffect(() => { setMounted(true); }, []);
-    if (!mounted) return <div className="w-full h-screen bg-slate-950" />;
+    if (!mounted) return <div className="w-full h-[85vh] bg-[#05070B]" />;
 
     return (
-        <section className="relative w-full h-screen bg-black overflow-hidden z-10">
-            <div className="absolute top-1/2 -translate-y-1/2 w-full hidden md:flex justify-between px-6 lg:px-12 `z-[100]` pointer-events-none">
-                <button
-                    ref={prevRef}
-                    className="pointer-events-auto w-14 h-14 rounded-full border border-white/20 flex items-center justify-center text-white bg-white/5 backdrop-blur-lg hover:bg-blue-600 hover:scale-110 transition-all duration-300 shadow-2xl"
-                >
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6" /></svg>
-                </button>
-                <button
-                    ref={nextRef}
-                    className="pointer-events-auto w-14 h-14 rounded-full border border-white/20 flex items-center justify-center text-white bg-white/5 backdrop-blur-lg hover:bg-blue-600 hover:scale-110 transition-all duration-300 shadow-2xl"
-                >
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg>
-                </button>
+        <section className="relative w-full h-[85vh] sm:h-[90vh] md:h-screen bg-[#05070B] overflow-hidden z-10">
+
+            {/* Mobile Top Floating Badge */}
+            <div className="absolute top-4 left-4 z-40 md:hidden flex items-center gap-2 bg-slate-950/80 border border-amber-400/40 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
+                <span className="text-[11px] font-extrabold text-amber-400 uppercase tracking-wider">Class-A Govt Enlisted</span>
             </div>
 
             <Swiper
-                modules={[Autoplay, EffectFade, Navigation]}
+                modules={[Autoplay, EffectFade, Navigation, Pagination]}
                 effect="fade"
-                speed={1200}
+                speed={1000}
                 loop={true}
-                autoplay={{ delay: 8000, disableOnInteraction: false }}
+                autoplay={{ delay: 6500, disableOnInteraction: false }}
                 onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+                pagination={{ clickable: true, el: '.custom-swiper-pagination' }}
                 navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
                 onBeforeInit={(swiper) => {
                     swiper.params.navigation.prevEl = prevRef.current;
@@ -81,27 +103,87 @@ const Banner = () => {
             >
                 {bannerData.map((item, index) => (
                     <SwiperSlide key={item.id}>
-                        <div className={`absolute inset-0 transition-transform duration-[10000ms] ease-out ${activeIndex === index ? 'scale-110' : 'scale-100'}`}>
-                            <Image src={item.image} alt="Transformer Manufacturing" fill className="object-cover" priority />
-                            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent z-10" />
+                        {/* Background Image Container with Stunning Visibility */}
+                        <div className={`absolute inset-0 transition-transform duration-[7000ms] ease-out ${activeIndex === index ? 'scale-105' : 'scale-100'}`}>
+                            <Image
+                                src={item.image}
+                                alt={item.title}
+                                fill
+                                className="object-cover object-center filter brightness-[0.85] contrast-[1.05]"
+                                priority={index === 0}
+                            />
+
+                            {/* Balanced Mobile Gradient: Keeps image clear at top/middle while reading text at bottom */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/70 to-black/30 md:bg-gradient-to-r md:from-[#05070B] md:via-[#05070B]/80 md:to-transparent z-10" />
+
+                            {/* Ambient Glow Lighting */}
+                            <div className="absolute top-1/4 left-10 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none z-10 hidden sm:block" />
                         </div>
 
-                        {/* Content Area - Balanced between Navbar and Stats */}
-                        <div className="container mx-auto px-6 lg:px-24 h-full flex items-center relative z-20 pt-20 pb-20">
-                            <div className="max-w-5xl">
+                        {/* Slide Content */}
+                        <div className="container mx-auto px-5 sm:px-8 lg:px-16 h-full flex items-end md:items-center relative z-20 pb-16 md:pb-0 pt-24">
+                            <div className="max-w-3xl">
                                 <AnimatePresence mode="wait">
                                     {activeIndex === index && (
-                                        <div key={index}>
-                                            <WordByWord text={item.title} className="text-2xl md:text-5xl font-light text-slate-200 mb-2" />
-                                            <WordByWord text={item.highlight} className="text-4xl md:text-[80px] font-black text-white leading-tight uppercase tracking-tighter" delay={0.4} />
-                                            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="text-sm md:text-lg text-slate-300 max-w-2xl mt-6 mb-8 border-l-2 border-blue-600 pl-6 leading-relaxed">
+                                        <div key={index} className="space-y-3 sm:space-y-4">
+
+                                            {/* Badge */}
+                                            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+                                                <span className="inline-block px-3.5 py-1.5 bg-amber-500/15 border border-amber-500/50 text-amber-300 text-[11px] sm:text-xs font-bold tracking-wider rounded-md uppercase shadow-lg">
+                                                    {item.badge}
+                                                </span>
+                                            </motion.div>
+
+                                            {/* Main Title */}
+                                            <WordByWord
+                                                text={item.title}
+                                                className="text-3xl sm:text-5xl md:text-7xl font-black text-white leading-[1.1] tracking-tight uppercase drop-shadow-md"
+                                            />
+
+                                            {/* Subtitle */}
+                                            <motion.h3
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                transition={{ delay: 0.4, duration: 0.5 }}
+                                                className="text-sm sm:text-xl font-semibold text-amber-400"
+                                            >
+                                                {item.subtitle}
+                                            </motion.h3>
+
+                                            {/* Description */}
+                                            <motion.p
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                transition={{ delay: 0.6, duration: 0.5 }}
+                                                className="text-xs sm:text-base text-slate-200 max-w-xl border-l-2 border-amber-500 pl-3 sm:pl-4 leading-relaxed bg-black/30 backdrop-blur-xs py-1 rounded-r-lg"
+                                            >
                                                 {item.description}
                                             </motion.p>
-                                            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.8 }}>
-                                                <Link href="/about" className="bg-blue-600 text-white px-8 py-4 font-bold inline-block hover:bg-blue-700 transition-all shadow-lg">
-                                                    EXPLORE MORE →
+
+                                            {/* Action Buttons */}
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: 0.8, duration: 0.5 }}
+                                                className="pt-2 flex flex-col sm:flex-row gap-3"
+                                            >
+                                                <Link
+                                                    href={item.ctaLink}
+                                                    className="px-6 py-3.5 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-slate-950 font-extrabold rounded-xl text-sm text-center shadow-[0_0_20px_rgba(245,158,11,0.3)] active:scale-95 transition-all flex items-center justify-center gap-2"
+                                                >
+                                                    <span>{item.ctaText}</span>
+                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                                                 </Link>
+
+                                                <a
+                                                    href={`tel:${item.phone}`}
+                                                    className="px-5 py-3.5 bg-slate-900/90 border border-slate-700 hover:border-amber-500/50 text-white font-bold rounded-xl text-sm text-center backdrop-blur-md active:scale-95 transition-all flex items-center justify-center gap-2"
+                                                >
+                                                    <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                                                    <span>Call: {item.phone}</span>
+                                                </a>
                                             </motion.div>
+
                                         </div>
                                     )}
                                 </AnimatePresence>
@@ -111,16 +193,18 @@ const Banner = () => {
                 ))}
             </Swiper>
 
-            {/* Bottom Progress Bar - To give that "Wow" look */}
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-white/10 z-[110]">
-                <motion.div
-                    key={activeIndex}
-                    initial={{ width: 0 }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: 8, ease: "linear" }}
-                    className="h-full bg-blue-600 shadow-[0_0_10px_#2563eb]"
-                />
+            {/* Navigation Arrows for Desktop */}
+            <div className="absolute top-1/2 -translate-y-1/2 w-full hidden md:flex justify-between px-8 z-30 pointer-events-none">
+                <button ref={prevRef} className="pointer-events-auto w-12 h-12 rounded-full border border-amber-500/30 bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white hover:bg-amber-500 hover:text-black transition-all shadow-xl">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+                <button ref={nextRef} className="pointer-events-auto w-12 h-12 rounded-full border border-amber-500/30 bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white hover:bg-amber-500 hover:text-black transition-all shadow-xl">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                </button>
             </div>
+
+            {/* Custom Swiper Pagination Dots */}
+            <div className="custom-swiper-pagination absolute bottom-4 left-0 w-full flex justify-center gap-2 z-30" />
         </section>
     );
 };
