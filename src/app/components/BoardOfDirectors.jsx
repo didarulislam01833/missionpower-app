@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Award, ShieldCheck, UserCheck } from 'lucide-react';
 
@@ -11,14 +12,16 @@ export default function BoardOfDirectors() {
             title: "Chairman",
             role: "Strategic Leadership & Corporate Governance",
             bio: "Steering Mission Power Land Limited with a visionary focus on national power sector advancement, enterprise governance, and sustainable infrastructure growth.",
-            icon: <Award className="w-6 h-6 text-amber-400" />
+            image: "/assets/employee/5.jpeg",
+            icon: <Award className="w-5 h-5 text-amber-400" />
         },
         {
             name: "Mr. Hasanur Jaman",
             title: "Managing Director",
             role: "Operational Excellence & Executive Direction",
             bio: "Leading the core technical operations, high-voltage substation projects, transformer manufacturing, and Class-A government contract execution across Bangladesh.",
-            icon: <ShieldCheck className="w-6 h-6 text-amber-400" />
+            image: "/assets/employee/3.jpg",
+            icon: <ShieldCheck className="w-5 h-5 text-amber-400" />
         }
     ];
 
@@ -62,14 +65,24 @@ export default function BoardOfDirectors() {
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-yellow-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-t-2xl" />
 
                             <div>
-                                {/* Icon & Badge */}
+                                {/* Top Header: Image & Icon Badge */}
                                 <div className="flex items-center justify-between mb-6">
-                                    <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
-                                        {director.icon}
+                                    <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-amber-500/40 shadow-md bg-slate-800 shrink-0">
+                                        <Image
+                                            src={director.image}
+                                            alt={director.name}
+                                            fill
+                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
                                     </div>
-                                    <span className="px-3 py-1 rounded-full bg-slate-800 text-[10px] font-extrabold text-amber-400 uppercase tracking-widest border border-slate-700">
-                                        Executive Board
-                                    </span>
+                                    <div className="flex flex-col items-end gap-2">
+                                        <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
+                                            {director.icon}
+                                        </div>
+                                        <span className="px-3 py-1 rounded-full bg-slate-800 text-[9px] font-extrabold text-amber-400 uppercase tracking-widest border border-slate-700">
+                                            Executive
+                                        </span>
+                                    </div>
                                 </div>
 
                                 {/* Title & Name */}
