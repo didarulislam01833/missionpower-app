@@ -1,71 +1,76 @@
 import Link from "next/link";
-import Banner from "./components/Banner";
+import Hero from "./components/Hero";
 import StatsSection from "./components/StatsSection";
 import ServicesGrid from "./components/ServicesGrid";
 import SolarSection from "./components/SolarSection";
 import FeaturedProjects from "./components/FeaturedProjects";
 import AboutSection from "./components/AboutSection";
 import TrustLogos from "./components/TrustLogos";
+import Certifications from "./components/Certifications";
 import BoardOfDirectors from "./components/BoardOfDirectors";
 import TransformerHotspots from "./components/TransformerHotspots";
 import ProcessTimeline from "./components/ProcessTimeline";
 
+const TITLE =
+  "Mission Power Land Limited | Class-A Power Infrastructure & Transformer Manufacturer";
+const DESCRIPTION =
+  "Premier Class-A Government Contractor & Transformer Manufacturer in Bangladesh specializing in 33/11kV Substation, Distribution Transformers, and Solar EPC Solutions.";
+
 export const metadata = {
-  title: {
-    absolute:
-      "Mission Power Land Limited | Class-A Power Infrastructure & Transformer Manufacturer",
+  metadataBase: new URL("https://www.missionpowerland.com"),
+  title: { absolute: TITLE },
+  description: DESCRIPTION,
+  // হোয়াটসঅ্যাপ/ফেসবুকে লিংক শেয়ার করলে সুন্দর প্রিভিউ দেখাবে
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: "/",
+    siteName: "Mission Power Land Limited",
+    type: "website",
+    images: [
+      {
+        url: "/assets/banner/banner-img-1.jpg",
+        alt: "Mission Power Land transformer factory",
+      },
+    ],
   },
-  description:
-    "Premier Class-A Government Contractor & Transformer Manufacturer in Bangladesh specializing in 33/11kV Substation, Distribution Transformers, and Solar EPC Solutions.",
 };
 
 export default function Home() {
   return (
     <main className="bg-[#070A11] text-slate-100 min-h-screen overflow-x-hidden selection:bg-amber-400 selection:text-black">
-      {/* Hero Carousel */}
-      <Banner />
+      {/* ১. হিরো */}
+      <Hero />
 
-      {/* Stats Strip (নিজেই হিরোর ওপর ওঠার মার্জিন ধারণ করে) */}
+      {/* ২. Stats Strip (নিজেই হিরোর ওপর ওঠার মার্জিন ধারণ করে) */}
       <StatsSection />
 
-      {/* Class-A Government Approvals & Enlistments: বিশ্বাস আগে */}
+      {/* ৩. সরকারি তালিকাভুক্তি ও অংশীদার */}
       <TrustLogos />
 
-      {/* Core Manufacturing & Engineering Capabilities */}
-      <section className="py-12 md:py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent pointer-events-none" />
-        <ServicesGrid />
-      </section>
+      {/* ৪. Core Divisions (বাইরে আর কোনো মোড়ক নেই) */}
+      <ServicesGrid />
 
-      {/* Core Manufacturing & Engineering Capabilities */}
-      <section className="py-12 md:py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent pointer-events-none" />
-        <ServicesGrid />
-      </section>
-
-      {/* নতুন: ভেতরের গঠন ও উৎপাদন প্রক্রিয়া */}
+      {/* ৫. ভেতরের গঠন ও উৎপাদন প্রক্রিয়া */}
       <TransformerHotspots />
       <ProcessTimeline />
 
-      {/* Technical Excellence & Infrastructure Showcase */}
-      <section className="py-12 md:py-20 px-4">
-        <FeaturedProjects />
-      </section>
+      {/* ৬. প্রজেক্ট */}
+      <FeaturedProjects />
 
-      {/* Solar Systems & Renewable Energy Works */}
-      <section className="relative">
-        <SolarSection />
-      </section>
+      {/* ৭. সোলার */}
+      <SolarSection />
 
-      {/* Corporate Legacy & Factory Overview */}
-      <section className="py-12 md:py-20 bg-[#0A0F1D] border-t border-slate-800">
-        <AboutSection />
-      </section>
+      {/* ৮. কোম্পানি পরিচিতি */}
+      <AboutSection />
 
-      {/* Board of Directors Section */}
+      {/* ৯. ISO সার্টিফিকেট */}
+      <Certifications />
+
+      {/* ১০. পরিচালনা পর্ষদ */}
       <BoardOfDirectors />
 
-      {/* Closing call-to-action */}
+      {/* ১১. শেষের কল-টু-অ্যাকশন */}
       <section className="py-14 md:py-20 px-5 bg-gradient-to-b from-[#070A11] to-[#0A0F1D] border-t border-amber-500/20">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl sm:text-4xl font-black text-white leading-tight">

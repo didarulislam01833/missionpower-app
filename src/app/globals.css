@@ -137,3 +137,34 @@ iframe[title="Messages"],
         animation: none;
     }
 }
+
+
+/* লোগো স্লাইডার */
+.mpl-marquee-track {
+    animation: mpl-scroll 40s linear infinite;
+}
+
+.mpl-marquee:hover .mpl-marquee-track {
+    animation-play-state: paused;
+}
+
+@keyframes mpl-scroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* যাদের ডিভাইসে অ্যানিমেশন বন্ধ করা, তাদের জন্য হাতে স্ক্রল */
+@media (prefers-reduced-motion: reduce) {
+    .mpl-marquee {
+        overflow-x: auto;
+    }
+
+    .mpl-marquee-track {
+        animation: none;
+    }
+}

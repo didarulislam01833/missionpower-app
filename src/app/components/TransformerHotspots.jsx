@@ -71,7 +71,7 @@ export default function TransformerHotspots() {
     const active = PARTS.find((p) => p.id === activeId);
 
     return (
-        <section className="py-16 md:py-24 bg-[#0A0F1D] border-y border-slate-800 relative overflow-hidden">
+        <section className="py-12 md:py-16 bg-[#0A0F1D] border-y border-slate-800 relative overflow-hidden">
             <div className="absolute top-1/2 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="container mx-auto px-5 sm:px-8 lg:px-16 relative z-10 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">

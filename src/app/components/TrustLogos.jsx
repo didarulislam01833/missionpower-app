@@ -18,7 +18,7 @@ const LOGOS = [
         name: "BPDB",
         full: "Bangladesh Power Development Board",
         badge: "Grid Supplier",
-        image: null,
+        image: "/assets/trust-logo/bpdp.png",
     },
     {
         name: "DESCO",
@@ -54,23 +54,23 @@ const LOGOS = [
 
 function LogoCard({ logo }) {
     return (
-        <div className="w-72 sm:w-80 h-48 sm:h-52 flex flex-col items-center justify-between bg-slate-900/90 border border-slate-800 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:border-amber-500/50 transition-colors duration-300 relative group overflow-hidden px-4 py-5 text-center">
+        <div className="w-72 sm:w-80 h-56 sm:h-64 flex flex-col items-center justify-between bg-slate-900/90 border border-slate-800 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:border-amber-500/50 transition-colors duration-300 relative group overflow-hidden px-4 py-5 text-center">
 
             {/* Hover Top Border Glow */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-yellow-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
             {/* Logo (ছবি না থাকলে নামের অক্ষর) */}
-            <div className="relative w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-xl shadow-md flex items-center justify-center overflow-hidden shrink-0">
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-xl shadow-md flex items-center justify-center overflow-hidden shrink-0">
                 {logo.image ? (
                     <Image
                         src={logo.image}
                         alt={`${logo.name} logo`}
                         fill
-                        sizes="64px"
+                        sizes="96px"
                         className="object-contain p-2"
                     />
                 ) : (
-                    <span className="text-sm font-black text-slate-800">{logo.name}</span>
+                    <span className="text-lg font-black text-slate-800">{logo.name}</span>
                 )}
             </div>
 
@@ -92,13 +92,13 @@ function LogoCard({ logo }) {
 
 export default function TrustLogos() {
     return (
-        <section className="py-14 md:py-20 bg-[#070A11] relative overflow-hidden border-y border-amber-500/20">
+        <section className="py-12 md:py-16 bg-[#070A11] relative overflow-hidden border-y border-amber-500/20">
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-500/30 to-transparent" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-amber-500/5 blur-[150px] rounded-full pointer-events-none" />
 
             <div className="container mx-auto px-5 sm:px-6 relative z-10">
                 {/* Header */}
-                <div className="flex flex-col items-center mb-12 text-center">
+                <div className="flex flex-col items-center mb-10 text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -139,7 +139,7 @@ export default function TrustLogos() {
                 </div>
 
                 {/* Bottom Trust Indicators */}
-                <div className="mt-12 pt-10 border-t border-slate-800/80 flex flex-wrap justify-center gap-10 md:gap-20">
+                <div className="mt-10 pt-8 border-t border-slate-800/80 flex flex-wrap justify-center gap-10 md:gap-20">
                     <div className="text-center group cursor-default">
                         <p className="text-2xl sm:text-4xl font-black text-white group-hover:text-amber-400 transition-colors">80+</p>
                         <p className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Active PBS Partners</p>

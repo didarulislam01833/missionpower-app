@@ -68,7 +68,7 @@ export default function ElectricalServices() {
     }, [selectedService]);
 
     return (
-        <section className="py-16 md:py-24 bg-[#070A11] text-slate-100 overflow-hidden relative">
+        <section className="py-12 md:py-16 bg-[#070A11] text-slate-100 overflow-hidden relative">
             {/* Background Ambient Glow */}
             <div className="absolute top-1/3 -left-40 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-1/4 -right-40 w-96 h-96 bg-orange-600/10 rounded-full blur-[120px] pointer-events-none" />
@@ -76,7 +76,7 @@ export default function ElectricalServices() {
             <div className="container mx-auto px-5 sm:px-8 lg:px-16 relative z-10">
 
                 {/* --- HEADER --- */}
-                <div className="max-w-3xl mb-14 md:mb-24">
+                <div className="max-w-3xl mb-10 md:mb-16">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-widest mb-4">
                         <span>⚡ Industrial Excellence</span>
                     </div>
@@ -86,7 +86,7 @@ export default function ElectricalServices() {
                 </div>
 
                 {/* --- SERVICES GRID --- */}
-                <div className="space-y-16 md:space-y-32">
+                <div className="space-y-14 md:space-y-20">
                     {SERVICES_DATA.map((service, index) => (
                         <div
                             key={service.id}

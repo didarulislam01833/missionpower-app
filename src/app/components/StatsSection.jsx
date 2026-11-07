@@ -3,6 +3,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, animate, useInView } from 'framer-motion';
 
+// ---- কোম্পানির তথ্য ----
+const FOUNDED_YEAR = 2014;
+const YEARS_ACTIVE = new Date().getFullYear() - FOUNDED_YEAR; // ২০২৬ সালে ১২
+
 function Counter({ value }) {
     const nodeRef = useRef(null);
     const isInView = useInView(nodeRef, { once: true, margin: "-30px" });
@@ -33,9 +37,11 @@ function Counter({ value }) {
     );
 }
 
-// মালিকের কাছ থেকে নিশ্চিত হয়ে সংখ্যাগুলো এখানে বদলান
+// ⚠️ "Projects Done" ও "MW Capacity"-এর সংখ্যা মালিকের কাছ থেকে
+// নিশ্চিত হয়ে বদলান। নিশ্চিত না হলে ওই কার্ড মুছে দিন বা নিচের মতো
+// সত্য লেখা দিন (যেমন number: "Class-A")।
 const STATS = [
-    { id: 1, number: "15+", label: "Years Experience", sublabel: "Industrial Leader" },
+    { id: 1, number: `${YEARS_ACTIVE}+`, label: "Years Experience", sublabel: `Since ${FOUNDED_YEAR}` },
     { id: 2, number: "120+", label: "Projects Done", sublabel: "Govt. & Private" },
     { id: 3, number: "500+", label: "MW Capacity", sublabel: "Grid Integration" },
     { id: 4, number: "Class-A", label: "Contractor", sublabel: "Verified Status" },

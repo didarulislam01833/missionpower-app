@@ -5,7 +5,8 @@ import { Phone, Mail, MapPin, ShieldCheck, Zap, MessageCircle } from 'lucide-rea
 
 // মালিকের কাছ থেকে নিশ্চিত করে এখানে একবারই বদলান
 const CONTACT = {
-    address: "Corporate Office & Factory: Gazipur Industrial Zone, Dhaka, Bangladesh.",
+    headOffice: "House 01, Road 16, Sector 07, Uttara, Dhaka-1230, Bangladesh.",
+    factory: "210/1, Niler Para, Gazipur City Corporation, Gazipur Sadar, Gazipur-1723, Bangladesh.",
     phones: [
         { label: "+88 01810-098909", href: "tel:+8801810098909" },
         { label: "+88 01810-098945", href: "tel:+8801810098945" },
@@ -67,7 +68,7 @@ export default function Footer() {
                                 <ShieldCheck size={14} aria-hidden="true" /> Class-A Contractor
                             </span>
                             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-extrabold uppercase tracking-wider">
-                                <Zap size={14} aria-hidden="true" /> ISO 9001
+                                <Zap size={14} aria-hidden="true" /> ISO 9001:2015
                             </span>
                         </div>
                     </div>
@@ -102,7 +103,10 @@ export default function Footer() {
                         <div className="space-y-4 text-sm">
                             <div className="flex items-start gap-3">
                                 <MapPin size={18} className="text-amber-400 shrink-0 mt-1" aria-hidden="true" />
-                                <span className="text-slate-300 leading-snug">{CONTACT.address}</span>
+                                <div className="text-slate-300 leading-snug space-y-2">
+                                    <p><span className="font-bold text-white">Head Office:</span> {CONTACT.headOffice}</p>
+                                    <p><span className="font-bold text-white">Factory:</span> {CONTACT.factory}</p>
+                                </div>
                             </div>
 
                             <div className="flex items-start gap-3">

@@ -5,10 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-// ---- মালিকের কাছ থেকে নিশ্চিত করে বদলান ----
-const PROFILE_PDF = null;          // PDF থাকলে যেমন: "/company-profile.pdf" (public ফোল্ডারে রাখুন)
+// ---- কোম্পানির তথ্য ----
+const FOUNDED_YEAR = 2014;
+const YEARS_ACTIVE = new Date().getFullYear() - FOUNDED_YEAR; // ২০২৬ সালে ১২
 const WHATSAPP = "8801810098909";
-const YEARS = "15+";               // StatsSection-এর সঙ্গে একই রাখুন
+const PROFILE_PDF = null; // PDF থাকলে যেমন: "/company-profile.pdf" (public ফোল্ডারে রাখুন)
 
 const fadeIn = (delay = 0, direction = "up") => ({
     hidden: { opacity: 0, x: direction === "left" ? -40 : 0, y: direction === "up" ? 30 : 0 },
@@ -24,12 +25,12 @@ export default function AboutSection() {
     )}`;
 
     return (
-        <section className="relative py-16 md:py-28 bg-[#070A11] text-slate-100 overflow-hidden">
+        <section className="relative py-12 md:py-16 bg-[#070A11] text-slate-100 overflow-hidden">
             <div className="absolute top-1/3 left-0 w-96 h-96 bg-amber-500/10 blur-[150px] rounded-full pointer-events-none" />
             <div className="absolute bottom-10 right-0 w-96 h-96 bg-orange-600/10 blur-[150px] rounded-full pointer-events-none" />
 
             <div className="container mx-auto px-5 sm:px-6 lg:px-16 relative z-10">
-                <div className="flex flex-col lg:flex-row items-center gap-14 lg:gap-20">
+                <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
 
                     {/* Left: factory photo */}
                     <div className="w-full lg:w-1/2 relative">
@@ -40,8 +41,10 @@ export default function AboutSection() {
                             transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.4 }}
                             className="absolute -top-6 right-2 md:-right-8 w-28 h-28 md:w-32 md:h-32 bg-gradient-to-br from-amber-400 to-yellow-600 rounded-full flex flex-col items-center justify-center text-slate-950 z-30 shadow-[0_0_25px_rgba(245,158,11,0.4)] border-4 border-[#070A11]"
                         >
-                            <span className="text-2xl md:text-3xl font-black">{YEARS}</span>
-                            <span className="text-[9px] md:text-[10px] font-extrabold uppercase tracking-tighter text-center">Years of<br />Excellence</span>
+                            <span className="text-2xl md:text-3xl font-black">{YEARS_ACTIVE}+</span>
+                            <span className="text-[9px] md:text-[10px] font-extrabold uppercase tracking-tighter text-center">
+                                Years · Since<br />{FOUNDED_YEAR}
+                            </span>
                         </motion.div>
 
                         <motion.div
@@ -51,7 +54,6 @@ export default function AboutSection() {
                             viewport={{ once: true }}
                             className="relative h-[300px] sm:h-[460px] md:h-[520px] w-full overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] border-4 border-slate-800 z-10 rounded-3xl bg-slate-900"
                         >
-                            {/* Manufacturing পেজের আসল ফ্যাক্টরির ছবি */}
                             <Image
                                 src="/assets/manufacturing-excellence/banner-img-2.jpg"
                                 alt="Mission Power Land transformer manufacturing plant"
@@ -111,7 +113,6 @@ export default function AboutSection() {
                                 </a>
                             )}
 
-                            {/* Leadership: আসল ছবি (আগে ট্রান্সফরমারের ছবি তিনবার ছিল) */}
                             <Link href="/about#employee" className="flex items-center gap-3 group">
                                 <div className="flex -space-x-3">
                                     {["/assets/employee/5.jpeg", "/assets/employee/3.jpg"].map((src) => (

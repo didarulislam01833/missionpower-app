@@ -36,7 +36,7 @@ export default function SolarSection() {
     }, [isPlaying]);
 
     return (
-        <section className="py-16 md:py-28 bg-[#05070B] text-slate-100 relative overflow-hidden">
+        <section className="py-12 md:py-16 bg-[#05070B] text-slate-100 relative overflow-hidden">
             <div className="absolute top-1/2 right-0 w-96 h-96 bg-amber-500/10 blur-[150px] rounded-full pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-600/10 blur-[150px] rounded-full pointer-events-none" />
 
