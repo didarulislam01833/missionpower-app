@@ -2,15 +2,19 @@
 @plugin "daisyui";
 
 /* --- 1. General UI & Root Fixes --- */
-/* html এবং body-তে পজিশন 'relative' রাখা হয়েছে যাতে HubSpot/Framer Motion সঠিকভাবে স্ক্রল মাপতে পারে */
+/* html এবং body-তে পজিশন 'relative' রাখা হয়েছে যাতে HubSpot/Framer Motion সঠিকভাবে স্ক্রল মাপতে পারে */
 html,
 body {
     position: relative;
     min-height: 100vh;
     scroll-behavior: smooth;
-    overflow-x: hidden;
     margin: 0;
     padding: 0;
+}
+
+/* overflow-x শুধু body-তে রাখা হয়েছে, যাতে sticky এলিমেন্ট ঠিকমতো কাজ করে */
+body {
+    overflow-x: hidden;
 }
 
 /* --- 2. Custom Animations --- */
@@ -32,6 +36,18 @@ body {
     }
 }
 
+/* যাদের ফোনে "Reduce motion" চালু আছে, তাদের জন্য অ্যানিমেশন বন্ধ */
+@media (prefers-reduced-motion: reduce) {
+    .animate-slow-zoom {
+        animation: none;
+    }
+
+    html,
+    body {
+        scroll-behavior: auto;
+    }
+}
+
 /* --- 3. Swiper Pagination Custom Styling --- */
 .mpl-pagination .swiper-pagination-bullet {
     width: 12px;
@@ -45,8 +61,8 @@ body {
 
 .mpl-pagination .swiper-pagination-bullet-active {
     width: 40px;
-    background: #3b82f6;
-    /* blue-500 */
+    background: #f59e0b;
+    /* amber-500 */
     opacity: 1;
 }
 
@@ -61,14 +77,14 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #3b82f6;
-    /* Blue-500 */
+    background: #f59e0b;
+    /* amber-500 */
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #2563eb;
-    /* Blue-600 */
+    background: #d97706;
+    /* amber-600 */
 }
 
 /* --- 5. Fix for Browser Extensions (Optional but helpful) --- */
@@ -79,16 +95,45 @@ body {
 }
 
 /* --- 6. Hide HubSpot Default Chat Button (Using AI Chatbot Instead) --- */
-/* HubSpot chat widget button hide করা হয়েছে কারণ আমরা custom AI chatbot ব্যবহার করছি */
+/* HubSpot chat widget button hide করা হয়েছে কারণ আমরা custom AI chatbot ব্যবহার করছি */
 #hubspot-messages-iframe-container,
 iframe[title="Messages"],
 .hs-messages-widget-open,
-#hs-messages-mount-point {
-    display: none !important;
-}
-
-/* HubSpot widget button hide */
+#hs-messages-mount-point,
 .hs-messages-widget-container,
 .hs-messages-widget {
     display: none !important;
+}
+
+
+/* --- 7. Logo marquee (framer-motion-এর বদলে হালকা CSS অ্যানিমেশন) --- */
+@keyframes mpl-marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.mpl-marquee-track {
+    animation: mpl-marquee 40s linear infinite;
+}
+
+/* আঙুল বা মাউস রাখলে থামবে */
+.mpl-marquee:hover .mpl-marquee-track,
+.mpl-marquee:active .mpl-marquee-track {
+    animation-play-state: paused;
+}
+
+/* "Reduce motion" চালু থাকলে স্ক্রল বন্ধ, হাতে সোয়াইপ করা যাবে */
+@media (prefers-reduced-motion: reduce) {
+    .mpl-marquee {
+        overflow-x: auto;
+    }
+
+    .mpl-marquee-track {
+        animation: none;
+    }
 }

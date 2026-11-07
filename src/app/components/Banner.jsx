@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -12,7 +12,11 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-const WordByWord = ({ text, className, delay = 0 }) => {
+// মালিকের কাছ থেকে আসল নম্বর নিশ্চিত করে এখানে একবারই বদলান
+const PHONE = "01810-098909";
+
+const WordByWord = ({ text, className, delay = 0, as = "div" }) => {
+    const Tag = motion[as];
     const words = text.split(" ");
     const container = {
         hidden: { opacity: 0 },
@@ -24,11 +28,11 @@ const WordByWord = ({ text, className, delay = 0 }) => {
     };
 
     return (
-        <motion.div variants={container} initial="hidden" animate="visible" className={`flex flex-wrap ${className}`}>
+        <Tag variants={container} initial="hidden" animate="visible" className={`flex flex-wrap ${className}`}>
             {words.map((word, index) => (
                 <motion.span variants={child} key={index} className="mr-2 md:mr-3">{word}</motion.span>
             ))}
-        </motion.div>
+        </Tag>
     );
 };
 
@@ -42,7 +46,6 @@ const bannerData = [
         description: "Premier manufacturer of high-voltage transformers, 33/11kV substations, and heavy industrial power distribution infrastructure.",
         ctaText: "EXPLORE PRODUCTS",
         ctaLink: "/services",
-        phone: "01810-098911"
     },
     {
         id: 2,
@@ -50,10 +53,9 @@ const bannerData = [
         badge: "⚡ BREB & BPDB APPROVED SPECIFICATIONS",
         title: "Precision-Built Transformers",
         subtitle: "Single & Three-Phase Heavy Duty Solutions",
-        description: "Crafted for maximum thermal durability, zero failure rate, and compliance with rigorous national utility standards.",
+        description: "Crafted for maximum thermal durability and compliance with rigorous national utility standards.",
         ctaText: "VIEW TECHNICAL SPECS",
         ctaLink: "/manufacture-excellence",
-        phone: "01810-098909"
     },
     {
         id: 3,
@@ -64,18 +66,11 @@ const bannerData = [
         description: "End-to-end electrical substation design, installation, and impulse testing for uninterrupted industrial operation.",
         ctaText: "CHECK PORTFOLIO",
         ctaLink: "/portfolio",
-        phone: "01810-098911"
     }
 ];
 
 const Banner = () => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [mounted, setMounted] = useState(false);
-    const prevRef = useRef(null);
-    const nextRef = useRef(null);
-
-    useEffect(() => { setMounted(true); }, []);
-    if (!mounted) return <div className="w-full h-[85vh] bg-[#05070B]" />;
 
     return (
         <section className="relative w-full h-[85vh] sm:h-[90vh] md:h-screen bg-[#05070B] overflow-hidden z-10">
@@ -94,34 +89,31 @@ const Banner = () => {
                 autoplay={{ delay: 6500, disableOnInteraction: false }}
                 onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
                 pagination={{ clickable: true, el: '.custom-swiper-pagination' }}
-                navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
-                onBeforeInit={(swiper) => {
-                    swiper.params.navigation.prevEl = prevRef.current;
-                    swiper.params.navigation.nextEl = nextRef.current;
-                }}
+                navigation={{ prevEl: '.mpl-prev', nextEl: '.mpl-next' }}
                 className="h-full w-full"
             >
                 {bannerData.map((item, index) => (
                     <SwiperSlide key={item.id}>
-                        {/* Background Image Container with Stunning Visibility */}
-                        <div className={`absolute inset-0 transition-transform duration-[7000ms] ease-out ${activeIndex === index ? 'scale-105' : 'scale-100'}`}>
+                        {/* Background Image */}
+                        <div className={`absolute inset-0 transition-transform duration-[7000ms] ease-out motion-reduce:transition-none ${activeIndex === index ? 'scale-105' : 'scale-100'}`}>
                             <Image
                                 src={item.image}
                                 alt={item.title}
                                 fill
+                                sizes="100vw"
                                 className="object-cover object-center filter brightness-[0.85] contrast-[1.05]"
                                 priority={index === 0}
                             />
 
-                            {/* Balanced Mobile Gradient: Keeps image clear at top/middle while reading text at bottom */}
+                            {/* Gradient: ছবি পরিষ্কার থাকে, লেখা নিচে পড়া যায় */}
                             <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/70 to-black/30 md:bg-gradient-to-r md:from-[#05070B] md:via-[#05070B]/80 md:to-transparent z-10" />
 
-                            {/* Ambient Glow Lighting */}
+                            {/* Ambient Glow */}
                             <div className="absolute top-1/4 left-10 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none z-10 hidden sm:block" />
                         </div>
 
                         {/* Slide Content */}
-                        <div className="container mx-auto px-5 sm:px-8 lg:px-16 h-full flex items-end md:items-center relative z-20 pb-16 md:pb-0 pt-24">
+                        <div className="container mx-auto px-5 sm:px-8 lg:px-16 h-full flex items-end md:items-center relative z-20 pb-24 md:pb-0 pt-24">
                             <div className="max-w-3xl">
                                 <AnimatePresence mode="wait">
                                     {activeIndex === index && (
@@ -134,8 +126,9 @@ const Banner = () => {
                                                 </span>
                                             </motion.div>
 
-                                            {/* Main Title */}
+                                            {/* Main Title: প্রথম স্লাইডে h1, বাকিগুলো h2 (SEO-র জন্য পেজে একটিই h1) */}
                                             <WordByWord
+                                                as={index === 0 ? "h1" : "h2"}
                                                 text={item.title}
                                                 className="text-3xl sm:text-5xl md:text-7xl font-black text-white leading-[1.1] tracking-tight uppercase drop-shadow-md"
                                             />
@@ -176,11 +169,11 @@ const Banner = () => {
                                                 </Link>
 
                                                 <a
-                                                    href={`tel:${item.phone}`}
+                                                    href={`tel:${PHONE}`}
                                                     className="px-5 py-3.5 bg-slate-900/90 border border-slate-700 hover:border-amber-500/50 text-white font-bold rounded-xl text-sm text-center backdrop-blur-md active:scale-95 transition-all flex items-center justify-center gap-2"
                                                 >
                                                     <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                                                    <span>Call: {item.phone}</span>
+                                                    <span>Call: {PHONE}</span>
                                                 </a>
                                             </motion.div>
 
@@ -195,16 +188,16 @@ const Banner = () => {
 
             {/* Navigation Arrows for Desktop */}
             <div className="absolute top-1/2 -translate-y-1/2 w-full hidden md:flex justify-between px-8 z-30 pointer-events-none">
-                <button ref={prevRef} className="pointer-events-auto w-12 h-12 rounded-full border border-amber-500/30 bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white hover:bg-amber-500 hover:text-black transition-all shadow-xl">
+                <button aria-label="Previous slide" className="mpl-prev pointer-events-auto w-12 h-12 rounded-full border border-amber-500/30 bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white hover:bg-amber-500 hover:text-black transition-all shadow-xl">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
                 </button>
-                <button ref={nextRef} className="pointer-events-auto w-12 h-12 rounded-full border border-amber-500/30 bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white hover:bg-amber-500 hover:text-black transition-all shadow-xl">
+                <button aria-label="Next slide" className="mpl-next pointer-events-auto w-12 h-12 rounded-full border border-amber-500/30 bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white hover:bg-amber-500 hover:text-black transition-all shadow-xl">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
                 </button>
             </div>
 
-            {/* Custom Swiper Pagination Dots */}
-            <div className="custom-swiper-pagination absolute bottom-4 left-0 w-full flex justify-center gap-2 z-30" />
+            {/* Pagination Dots: Stats কার্ডের ওপরে রাখা হয়েছে যাতে ঢাকা না পড়ে */}
+            <div className="custom-swiper-pagination mpl-pagination absolute bottom-14 sm:bottom-20 md:bottom-24 left-0 w-full flex justify-center gap-2 z-30" />
         </section>
     );
 };

@@ -5,8 +5,6 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import Script from "next/script";
 import ChatWrapper from "./components/ChatWrapper";
-// ১. নতুন তৈরি করা ChatWrapper ইম্পোর্ট করুন
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,8 +17,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Mission Power Land Limited",
-  description: "Engineering Excellence Since 2014 - Power Grids and Land Development.",
+  metadataBase: new URL("https://www.missionpowerland.com"),
+  title: {
+    default: "Mission Power Land Ltd | Transformer Manufacturer & Class-A Contractor, Bangladesh",
+    template: "%s | Mission Power Land Ltd",
+  },
+  description:
+    "Distribution transformers, 33/11kV substations and solar EPC for BREB, BPDB, DESCO and DPDC. Factory in Gazipur.",
+  openGraph: {
+    type: "website",
+    siteName: "Mission Power Land Limited",
+    locale: "en_BD",
+    images: ["/assets/og-image.jpg"], // 1200x630, public/assets/ ফোল্ডারে রাখুন
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -31,12 +40,12 @@ export default function RootLayout({ children }) {
         {children}
         <WhatsAppButton />
 
-        {/* ২. চ্যাটবট এখন নিরাপদে লোড হবে */}
+        {/* চ্যাটবট ChatWrapper-এর মাধ্যমে লোড হয় */}
         <ChatWrapper />
 
         <Footer />
 
-        {process.env.NEXT_PUBLIC_ENABLE_HUBSPOT === 'true' && (
+        {process.env.NEXT_PUBLIC_ENABLE_HUBSPOT === "true" && (
           <Script
             type="text/javascript"
             id="hs-script-loader"

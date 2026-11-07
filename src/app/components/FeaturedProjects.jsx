@@ -2,11 +2,18 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+
+// ⚠️ এই তালিকার প্রতিটি প্রজেক্ট মালিকের কাছ থেকে যাচাই করুন।
+// আসল প্রজেক্ট হলে নাম, স্থান, ক্ষমতা ও ছবি আসল তথ্যে বদলে দিন।
+// যাচাই করা যায় না এমন কার্ড মুছে দিন, কম কিন্তু সত্য প্রজেক্ট ভালো।
+const TABS = ["All", "Solar", "Power Infrastructure", "Manufacturing"];
 
 const PROJECTS_DATA = [
     {
         id: "01",
+        group: "Solar",
         title: "Commercial & Industrial Rooftop Solar EPC",
         category: "Renewable Energy",
         image: "/assets/solar-home-page/solar-pic.png",
@@ -16,6 +23,7 @@ const PROJECTS_DATA = [
     },
     {
         id: "02",
+        group: "Solar",
         title: "Utility-Scale Solar PV Installation",
         category: "Green Power Grid",
         image: "/assets/solar-home-page/solar5.jpg",
@@ -25,6 +33,7 @@ const PROJECTS_DATA = [
     },
     {
         id: "03",
+        group: "Power Infrastructure",
         title: "33/11KV Grid Substation Integration",
         category: "Power Infrastructure",
         image: "/assets/banner/banner-img-7.jpg",
@@ -34,6 +43,7 @@ const PROJECTS_DATA = [
     },
     {
         id: "04",
+        group: "Manufacturing",
         title: "Heavy-Duty Three-Phase Transformers",
         category: "Manufacturing",
         image: "/assets/banner/banner-img-6.jpg",
@@ -48,18 +58,18 @@ export default function FeaturedProjects() {
 
     const filteredProjects = activeTab === "All"
         ? PROJECTS_DATA
-        : PROJECTS_DATA.filter(p => p.category === activeTab);
+        : PROJECTS_DATA.filter((p) => p.group === activeTab);
 
     return (
-        <section className="py-20 md:py-28 bg-[#070A11] text-slate-100 relative overflow-hidden">
+        <section className="py-16 md:py-28 bg-[#070A11] text-slate-100 relative overflow-hidden">
             {/* Background Glow Accents */}
             <div className="absolute top-1/4 left-0 w-96 h-96 bg-amber-500/10 blur-[150px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-blue-600/10 blur-[150px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-orange-600/10 blur-[150px] rounded-full pointer-events-none" />
 
             <div className="container mx-auto px-5 sm:px-6 lg:px-16 relative z-10">
 
                 {/* --- HEADER --- */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-12 gap-6">
                     <div>
                         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-widest mb-4 shadow-lg">
                             <span>⚡ Proven Engineering Track Record</span>
@@ -69,15 +79,21 @@ export default function FeaturedProjects() {
                         </h2>
                     </div>
 
-                    {/* Filter Tabs */}
-                    <div className="flex flex-wrap gap-2 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800">
-                        {["All", "Renewable Energy", "Power Infrastructure", "Manufacturing"].map((tab) => (
+                    {/* Filter Tabs: ফোনে পাশে সোয়াইপ করা যায় */}
+                    <div
+                        role="tablist"
+                        aria-label="Filter projects"
+                        className="flex gap-2 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 overflow-x-auto max-w-full"
+                    >
+                        {TABS.map((tab) => (
                             <button
                                 key={tab}
+                                role="tab"
+                                aria-selected={activeTab === tab}
                                 onClick={() => setActiveTab(tab)}
-                                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === tab
-                                        ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20"
-                                        : "text-slate-400 hover:text-white hover:bg-slate-800"
+                                className={`shrink-0 px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === tab
+                                    ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20"
+                                    : "text-slate-400 hover:text-white hover:bg-slate-800"
                                     }`}
                             >
                                 {tab}
@@ -87,7 +103,7 @@ export default function FeaturedProjects() {
                 </div>
 
                 {/* --- PROJECTS GRID --- */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                     <AnimatePresence mode="popLayout">
                         {filteredProjects.map((project) => (
                             <motion.div
@@ -97,49 +113,51 @@ export default function FeaturedProjects() {
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 transition={{ duration: 0.4 }}
-                                className="group relative bg-slate-900/90 border border-slate-800 rounded-3xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:border-amber-500/50 transition-all duration-500 flex flex-col justify-between"
+                                className="group relative bg-slate-900/90 border border-slate-800 rounded-3xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:border-amber-500/50 transition-colors duration-500 flex flex-col"
                             >
-                                {/* Project Image Container */}
-                                <div className="relative h-[260px] sm:h-[320px] w-full overflow-hidden bg-slate-950">
+                                {/* Project Image */}
+                                <div className="relative h-[220px] sm:h-[300px] w-full overflow-hidden bg-slate-950">
                                     <Image
                                         src={project.image}
                                         alt={project.title}
                                         fill
+                                        sizes="(max-width: 768px) 100vw, 50vw"
                                         className="object-cover group-hover:scale-105 transition-transform duration-700"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
 
-                                    {/* Category Badge */}
+                                    {/* শুধু Category ব্যাজ (ক্ষমতা নিচে, যাতে ফোনে ব্যাজ একটার ওপর আরেকটা না পড়ে) */}
                                     <div className="absolute top-4 left-4 bg-slate-950/80 backdrop-blur-md border border-amber-500/30 px-3 py-1.5 rounded-full text-[11px] font-extrabold text-amber-400 uppercase tracking-wider shadow-lg">
                                         {project.category}
                                     </div>
-
-                                    {/* Capacity Badge */}
-                                    <div className="absolute top-4 right-4 bg-amber-500 text-slate-950 px-3 py-1.5 rounded-full text-[11px] font-black uppercase tracking-wider shadow-lg">
-                                        {project.capacity}
-                                    </div>
                                 </div>
 
-                                {/* Content Details */}
-                                <div className="p-6 sm:p-8 flex flex-col justify-between flex-grow space-y-4">
-                                    <div>
-                                        <p className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
-                                            <span>📍</span> {project.location}
-                                        </p>
-                                        <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight group-hover:text-amber-400 transition-colors">
-                                            {project.title}
-                                        </h3>
-                                        <p className="text-sm text-slate-300 leading-relaxed mt-3">
-                                            {project.desc}
-                                        </p>
-                                    </div>
+                                {/* Content */}
+                                <div className="p-5 sm:p-8 flex flex-col flex-grow">
+                                    <p className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                                        <span aria-hidden="true">📍</span> {project.location}
+                                    </p>
+                                    <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight group-hover:text-amber-400 transition-colors">
+                                        {project.title}
+                                    </h3>
 
-                                    <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
-                                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Mission Power Land Execution</span>
-                                        <span className="w-8 h-8 rounded-full bg-slate-800 group-hover:bg-amber-500 group-hover:text-slate-950 text-white flex items-center justify-center transition-colors">
+                                    <p className="mt-3 inline-block self-start px-3 py-1 rounded-md bg-amber-500 text-slate-950 text-xs font-black uppercase tracking-wide">
+                                        {project.capacity}
+                                    </p>
+
+                                    <p className="text-sm text-slate-300 leading-relaxed mt-3 flex-grow">
+                                        {project.desc}
+                                    </p>
+
+                                    <Link
+                                        href="/portfolio"
+                                        className="mt-5 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-bold text-slate-400 hover:text-amber-400 uppercase tracking-wider transition-colors"
+                                    >
+                                        <span>See full portfolio</span>
+                                        <span className="w-8 h-8 rounded-full bg-slate-800 group-hover:bg-amber-500 group-hover:text-slate-950 text-white flex items-center justify-center transition-colors" aria-hidden="true">
                                             →
                                         </span>
-                                    </div>
+                                    </Link>
                                 </div>
                             </motion.div>
                         ))}

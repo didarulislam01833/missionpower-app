@@ -1,39 +1,60 @@
-"use client";
-
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, ArrowRight, ShieldCheck, Zap, Globe } from 'lucide-react';
+import { Phone, Mail, MapPin, ShieldCheck, Zap, MessageCircle } from 'lucide-react';
+
+// মালিকের কাছ থেকে নিশ্চিত করে এখানে একবারই বদলান
+const CONTACT = {
+    address: "Corporate Office & Factory: Gazipur Industrial Zone, Dhaka, Bangladesh.",
+    phones: [
+        { label: "+88 01810-098909", href: "tel:+8801810098909" },
+        { label: "+88 01810-098945", href: "tel:+8801810098945" },
+    ],
+    whatsapp: "https://wa.me/8801810098909",
+    email: "info@missionpowerland.com",
+};
+
+const QUICK_LINKS = [
+    { name: 'Home', href: '/' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Manufacturing', href: '/manufacture-excellence' },
+    { name: 'Portfolio', href: '/portfolio' },
+    { name: 'Contact', href: '/contact' },
+    { name: 'Get a Quote', href: '/contact?type=quote' },
+];
+
+const DIVISIONS = [
+    { name: 'Power & Substations', href: '/services/powerGrid' },
+    { name: 'Solar EPC Solutions', href: '/services/solar' },
+    { name: 'Civil & Infrastructure', href: '/services/civil' },
+    { name: 'National Grid Works', href: '/services/public' },
+];
+
+const listLink = "hover:text-amber-400 transition-colors flex items-center gap-2 group";
+const dot = <span className="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-amber-400 transition-colors" />;
+const heading = "text-xs font-black text-white uppercase tracking-[0.25em] border-l-2 border-amber-400 pl-3";
 
 export default function Footer() {
     return (
         <footer className="bg-[#05070B] text-slate-300 relative overflow-hidden border-t border-slate-800">
-            {/* Background Glow Effects */}
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/5 blur-[150px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/5 blur-[150px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-600/5 blur-[150px] rounded-full pointer-events-none" />
 
-            <div className="container mx-auto px-5 sm:px-6 lg:px-16 pt-20 pb-12 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 pb-16 border-b border-slate-800/80">
+            {/* নিচে বাড়তি ফাঁক শুধু ফোনে: ভাসমান WhatsApp ও চ্যাট বাটন লেখা ঢাকবে না */}
+            <div className="container mx-auto px-5 sm:px-6 lg:px-16 pt-16 md:pt-20 pb-28 sm:pb-12 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-12 md:pb-16 border-b border-slate-800/80">
 
-                    {/* --- COLUMN 1: BRAND INFO --- */}
+                    {/* BRAND */}
                     <div className="lg:col-span-4 space-y-6">
                         <Link href="/" className="flex items-center gap-3 group">
                             <div className="relative w-[50px] h-[50px] flex-shrink-0">
-                                <Image
-                                    src="/assets/logo/logo.png"
-                                    alt="Mission Power Land Limited"
-                                    fill
-                                    className="object-contain"
-                                />
+                                <Image src="/assets/logo/logo.png" alt="Mission Power Land Limited" fill sizes="50px" className="object-contain" />
                             </div>
                             <div className="flex flex-col leading-none">
                                 <span className="text-lg font-black tracking-tight text-white uppercase">
                                     Mission Power <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">Land</span>
                                 </span>
-                                <span className="text-[10px] font-black text-amber-400 tracking-widest mt-1">
-                                    LIMITED
-                                </span>
+                                <span className="text-[10px] font-black text-amber-400 tracking-widest mt-1">LIMITED</span>
                             </div>
                         </Link>
 
@@ -41,104 +62,81 @@ export default function Footer() {
                             Premier Class-A Government Contractor & Transformer Manufacturer in Bangladesh specializing in 33/11kV Substation, Power/Distribution Transformers, and Solar EPC Solutions.
                         </p>
 
-                        <div className="flex items-center gap-3 pt-2">
+                        <div className="flex flex-wrap items-center gap-3 pt-2">
                             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-extrabold uppercase tracking-wider">
-                                <ShieldCheck size={14} /> Class-A Contractor
+                                <ShieldCheck size={14} aria-hidden="true" /> Class-A Contractor
                             </span>
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-extrabold uppercase tracking-wider">
-                                <Zap size={14} /> ISO 9001
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-extrabold uppercase tracking-wider">
+                                <Zap size={14} aria-hidden="true" /> ISO 9001
                             </span>
                         </div>
                     </div>
 
-                    {/* --- COLUMN 2: QUICK LINKS --- */}
-                    <div className="lg:col-span-2 space-y-5">
-                        <h4 className="text-xs font-black text-white uppercase tracking-[0.25em] border-l-2 border-amber-400 pl-3">
-                            Quick Links
-                        </h4>
+                    {/* QUICK LINKS */}
+                    <nav aria-label="Quick links" className="lg:col-span-2 space-y-5">
+                        <h4 className={heading}>Quick Links</h4>
                         <ul className="space-y-3 text-sm font-medium">
-                            {['Home', 'About Us', 'Manufacturing', 'Portfolio', 'Contact'].map((item, idx) => {
-                                const hrefs = ['/', '/about', '/manufacture-excellence', '/portfolio', '/contact'];
-                                return (
-                                    <li key={item}>
-                                        <Link
-                                            href={hrefs[idx]}
-                                            className="hover:text-amber-400 transition-colors flex items-center gap-2 group"
-                                        >
-                                            <span className="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-amber-400 transition-colors" />
-                                            {item}
-                                        </Link>
-                                    </li>
-                                );
-                            })}
-                        </ul>
-                    </div>
-
-                    {/* --- COLUMN 3: EXPERTISE --- */}
-                    <div className="lg:col-span-3 space-y-5">
-                        <h4 className="text-xs font-black text-white uppercase tracking-[0.25em] border-l-2 border-amber-400 pl-3">
-                            Our Divisions
-                        </h4>
-                        <ul className="space-y-3 text-sm font-medium">
-                            {[
-                                { name: 'Power & Substations', href: '/services/powerGrid' },
-                                { name: 'Solar EPC Solutions', href: '/services/solar' },
-                                { name: 'Civil & Infrastructure', href: '/services/civil' },
-                                { name: 'National Grid Works', href: '/services/public' },
-                            ].map((service) => (
-                                <li key={service.name}>
-                                    <Link
-                                        href={service.href}
-                                        className="hover:text-amber-400 transition-colors flex items-center gap-2 group"
-                                    >
-                                        <span className="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-amber-400 transition-colors" />
-                                        {service.name}
-                                    </Link>
+                            {QUICK_LINKS.map((item) => (
+                                <li key={item.name}>
+                                    <Link href={item.href} className={listLink}>{dot}{item.name}</Link>
                                 </li>
                             ))}
                         </ul>
-                    </div>
+                    </nav>
 
-                    {/* --- COLUMN 4: CONTACT INFO --- */}
+                    {/* DIVISIONS */}
+                    <nav aria-label="Our divisions" className="lg:col-span-3 space-y-5">
+                        <h4 className={heading}>Our Divisions</h4>
+                        <ul className="space-y-3 text-sm font-medium">
+                            {DIVISIONS.map((s) => (
+                                <li key={s.name}>
+                                    <Link href={s.href} className={listLink}>{dot}{s.name}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+
+                    {/* CONTACT */}
                     <div className="lg:col-span-3 space-y-5">
-                        <h4 className="text-xs font-black text-white uppercase tracking-[0.25em] border-l-2 border-amber-400 pl-3">
-                            Official Contacts
-                        </h4>
-                        <div className="space-y-3.5 text-sm">
+                        <h4 className={heading}>Official Contacts</h4>
+                        <div className="space-y-4 text-sm">
                             <div className="flex items-start gap-3">
-                                <MapPin size={18} className="text-amber-400 shrink-0 mt-1" />
-                                <span className="text-slate-300 leading-snug">
-                                    Corporate Office & Factory: Gazipur Industrial Zone, Dhaka, Bangladesh.
-                                </span>
+                                <MapPin size={18} className="text-amber-400 shrink-0 mt-1" aria-hidden="true" />
+                                <span className="text-slate-300 leading-snug">{CONTACT.address}</span>
                             </div>
 
-                            <div className="flex items-center gap-3">
-                                <Phone size={18} className="text-amber-400 shrink-0" />
-                                <div className="flex flex-col">
-                                    <a href="tel:+8801810098909" className="hover:text-amber-400 transition-colors font-bold">+88 01810-098909</a>
-                                    <a href="tel:+8801810098945" className="hover:text-amber-400 transition-colors font-bold">+88 01810-098945</a>
+                            <div className="flex items-start gap-3">
+                                <Phone size={18} className="text-amber-400 shrink-0 mt-1" aria-hidden="true" />
+                                <div className="flex flex-col gap-1">
+                                    {CONTACT.phones.map((p) => (
+                                        <a key={p.href} href={p.href} className="hover:text-amber-400 transition-colors font-bold py-0.5">{p.label}</a>
+                                    ))}
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-3">
-                                <Mail size={18} className="text-amber-400 shrink-0" />
-                                <a href="mailto:info@missionpowerland.com" className="hover:text-amber-400 transition-colors font-bold">
-                                    info@missionpowerland.com
+                                <MessageCircle size={18} className="text-amber-400 shrink-0" aria-hidden="true" />
+                                <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition-colors font-bold">
+                                    Chat on WhatsApp
+                                </a>
+                            </div>
+
+                            <div className="flex items-center gap-3">
+                                <Mail size={18} className="text-amber-400 shrink-0" aria-hidden="true" />
+                                <a href={`mailto:${CONTACT.email}`} className="hover:text-amber-400 transition-colors font-bold break-all">
+                                    {CONTACT.email}
                                 </a>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
-                {/* --- BOTTOM COPYRIGHT BAR --- */}
+                {/* BOTTOM BAR */}
                 <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500">
                     <p>© {new Date().getFullYear()} Mission Power Land Limited. All Rights Reserved.</p>
-                    <div className="flex items-center gap-6">
-                        <span className="hover:text-slate-400 cursor-pointer">Privacy Policy</span>
-                        <span className="hover:text-slate-400 cursor-pointer">Terms of Service</span>
-                        <span className="text-amber-400 font-bold uppercase tracking-wider">Class-A Verified</span>
-                    </div>
+                    <Link href="/contact?type=quote" className="text-amber-400 font-bold uppercase tracking-wider hover:text-amber-300 transition-colors">
+                        Request a quote
+                    </Link>
                 </div>
             </div>
         </footer>

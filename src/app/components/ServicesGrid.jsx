@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // --- TECHNICAL DATA ---
+// স্পেকগুলো কারখানার ইঞ্জিনিয়ারের কাছ থেকে নিশ্চিত করে নিন
 const SERVICES_DATA = [
     {
         id: "01",
@@ -12,7 +14,6 @@ const SERVICES_DATA = [
         category: "Manufacturing",
         image: "/assets/Stats/singlePhase.jpg",
         desc: "Expertly crafted Single Phase Transformers designed for high durability and efficiency, meeting the power demands of residential and rural distribution networks across Bangladesh.",
-        link: "/services/single-phase",
         specs: [
             "Capacity Range: 5kVA to 50kVA",
             "Voltage Ratio: 6.35kV / 0.24kV (Standard)",
@@ -27,7 +28,6 @@ const SERVICES_DATA = [
         category: "Industrial Grid",
         image: "/assets/Stats/threePhase.jpg",
         desc: "High-capacity Three Phase Transformers engineered for heavy industrial use. Built with precision to ensure stable power delivery for large-scale factories and urban grids.",
-        link: "/services/three-phase",
         specs: [
             "Capacity Range: 100kVA to 5000kVA",
             "Voltage Class: 11kV / 0.415kV or 33kV / 11kV",
@@ -42,7 +42,6 @@ const SERVICES_DATA = [
         category: "Engineering",
         image: "/assets/Stats/substation.jpg",
         desc: "Complete 33/11KV substation setup featuring advanced HT/LT switchgear and automated control panels for reliable and safe power management.",
-        link: "/services/substation",
         specs: [
             "Panel Type: HT (VCB/LBS) and LT (MCCB/ACB)",
             "Rated Current: Up to 4000A (LT) / 630A (HT)",
@@ -56,16 +55,28 @@ const SERVICES_DATA = [
 export default function ElectricalServices() {
     const [selectedService, setSelectedService] = useState(null);
 
+    // Esc চাপলে মডাল বন্ধ, মডাল খোলা থাকলে পেছনের পেজ স্ক্রল হবে না
+    useEffect(() => {
+        if (!selectedService) return;
+        const onKey = (e) => { if (e.key === 'Escape') setSelectedService(null); };
+        document.body.style.overflow = 'hidden';
+        window.addEventListener('keydown', onKey);
+        return () => {
+            document.body.style.overflow = '';
+            window.removeEventListener('keydown', onKey);
+        };
+    }, [selectedService]);
+
     return (
         <section className="py-16 md:py-24 bg-[#070A11] text-slate-100 overflow-hidden relative">
             {/* Background Ambient Glow */}
             <div className="absolute top-1/3 -left-40 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-1/4 -right-40 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-1/4 -right-40 w-96 h-96 bg-orange-600/10 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="container mx-auto px-5 sm:px-8 lg:px-16 relative z-10">
 
                 {/* --- HEADER --- */}
-                <div className="max-w-3xl mb-16 md:mb-24">
+                <div className="max-w-3xl mb-14 md:mb-24">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-widest mb-4">
                         <span>⚡ Industrial Excellence</span>
                     </div>
@@ -75,15 +86,15 @@ export default function ElectricalServices() {
                 </div>
 
                 {/* --- SERVICES GRID --- */}
-                <div className="space-y-20 md:space-y-32">
+                <div className="space-y-16 md:space-y-32">
                     {SERVICES_DATA.map((service, index) => (
                         <div
                             key={service.id}
                             className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-20 ${index % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}
                         >
-                            {/* --- IMAGE PART WITH MOBILE-FRIENDLY ASPECT --- */}
+                            {/* --- IMAGE --- */}
                             <div className="relative w-full lg:w-1/2">
-                                <div className={`absolute -top-10 ${index % 2 !== 0 ? 'right-4' : 'left-4'} text-[100px] md:text-[150px] font-black text-slate-800/40 leading-none select-none z-0`}>
+                                <div className={`absolute -top-10 ${index % 2 !== 0 ? 'right-4' : 'left-4'} text-[100px] md:text-[150px] font-black text-slate-800/40 leading-none select-none z-0`} aria-hidden="true">
                                     {service.id}
                                 </div>
 
@@ -92,21 +103,20 @@ export default function ElectricalServices() {
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.6 }}
-                                    className="relative h-[320px] sm:h-[400px] md:h-[480px] w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-10 border border-slate-800 bg-slate-900"
+                                    className="relative h-[280px] sm:h-[400px] md:h-[480px] w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-10 border border-slate-800 bg-slate-900"
                                 >
                                     <Image
                                         src={service.image}
                                         alt={service.title}
                                         fill
-                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                        sizes="(max-width: 1024px) 100vw, 50vw"
                                         className="object-cover hover:scale-105 transition-transform duration-700 filter brightness-[0.9]"
-                                        priority={index === 0}
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#070A11] via-transparent to-transparent opacity-80" />
                                 </motion.div>
                             </div>
 
-                            {/* --- TEXT CONTENT --- */}
+                            {/* --- TEXT --- */}
                             <motion.div
                                 whileInView={{ opacity: 1, y: 0 }}
                                 initial={{ opacity: 0, y: 20 }}
@@ -143,11 +153,10 @@ export default function ElectricalServices() {
                 </div>
             </div>
 
-            {/* --- ANIMATED MODAL FOR SPECS --- */}
+            {/* --- SPECS MODAL --- */}
             <AnimatePresence>
                 {selectedService && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                        {/* Backdrop */}
+                    <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4">
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -156,29 +165,31 @@ export default function ElectricalServices() {
                             className="absolute inset-0 bg-black/80 backdrop-blur-md"
                         />
 
-                        {/* Modal Card */}
                         <motion.div
+                            role="dialog"
+                            aria-modal="true"
+                            aria-label={`${selectedService.title} specifications`}
                             initial={{ scale: 0.9, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                            className="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl overflow-hidden z-10"
+                            className="relative w-full max-w-lg max-h-[90dvh] overflow-y-auto bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl z-10"
                         >
                             <div className="p-6 sm:p-8">
-                                <div className="flex justify-between items-start mb-6">
+                                <div className="flex justify-between items-start mb-6 gap-3">
                                     <div>
-                                        <p className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-1">⚡ Official Datasheet</p>
+                                        <p className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-1">⚡ Typical Specifications</p>
                                         <h4 className="text-xl sm:text-2xl font-black text-white uppercase">{selectedService.title}</h4>
                                     </div>
                                     <button
                                         onClick={() => setSelectedService(null)}
-                                        className="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-full transition-colors"
-                                        aria-label="Close modal"
+                                        className="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-full transition-colors shrink-0"
+                                        aria-label="Close"
                                     >
                                         ✕
                                     </button>
                                 </div>
 
-                                <div className="space-y-3 mb-8">
+                                <div className="space-y-3 mb-4">
                                     {selectedService.specs.map((spec, i) => (
                                         <motion.div
                                             key={i}
@@ -193,12 +204,25 @@ export default function ElectricalServices() {
                                     ))}
                                 </div>
 
-                                <button
-                                    onClick={() => setSelectedService(null)}
-                                    className="w-full py-3.5 bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-extrabold rounded-xl hover:from-amber-600 hover:to-yellow-700 transition-colors shadow-lg shadow-amber-500/20 active:scale-95"
-                                >
-                                    Close Specifications
-                                </button>
+                                <p className="text-xs text-slate-400 mb-6">
+                                    Exact ratings are made to your requirement. Contact us for the full datasheet.
+                                </p>
+
+                                <div className="flex flex-col sm:flex-row gap-3">
+                                    <Link
+                                        href="/contact?type=quote"
+                                        onClick={() => setSelectedService(null)}
+                                        className="flex-1 py-3.5 text-center bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-extrabold rounded-xl hover:from-amber-600 hover:to-yellow-700 transition-colors shadow-lg shadow-amber-500/20 active:scale-95"
+                                    >
+                                        Request a quote
+                                    </Link>
+                                    <button
+                                        onClick={() => setSelectedService(null)}
+                                        className="flex-1 py-3.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl transition-colors active:scale-95"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
                             </div>
                         </motion.div>
                     </div>
