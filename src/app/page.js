@@ -5,6 +5,7 @@ import SolarSection from "./components/SolarSection";
 import FeaturedProjects from "./components/FeaturedProjects";
 import AboutSection from "./components/AboutSection";
 import TrustLogos from "./components/TrustLogos";
+import BoardOfDirectors from "./components/BoardOfDirectors";
 
 export const metadata = {
   title: "Mission Power Land Limited | Class-A Power Infrastructure & Transformer Manufacturer",
@@ -48,10 +49,13 @@ export default function Home() {
         <AboutSection />
       </section>
 
+      {/* Board of Directors Section */}
+      <BoardOfDirectors />
+
       {/* Floating Quick Action Launcher for Mobile */}
       <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-3 md:hidden">
         <a
-          href="https://wa.me/8801810098911"
+          href="https://wa.me/8801810098909"
           target="_blank"
           rel="noopener noreferrer"
           className="w-14 h-14 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg shadow-emerald-500/40 active:scale-95 transition-transform"
