@@ -48,14 +48,15 @@ export default function Footer() {
                     {/* BRAND */}
                     <div className="lg:col-span-4 space-y-6">
                         <Link href="/" className="flex items-center gap-3 group">
-                            <div className="relative w-[50px] h-[50px] flex-shrink-0">
-                                <Image src="/assets/logo/logo.png" alt="Mission Power Land Limited" fill sizes="50px" className="object-contain" />
+                            {/* লোগো: হালকা বক্সে বসানো, যাতে গাঢ় পটভূমিতে মিশে না যায় */}
+                            <div className="relative w-[52px] h-[52px] flex-shrink-0 rounded-xl bg-white shadow-md ring-1 ring-amber-500/30">
+                                <Image src="/assets/logo/logo.png" alt="Mission Power Land Limited" fill sizes="52px" className="object-contain p-1" />
                             </div>
                             <div className="flex flex-col leading-none">
                                 <span className="text-lg font-black tracking-tight text-white uppercase">
                                     Mission Power <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">Land</span>
                                 </span>
-                                <span className="text-[10px] font-black text-amber-400 tracking-widest mt-1">LIMITED</span>
+                                <span className="text-[11px] font-black text-amber-400 tracking-widest mt-1">LIMITED</span>
                             </div>
                         </Link>
 
@@ -136,7 +137,7 @@ export default function Footer() {
                 </div>
 
                 {/* BOTTOM BAR */}
-                <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500">
+                <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-400">
                     <p>© {new Date().getFullYear()} Mission Power Land Limited. All Rights Reserved.</p>
                     <Link href="/contact?type=quote" className="text-amber-400 font-bold uppercase tracking-wider hover:text-amber-300 transition-colors">
                         Request a quote

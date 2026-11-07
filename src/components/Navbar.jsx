@@ -77,16 +77,16 @@ const Navbar = () => {
         >
             <div className="max-w-7xl mx-auto px-5 sm:px-6 flex justify-between items-center gap-3">
 
-                {/* LOGO */}
+                {/* LOGO: হালকা বক্সে বসানো, যাতে গাঢ় পটভূমিতে মিশে না যায় */}
                 <Link href="/" className="flex items-center gap-3 group min-w-0">
-                    <div className="relative w-[44px] h-[44px] md:w-[54px] md:h-[54px] flex-shrink-0 transition-transform duration-500 group-hover:scale-105">
-                        <Image src="/assets/logo/logo.png" alt="Mission Power Land Limited" fill sizes="54px" className="object-contain" priority />
+                    <div className="relative w-[48px] h-[48px] md:w-[58px] md:h-[58px] flex-shrink-0 rounded-xl bg-white shadow-md ring-1 ring-amber-500/30 transition-transform duration-500 group-hover:scale-105">
+                        <Image src="/assets/logo/logo.png" alt="Mission Power Land Limited" fill sizes="58px" className="object-contain p-1" priority />
                     </div>
                     <div className="flex flex-col leading-none">
                         <span className="text-sm sm:text-base md:text-xl font-black tracking-tight text-white uppercase whitespace-nowrap">
                             Mission Power <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">Land</span>
                         </span>
-                        <span className="text-[10px] md:text-xs font-black text-amber-400 tracking-widest mt-1">LIMITED</span>
+                        <span className="text-[11px] md:text-xs font-black text-amber-400 tracking-widest mt-1">LIMITED</span>
                     </div>
                 </Link>
 
